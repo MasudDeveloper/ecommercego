@@ -11,6 +11,9 @@
 
 @section('action-button')
     <div class="text-end d-flex all-button-box justify-content-md-end justify-content-center gap-2">
+        <a href="{{ route('marketing-agents.payout-requests') }}" class="btn btn-sm btn-outline-warning d-flex align-items-center gap-1">
+            <i class="ti ti-wallet"></i> {{ __('পেআউট রিকোয়েস্ট') }}
+        </a>
         <a href="{{ route('marketing-agents.targets') }}" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
             <i class="ti ti-target"></i> {{ __('টার্গেট ও বোনাস') }}
         </a>
@@ -147,10 +150,16 @@
                                 </td>
                                 <td>
                                     @if($agent->is_active)
-                                        <span class="badge bg-success">{{ __('সক্রিয়') }}</span>
+                                        <span class="badge bg-success mb-1">{{ __('সক্রিয়') }}</span>
                                     @else
-                                        <span class="badge bg-danger">{{ __('নিষ্ক্রিয়') }}</span>
+                                        <span class="badge bg-danger mb-1">{{ __('স্থগিত (Suspended)') }}</span>
                                     @endif
+                                    <form method="POST" action="{{ route('marketing-agents.toggle-status', $agent->id) }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-xs {{ $agent->is_active ? 'btn-outline-danger' : 'btn-outline-success' }}" onclick="return confirm('{{ $agent->is_active ? 'আপনি কি এই এজেন্টের অ্যাকাউন্ট স্থগিত (Suspend) করতে চান? স্থগিত করলে সে পোর্টাল লগইন করতে পারবে না।' : 'আপনি কি এই এজেন্টের অ্যাকাউন্ট পুনরায় সক্রিয় করতে চান?' }}')">
+                                            <i class="ti {{ $agent->is_active ? 'ti-user-off' : 'ti-user-check' }}"></i> {{ $agent->is_active ? __('স্থগিত করুন') : __('সক্রিয় করুন') }}
+                                        </button>
+                                    </form>
                                 </td>
                                 <td class="text-end">
                                     <div class="d-inline-flex gap-1">
@@ -209,6 +218,11 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">{{ __('পোর্টাল পাসওয়ার্ড পরিবর্তন (ঐচ্ছিক)') }}</label>
+                                                    <input type="password" name="password" class="form-control" placeholder="পাসওয়ার্ড অপরিবর্তিত রাখতে ফাঁকা রাখুন (মিনিমাম ৬ অক্ষর)">
+                                                    <small class="text-muted">{{ __('এজেন্ট পোর্টাল (/agent/login) এ লগইন করার পাসওয়ার্ড') }}</small>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
@@ -303,6 +317,11 @@
                             </div>
                             <small class="text-muted text-xs">{{ __('সাধারণত ১০% থেকে ২০% কমিশন দেওয়া হয়') }}</small>
                         </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('পোর্টাল লগইন পাসওয়ার্ড') }} <span class="text-danger">*</span></label>
+                        <input type="password" name="password" class="form-control" placeholder="মিনিমাম ৬ অক্ষরের শক্তিশালী পাসওয়ার্ড" required>
+                        <small class="text-muted text-xs">{{ __('এজেন্ট তার ফোন নম্বর ও এই পাসওয়ার্ড দিয়ে /agent/login এ ঢুকতে পারবে') }}</small>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">

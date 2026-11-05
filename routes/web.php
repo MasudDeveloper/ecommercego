@@ -178,6 +178,11 @@ Route::middleware(['web'])->group(function () {
     Route::post('marketing-agents', [MarketingAgentController::class, 'store'])->name('marketing-agents.store');
     Route::put('marketing-agents/{id}', [MarketingAgentController::class, 'update'])->name('marketing-agents.update');
     Route::delete('marketing-agents/{id}', [MarketingAgentController::class, 'destroy'])->name('marketing-agents.destroy');
+    Route::post('marketing-agents/{id}/toggle-status', [MarketingAgentController::class, 'toggleStatus'])->name('marketing-agents.toggle-status');
+
+    Route::get('marketing-agents/payout-requests', [MarketingAgentController::class, 'payoutRequests'])->name('marketing-agents.payout-requests');
+    Route::post('marketing-agents/payout-requests/{id}/approve', [MarketingAgentController::class, 'approvePayoutRequest'])->name('marketing-agents.payout-requests.approve');
+    Route::post('marketing-agents/payout-requests/{id}/reject', [MarketingAgentController::class, 'rejectPayoutRequest'])->name('marketing-agents.payout-requests.reject');
 
     Route::get('marketing-agents/targets', [MarketingAgentController::class, 'targets'])->name('marketing-agents.targets');
     Route::post('marketing-agents/targets', [MarketingAgentController::class, 'storeTarget'])->name('marketing-agents.targets.store');
@@ -792,5 +797,35 @@ Route::middleware(['web'])->group(function () {
 
 
   Route::post('/format-price', [ProductController::class, 'formatPrice'])->name('format.price');
+
+  // ==========================================
+  // Marketing Agent Portal & Ecosystem Routes
+  // ==========================================
+  Route::get('agent/login', [\App\Http\Controllers\Agent\AgentAuthController::class, 'showLoginForm'])->name('agent.login');
+  Route::post('agent/login', [\App\Http\Controllers\Agent\AgentAuthController::class, 'login'])->name('agent.login.submit');
+
+  Route::group(['prefix' => 'agent', 'as' => 'agent.', 'middleware' => ['auth:agent']], function () {
+      Route::post('logout', [\App\Http\Controllers\Agent\AgentAuthController::class, 'logout'])->name('logout');
+      Route::get('dashboard', [\App\Http\Controllers\Agent\AgentPortalController::class, 'dashboard'])->name('dashboard');
+      Route::get('leaderboard', [\App\Http\Controllers\Agent\AgentPortalController::class, 'leaderboard'])->name('leaderboard');
+      
+      // Mini CRM (Leads)
+      Route::get('leads', [\App\Http\Controllers\Agent\AgentPortalController::class, 'leads'])->name('leads');
+      Route::post('leads', [\App\Http\Controllers\Agent\AgentPortalController::class, 'storeLead'])->name('leads.store');
+      Route::put('leads/{id}', [\App\Http\Controllers\Agent\AgentPortalController::class, 'updateLead'])->name('leads.update');
+      Route::delete('leads/{id}', [\App\Http\Controllers\Agent\AgentPortalController::class, 'deleteLead'])->name('leads.delete');
+
+      // Marketing Toolkit & Playbook
+      Route::get('resources', [\App\Http\Controllers\Agent\AgentPortalController::class, 'resources'])->name('resources');
+
+      // Wallet & Payout
+      Route::get('wallet', [\App\Http\Controllers\Agent\AgentPortalController::class, 'wallet'])->name('wallet');
+      Route::post('wallet/request', [\App\Http\Controllers\Agent\AgentPortalController::class, 'requestPayout'])->name('wallet.request');
+
+      // Profile & Settings
+      Route::get('profile', [\App\Http\Controllers\Agent\AgentPortalController::class, 'profile'])->name('profile');
+      Route::post('profile', [\App\Http\Controllers\Agent\AgentPortalController::class, 'updateProfile'])->name('profile.update');
+  });
+
   require __DIR__ . '/customer.php';
 });

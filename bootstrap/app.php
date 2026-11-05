@@ -28,6 +28,14 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         // Append middleware to the 'web' group
         $middleware->appendToGroup('web', \App\Http\Middleware\SetLocate::class);
+
+        // Redirect unauthenticated guests appropriately
+        $middleware->redirectGuestsTo(function (\Illuminate\Http\Request $request) {
+            if ($request->is('agent') || $request->is('agent/*')) {
+                return route('agent.login');
+            }
+            return route('login');
+        });
         // Exclude specific routes from CSRF protection
         $middleware->validateCsrfTokens(
             except: [

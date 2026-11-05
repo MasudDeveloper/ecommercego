@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\MarketingAgent;
 use App\Models\AgentTarget;
 use App\Models\AgentCommission;
+use App\Models\AgentPayoutRequest;
 use App\Models\User;
 use App\Models\PlanOrder;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class MarketingAgentController extends Controller
 {
@@ -56,13 +58,18 @@ class MarketingAgentController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:30',
-            'email' => 'nullable|email|max:255',
+            'phone' => 'required|string|max:30|unique:marketing_agents,phone',
+            'email' => 'nullable|email|max:255|unique:marketing_agents,email',
+            'password' => 'required|string|min:6',
             'referral_code' => 'nullable|string|max:50|unique:marketing_agents,referral_code',
             'commission_rate' => 'required|numeric|min:1|max:100',
             'commission_type' => 'required|in:percentage,fixed',
             'payment_method' => 'nullable|string',
             'payout_details' => 'nullable|string',
+        ], [
+            'password.required' => 'এজেন্টের পোর্টাল লগইনের পাসওয়ার্ড দিন।',
+            'password.min' => 'পাসওয়ার্ড সর্বনিম্ন ৬ অক্ষরের হতে হবে।',
+            'phone.unique' => 'এই মোবাইল নম্বরে ইতিমধ্যে একজন এজেন্ট রয়েছে।',
         ]);
 
         $code = !empty($request->referral_code) 
@@ -73,6 +80,7 @@ class MarketingAgentController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
+            'password' => Hash::make($request->password),
             'referral_code' => $code,
             'commission_rate' => $request->commission_rate,
             'commission_type' => $request->commission_type,
@@ -98,13 +106,15 @@ class MarketingAgentController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:30',
+            'phone' => 'required|string|max:30|unique:marketing_agents,phone,' . $agent->id,
+            'email' => 'nullable|email|max:255|unique:marketing_agents,email,' . $agent->id,
+            'password' => 'nullable|string|min:6',
             'referral_code' => 'required|string|max:50|unique:marketing_agents,referral_code,' . $agent->id,
             'commission_rate' => 'required|numeric|min:1|max:100',
             'commission_type' => 'required|in:percentage,fixed',
         ]);
 
-        $agent->update([
+        $data = [
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
@@ -115,9 +125,145 @@ class MarketingAgentController extends Controller
             'payout_details' => $request->payout_details,
             'is_active' => $request->has('is_active') ? true : false,
             'notes' => $request->notes,
-        ]);
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $agent->update($data);
 
         return redirect()->route('marketing-agents.index')->with('success', __('এজেন্টের তথ্য আপডেট করা হয়েছে।'));
+    }
+
+    /**
+     * Toggle Agent Status (1-Click Activate / Suspend)
+     */
+    public function toggleStatus($id)
+    {
+        if (!auth()->check() || auth()->user()->type != 'super admin') {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+
+        $agent = MarketingAgent::findOrFail($id);
+        $agent->is_active = !$agent->is_active;
+        $agent->save();
+
+        $statusText = $agent->is_active ? 'সক্রিয় (Active)' : 'স্থগিত (Suspended)';
+        $msgType = $agent->is_active ? 'success' : 'warning';
+
+        return redirect()->back()->with($msgType, "এজেন্ট '{$agent->name}' এর অ্যাকাউন্ট {$statusText} করা হয়েছে।");
+    }
+
+    /**
+     * View Agent Payout Withdrawal Requests
+     */
+    public function payoutRequests(Request $request)
+    {
+        if (!auth()->check() || auth()->user()->type != 'super admin') {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+
+        $query = AgentPayoutRequest::with('agent')->latest();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $payoutRequests = $query->paginate(20);
+
+        $counts = [
+            'all' => AgentPayoutRequest::count(),
+            'pending' => AgentPayoutRequest::where('status', 'pending')->count(),
+            'approved' => AgentPayoutRequest::where('status', 'approved')->count(),
+            'rejected' => AgentPayoutRequest::where('status', 'rejected')->count(),
+        ];
+
+        return view('marketing_agents.payout_requests', compact('payoutRequests', 'counts'));
+    }
+
+    /**
+     * Approve Payout Request
+     */
+    public function approvePayoutRequest(Request $request, $id)
+    {
+        if (!auth()->check() || auth()->user()->type != 'super admin') {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+
+        $request->validate([
+            'transaction_id' => 'required|string|max:100',
+            'admin_note' => 'nullable|string|max:255',
+        ], [
+            'transaction_id.required' => 'বিকাশ/নগদ/ব্যাংক পেমেন্টের ট্রানজেকশন আইডি (TrxID) দিন।',
+        ]);
+
+        $payout = AgentPayoutRequest::findOrFail($id);
+
+        if ($payout->status != 'pending') {
+            return redirect()->back()->with('error', 'এই রিকোয়েস্টটি ইতিমধ্যে প্রক্রিয়াকৃত হয়েছে।');
+        }
+
+        $payout->update([
+            'status' => 'approved',
+            'transaction_id' => $request->transaction_id,
+            'admin_note' => $request->admin_note,
+            'processed_at' => Carbon::now(),
+        ]);
+
+        // Mark agent's oldest pending commissions as paid up to this payout amount
+        $remainingToMark = (float) $payout->amount;
+        $pendingComms = AgentCommission::where('agent_id', $payout->agent_id)
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        foreach ($pendingComms as $comm) {
+            if ($remainingToMark <= 0) break;
+            $commTotal = (float) ($comm->commission_amount + $comm->bonus_amount);
+
+            $comm->update([
+                'status' => 'paid',
+                'payout_date' => Carbon::now(),
+                'payout_method' => $payout->payment_method,
+                'payout_trx_id' => $payout->transaction_id,
+                'payout_notes' => 'উইথড্রয়াল রিকোয়েস্ট #' . $payout->id . ' এর মাধ্যমে অনুমোদিত ও পরিশোধিত।',
+            ]);
+
+            $remainingToMark -= $commTotal;
+        }
+
+        return redirect()->back()->with('success', "৳{$payout->amount} এর পেআউট রিকোয়েস্ট সফলভাবে অনুমোদিত এবং পরিশোধিত হয়েছে।");
+    }
+
+    /**
+     * Reject Payout Request
+     */
+    public function rejectPayoutRequest(Request $request, $id)
+    {
+        if (!auth()->check() || auth()->user()->type != 'super admin') {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+
+        $request->validate([
+            'admin_note' => 'required|string|max:255',
+        ], [
+            'admin_note.required' => 'বাতিল করার কারণ উল্লেখ করুন।',
+        ]);
+
+        $payout = AgentPayoutRequest::findOrFail($id);
+
+        if ($payout->status != 'pending') {
+            return redirect()->back()->with('error', 'এই রিকোয়েস্টটি ইতিমধ্যে প্রক্রিয়াকৃত হয়েছে।');
+        }
+
+        $payout->update([
+            'status' => 'rejected',
+            'admin_note' => $request->admin_note,
+            'processed_at' => Carbon::now(),
+        ]);
+
+        return redirect()->back()->with('info', "পেআউট রিকোয়েস্ট বাতিল করা হয়েছে।");
     }
 
     /**

@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'delivery_boys',
         ],
+        'agent' => [
+            'driver' => 'session',
+            'provider' => 'agents',
+        ],
     ],
 
     /*
@@ -79,6 +83,10 @@ return [
 		'delivery_boys' => [
             'driver' => 'eloquent',
             'model' => App\Models\DeliveryBoy::class,
+        ],
+        'agents' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\MarketingAgent::class,
         ],
         // 'users' => [
         //     'driver' => 'database',
