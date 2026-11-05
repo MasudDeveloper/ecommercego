@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <defs>
+    <linearGradient id="favGold" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#FFE885" />
+      <stop offset="25%" stop-color="#FDB833" />
+      <stop offset="55%" stop-color="#EAA023" />
+      <stop offset="85%" stop-color="#CA7806" />
+      <stop offset="100%" stop-color="#9E5602" />
+    </linearGradient>
+
+    <radialGradient id="favGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Dark Rounded Squircle Base -->
+  <rect width="128" height="128" rx="32" fill="#0A0B0E" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
+  <circle cx="64" cy="64" r="50" fill="url(#favGlow)" />
+
+  <!-- Center Scaled Mark -->
+  <g transform="translate(24, 18) scale(0.32)">
+    <!-- 'e' -->
+    <path d="M 175 14 
+             C 112 14, 76 60, 76 118 
+             C 76 178, 122 216, 185 216 
+             C 218 216, 245 204, 260 190 
+             L 242 165 
+             C 228 176, 208 184, 184 184 
+             C 142 184, 114 158, 111 120 
+             L 266 98 
+             C 264 48, 228 14, 175 14 Z 
+             M 112 92 
+             C 116 58, 142 42, 175 42 
+             C 204 42, 228 58, 232 92 
+             L 112 92 Z" 
+          fill="url(#favGold)" />
+
+    <!-- Speed Wings -->
+    <path d="M 28 85 L 75 85 C 80 85, 84 89, 84 94 C 84 99, 80 103, 75 103 L 28 103 C 20 103, 20 85, 28 85 Z" fill="url(#favGold)" />
+    <path d="M 0 115 L 76 115 C 81 115, 85 119, 85 124 C 85 129, 81 133, 76 133 L 0 133 C -8 133, -8 115, 0 115 Z" fill="url(#favGold)" />
+    <path d="M 36 145 L 80 145 C 85 145, 89 149, 89 154 C 89 159, 85 163, 80 163 L 36 163 C 28 163, 28 145, 36 145 Z" fill="url(#favGold)" />
+
+    <!-- Cart Base -->
+    <path d="M 68 85 
+             L 82 148 
+             C 86 168, 102 182, 122 182 
+             L 218 182 
+             C 225 182, 230 188, 230 195 
+             C 230 202, 225 208, 218 208 
+             L 118 208 
+             C 86 208, 62 184, 56 152 
+             L 44 92 
+             C 42 84, 48 76, 56 76 
+             C 63 76, 68 80, 68 85 Z" 
+          fill="url(#favGold)" />
+
+    <!-- Wheels -->
+    <g transform="translate(112, 224)">
+      <circle cx="16" cy="16" r="16" fill="url(#favGold)" />
+      <circle cx="16" cy="16" r="8" fill="#5B3101" opacity="0.35" />
+    </g>
+    <g transform="translate(182, 224)">
+      <circle cx="16" cy="16" r="16" fill="url(#favGold)" />
+      <circle cx="16" cy="16" r="8" fill="#5B3101" opacity="0.35" />
+    </g>
+  </g>
+</svg>
+

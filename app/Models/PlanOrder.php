@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Models;
+
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PlanOrder extends Model
+{
+    use HasFactory, Cachable;
+    protected $fillable = [
+        'order_id',
+        'name',
+        'card_number',
+        'card_exp_month',
+        'card_exp_year',
+        'plan_name',
+        'plan_id',
+        'discount_price',
+        'price',
+        'price_currency',
+        'txn_id',
+        'payment_type',
+        'payment_status',
+        'receipt',
+        'user_id',
+        'store_id',
+    ];
+    public static function total_plan_price()
+    {
+        return PlanOrder::sum('price');
+    }
+    public static function total_orders()
+    {
+        return PlanOrder::count();
+    }
+    public function total_coupon_used()
+    {
+        return $this->hasOne('App\Models\PlanUserCoupon', 'order', 'order_id');
+    }
+
+    /**
+     * Auto-process marketing agent commission when plan payment succeeds
+     */
+    protected static function booted()
+    {
+        static::saved(function ($planOrder) {
+            $status = strtolower(trim($planOrder->payment_status ?? ''));
+            if (in_array($status, ['succeeded', 'success', 'approved', 'paid', 'complete', '1'])) {
+                $user = User::find($planOrder->user_id);
+                if ($user && !empty($user->referred_by_agent_id)) {
+                    \App\Http\Controllers\MarketingAgentController::processPlanCommission($planOrder, $user);
+                }
+            }
+        });
+    }
+}

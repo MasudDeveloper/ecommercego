@@ -1,0 +1,126 @@
+{
+    "title": "Home Page",
+    "slug": "home",
+    "detail": "Single Product Landing Page Configuration.",
+    "icon": "fas fa-house",
+    "sections": [
+        {
+            "title": "Hero Section (Product Banner)",
+            "slug": "hero",
+            "key": "hero",
+            "settings": [
+                {
+                    "label": "Badge Text",
+                    "key": "badge",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "🥻 রূপগঞ্জের শতভাগ খাঁটি তাঁতের হ্যান্ডলুম বুনন"
+                },
+                {
+                    "label": "Headline",
+                    "key": "title",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "ঐতিহ্যবাহী তাঁতের খাঁটি ঢাকাই জামদানি ও রেশমি সিল্ক শাড়ি কালেকশন"
+                },
+                {
+                    "label": "Sub-Headline Description",
+                    "key": "subtitle",
+                    "type": "textarea",
+                    "rows": 3,
+                    "placeholder": "",
+                    "value": "১০০ কাউন্টের মোলায়েম সুতা ও চকচকে সোনালী জরির সুনিপুণ কারুকাজ। ১৪ হাত পূর্ণ বহর, সুন্দর কুঁচি ও সাথে পাচ্ছেন আকর্ষণীয় ম্যাচিং ব্লাউজ পিস।"
+                },
+                {
+                    "label": "Regular Price (Strike-through)",
+                    "key": "regular_price",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "2800"
+                },
+                {
+                    "label": "Offer Price (Sale Price)",
+                    "key": "offer_price",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "1950"
+                },
+                {
+                    "label": "Discount Tag",
+                    "key": "discount_tag",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "৩০% বিশেষ মূল্যছাড়!"
+                },
+                {
+                    "label": "Button Text",
+                    "key": "button_text",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "👉 এখনই অর্ডার করুন (ক্যাশ অন ডেলিভারি)"
+                },
+                {
+                    "label": "Product Hero Image",
+                    "key": "image",
+                    "type": "image",
+                    "value": "themes\/landing-saree\/assets\/images\/product-01.png"
+                }
+            ]
+        },
+        {
+            "title": "YouTube Video Section",
+            "slug": "video",
+            "key": "video",
+            "settings": [
+                {
+                    "label": "YouTube Video Link (leave blank to hide)",
+                    "key": "youtube_url",
+                    "type": "text",
+                    "placeholder": "https:\/\/www.youtube.com\/watch?v=...",
+                    "value": ""
+                },
+                {
+                    "label": "Video Title",
+                    "key": "title",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "পণ্যটির আসল ব্যবহার ও কার্যকারিতা সরাসরি ভিডিওতে দেখুন"
+                },
+                {
+                    "label": "Video Subtitle",
+                    "key": "subtitle",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "অর্ডার করার আগে ভিডিওটি দেখে পণ্যের কোয়ালিটি যাচাই করে নিন"
+                },
+                {
+                    "label": "Autoplay Video (On \/ Off)",
+                    "key": "autoplay",
+                    "type": "switch",
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "title": "Delivery Charges",
+            "slug": "delivery",
+            "key": "delivery",
+            "settings": [
+                {
+                    "label": "Dhaka Inside Charge (BDT)",
+                    "key": "charge_dhaka",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "70"
+                },
+                {
+                    "label": "Outside Dhaka Charge (BDT)",
+                    "key": "charge_outside",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "130"
+                }
+            ]
+        }
+    ]
+}

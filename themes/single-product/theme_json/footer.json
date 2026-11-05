@@ -1,0 +1,41 @@
+{
+    "title": "Footer Settings",
+    "slug": "footer",
+    "detail": "Footer details and contact information.",
+    "icon": "fas fa-shoe-prints",
+    "sections": [
+        {
+            "title": "Footer Content",
+            "slug": "footer_content",
+            "key": "footer",
+            "settings": [
+                {
+                    "label": "Store Description",
+                    "key": "description",
+                    "type": "textarea",
+                    "rows": 3,
+                    "value": "আমরা সর্বোচ্চ গুণগত মানের খাঁটি পণ্য সরাসরি আপনার দোরগোড়ায় পৌঁছে দিতে প্রতিশ্রুতিবদ্ধ।"
+                },
+                {
+                    "label": "Contact Phone",
+                    "key": "phone",
+                    "type": "text",
+                    "value": "01700-000000"
+                },
+                {
+                    "label": "Contact Email",
+                    "key": "email",
+                    "type": "text",
+                    "value": "support@myshop.com"
+                },
+                {
+                    "label": "Store Address",
+                    "key": "address",
+                    "type": "text",
+                    "value": "ঢাকা, বাংলাদেশ"
+                }
+            ]
+        }
+    ]
+}
+

@@ -1,0 +1,21 @@
+[
+    {
+        "title": "Header & Call",
+        "slug": "header",
+        "detail": "Logo, Top Announcement bar, and Call Us phone number.",
+        "icon": "ti ti-heading"
+    },
+    {
+        "title": "One-Page Landing Settings",
+        "slug": "home",
+        "detail": "Hero section, pricing, product benefits, reviews, and COD order form.",
+        "icon": "ti ti-home"
+    },
+    {
+        "title": "Footer",
+        "slug": "footer",
+        "detail": "Footer details, store phone, and address.",
+        "icon": "ti ti-ball-football"
+    }
+]
+

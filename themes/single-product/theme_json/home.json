@@ -1,0 +1,126 @@
+{
+    "title": "Home Page",
+    "slug": "home",
+    "detail": "Single Product Landing Page Configuration.",
+    "icon": "fas fa-house",
+    "sections": [
+        {
+            "title": "Hero Section (Product Banner)",
+            "slug": "hero",
+            "key": "hero",
+            "settings": [
+                {
+                    "label": "Badge Text",
+                    "key": "badge",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "🌿 ১০০% প্রাকৃতিক ও ভেজালমুক্তির গ্যারান্টি"
+                },
+                {
+                    "label": "Headline",
+                    "key": "title",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "ঘানিতে ভাঙানো খাঁটি সরিষার তেল ও সুন্দরবনের চাকভাঙা মধু"
+                },
+                {
+                    "label": "Sub-Headline Description",
+                    "key": "subtitle",
+                    "type": "textarea",
+                    "rows": 3,
+                    "placeholder": "",
+                    "value": "সরাসরি নিজস্ব ঘানি ও সুন্দরবনের মৌয়ালদের থেকে সংগৃহীত। কোনো কেমিক্যাল, কৃত্রিম রঙ বা প্রিজারভেটিভ নেই। আপনার পরিবারের সুস্বাস্থ্য নিশ্চিত করুন।"
+                },
+                {
+                    "label": "Regular Price (Strike-through)",
+                    "key": "regular_price",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "1200"
+                },
+                {
+                    "label": "Offer Price (Sale Price)",
+                    "key": "offer_price",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "950"
+                },
+                {
+                    "label": "Discount Tag",
+                    "key": "discount_tag",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "২৫% স্পেশাল ছাড়"
+                },
+                {
+                    "label": "Button Text",
+                    "key": "button_text",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "👉 এখনই অর্ডার করুন (ক্যাশ অন ডেলিভারি)"
+                },
+                {
+                    "label": "Product Hero Image",
+                    "key": "image",
+                    "type": "image",
+                    "value": "themes\/single-product\/assets\/images\/product-01.png"
+                }
+            ]
+        },
+        {
+            "title": "YouTube Video Section",
+            "slug": "video",
+            "key": "video",
+            "settings": [
+                {
+                    "label": "YouTube Video Link (leave blank to hide)",
+                    "key": "youtube_url",
+                    "type": "text",
+                    "placeholder": "https:\/\/www.youtube.com\/watch?v=...",
+                    "value": "https:\/\/www.youtube.com\/watch?v=dQw4w9WgXcQ"
+                },
+                {
+                    "label": "Video Title",
+                    "key": "title",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "পণ্যটির আসল ব্যবহার ও কার্যকারিতা সরাসরি ভিডিওতে দেখুন"
+                },
+                {
+                    "label": "Video Subtitle",
+                    "key": "subtitle",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "অর্ডার করার আগে ভিডিওটি দেখে পণ্যের কোয়ালিটি যাচাই করে নিন"
+                },
+                {
+                    "label": "Autoplay Video (On \/ Off)",
+                    "key": "autoplay",
+                    "type": "switch",
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "title": "Delivery Charges",
+            "slug": "delivery",
+            "key": "delivery",
+            "settings": [
+                {
+                    "label": "Dhaka Inside Charge (BDT)",
+                    "key": "charge_dhaka",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "70"
+                },
+                {
+                    "label": "Outside Dhaka Charge (BDT)",
+                    "key": "charge_outside",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "130"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,126 @@
+{
+    "title": "Home Page",
+    "slug": "home",
+    "detail": "Single Product Landing Page Configuration.",
+    "icon": "fas fa-house",
+    "sections": [
+        {
+            "title": "Hero Section (Product Banner)",
+            "slug": "hero",
+            "key": "hero",
+            "settings": [
+                {
+                    "label": "Badge Text",
+                    "key": "badge",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "🌙 ডিজিটাল কুরআন লাইফস্টাইল • পরিবার ও সন্তানদের জন্য সেরা উপহার"
+                },
+                {
+                    "label": "Headline",
+                    "key": "title",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "রিমোট কন্ট্রোল ৭ কালার টাচ ডিজিটাল কুরআন স্পিকার ও মুন ল্যাম্প"
+                },
+                {
+                    "label": "Sub-Headline Description",
+                    "key": "subtitle",
+                    "type": "textarea",
+                    "rows": 3,
+                    "placeholder": "",
+                    "value": "১৮ জন বিশ্ববিখ্যাত ক্বারীর সুরে পূর্ণাঙ্গ কুরআন তেলাওয়াত, বাংলা তাফসীর ও অনুবাদ, সহিহ বুখারী, রিয়াযুস সালেহীন ও দোয়া সমূহ।"
+                },
+                {
+                    "label": "Regular Price (Strike-through)",
+                    "key": "regular_price",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "2400"
+                },
+                {
+                    "label": "Offer Price (Sale Price)",
+                    "key": "offer_price",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "1650"
+                },
+                {
+                    "label": "Discount Tag",
+                    "key": "discount_tag",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "৩১% অফার চলছে!"
+                },
+                {
+                    "label": "Button Text",
+                    "key": "button_text",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "👉 এখনই অর্ডার করুন (ক্যাশ অন ডেলিভারি)"
+                },
+                {
+                    "label": "Product Hero Image",
+                    "key": "image",
+                    "type": "image",
+                    "value": "themes\/landing-islamic\/assets\/images\/product-01.png"
+                }
+            ]
+        },
+        {
+            "title": "YouTube Video Section",
+            "slug": "video",
+            "key": "video",
+            "settings": [
+                {
+                    "label": "YouTube Video Link (leave blank to hide)",
+                    "key": "youtube_url",
+                    "type": "text",
+                    "placeholder": "https:\/\/www.youtube.com\/watch?v=...",
+                    "value": ""
+                },
+                {
+                    "label": "Video Title",
+                    "key": "title",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "পণ্যটির আসল ব্যবহার ও কার্যকারিতা সরাসরি ভিডিওতে দেখুন"
+                },
+                {
+                    "label": "Video Subtitle",
+                    "key": "subtitle",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "অর্ডার করার আগে ভিডিওটি দেখে পণ্যের কোয়ালিটি যাচাই করে নিন"
+                },
+                {
+                    "label": "Autoplay Video (On \/ Off)",
+                    "key": "autoplay",
+                    "type": "switch",
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "title": "Delivery Charges",
+            "slug": "delivery",
+            "key": "delivery",
+            "settings": [
+                {
+                    "label": "Dhaka Inside Charge (BDT)",
+                    "key": "charge_dhaka",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "70"
+                },
+                {
+                    "label": "Outside Dhaka Charge (BDT)",
+                    "key": "charge_outside",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "130"
+                }
+            ]
+        }
+    ]
+}

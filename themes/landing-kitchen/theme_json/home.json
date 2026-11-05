@@ -1,0 +1,126 @@
+{
+    "title": "Home Page",
+    "slug": "home",
+    "detail": "Single Product Landing Page Configuration.",
+    "icon": "fas fa-house",
+    "sections": [
+        {
+            "title": "Hero Section (Product Banner)",
+            "slug": "hero",
+            "key": "hero",
+            "settings": [
+                {
+                    "label": "Badge Text",
+                    "key": "badge",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "🍳 ৩ সেকেন্ডে চপিং • ১ বছরের রিপ্লেসমেন্ট ওয়ারেন্টি"
+                },
+                {
+                    "label": "Headline",
+                    "key": "title",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "জার্মানি টেকনোলজি ৪ ইন ১ ইলেকট্রিক ফুড চপার, মিট কিমা ও জুসার"
+                },
+                {
+                    "label": "Sub-Headline Description",
+                    "key": "subtitle",
+                    "type": "textarea",
+                    "rows": 3,
+                    "placeholder": "",
+                    "value": "খাঁটি কপার মোটর ও ৪ স্তরের স্টেইনলেস স্টিল টাইটানিয়াম ব্লেড। পেঁয়াজ কাটতে গিয়ে আর চোখের পানি ফেলতে হবে না, মাংসের কিমা তৈরি করুন চোখের পলকে।"
+                },
+                {
+                    "label": "Regular Price (Strike-through)",
+                    "key": "regular_price",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "2100"
+                },
+                {
+                    "label": "Offer Price (Sale Price)",
+                    "key": "offer_price",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "1350"
+                },
+                {
+                    "label": "Discount Tag",
+                    "key": "discount_tag",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "৩৫% ডিসকাউন্ট!"
+                },
+                {
+                    "label": "Button Text",
+                    "key": "button_text",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "👉 এখনই অর্ডার করুন (ক্যাশ অন ডেলিভারি)"
+                },
+                {
+                    "label": "Product Hero Image",
+                    "key": "image",
+                    "type": "image",
+                    "value": "themes\/landing-kitchen\/assets\/images\/product-01.png"
+                }
+            ]
+        },
+        {
+            "title": "YouTube Video Section",
+            "slug": "video",
+            "key": "video",
+            "settings": [
+                {
+                    "label": "YouTube Video Link (leave blank to hide)",
+                    "key": "youtube_url",
+                    "type": "text",
+                    "placeholder": "https:\/\/www.youtube.com\/watch?v=...",
+                    "value": ""
+                },
+                {
+                    "label": "Video Title",
+                    "key": "title",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "পণ্যটির আসল ব্যবহার ও কার্যকারিতা সরাসরি ভিডিওতে দেখুন"
+                },
+                {
+                    "label": "Video Subtitle",
+                    "key": "subtitle",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "অর্ডার করার আগে ভিডিওটি দেখে পণ্যের কোয়ালিটি যাচাই করে নিন"
+                },
+                {
+                    "label": "Autoplay Video (On \/ Off)",
+                    "key": "autoplay",
+                    "type": "switch",
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "title": "Delivery Charges",
+            "slug": "delivery",
+            "key": "delivery",
+            "settings": [
+                {
+                    "label": "Dhaka Inside Charge (BDT)",
+                    "key": "charge_dhaka",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "70"
+                },
+                {
+                    "label": "Outside Dhaka Charge (BDT)",
+                    "key": "charge_outside",
+                    "type": "text",
+                    "placeholder": "",
+                    "value": "130"
+                }
+            ]
+        }
+    ]
+}

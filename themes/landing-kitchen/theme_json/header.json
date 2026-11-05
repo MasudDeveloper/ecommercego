@@ -1,0 +1,52 @@
+{
+    "title": "Header Settings",
+    "slug": "header",
+    "detail": "Top urgency announcement bar and header logo.",
+    "icon": "fas fa-arrows-up-to-line",
+    "sections": [
+        {
+            "title": "Top Urgency Announcement",
+            "slug": "announcement",
+            "key": "announcement",
+            "settings": [
+                {
+                    "label": "On\/Off",
+                    "key": "status",
+                    "type": "switch",
+                    "value": 1
+                },
+                {
+                    "label": "Announcement Text",
+                    "key": "text",
+                    "type": "text",
+                    "value": "🔥 বিশেষ অফার চলছে! সারা বাংলাদেশে ক্যাশ অন ডেলিভারি (পণ্য হাতে পেয়ে টাকা দিন)"
+                }
+            ]
+        },
+        {
+            "title": "Header & Direct Call",
+            "slug": "logo",
+            "key": "header",
+            "settings": [
+                {
+                    "label": "Header Logo",
+                    "key": "logo",
+                    "type": "image",
+                    "value": "themes\/landing-kitchen\/assets\/images\/logo.png"
+                },
+                {
+                    "label": "Favicon",
+                    "key": "favicon",
+                    "type": "image",
+                    "value": "themes\/landing-kitchen\/assets\/images\/favicon.png"
+                },
+                {
+                    "label": "Call Us Number",
+                    "key": "call",
+                    "type": "text",
+                    "value": "01700-000000"
+                }
+            ]
+        }
+    ]
+}
