@@ -251,3 +251,4 @@
     @stack('custom-script')
 </body>
 </html>
+

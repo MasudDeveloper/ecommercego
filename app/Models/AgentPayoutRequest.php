@@ -16,7 +16,6 @@ class AgentPayoutRequest extends Model
         'amount',
         'payment_method',
         'account_number',
-        'agent_notes',
         'status',
         'transaction_id',
         'admin_note',
@@ -25,16 +24,6 @@ class AgentPayoutRequest extends Model
     protected $casts = [
         'amount' => 'decimal:2',
     ];
-
-    public function getAccountDetailsAttribute()
-    {
-        return $this->account_number;
-    }
-
-    public function setAccountDetailsAttribute($value)
-    {
-        $this->attributes['account_number'] = $value;
-    }
 
     public function agent()
     {
@@ -51,3 +40,4 @@ class AgentPayoutRequest extends Model
         };
     }
 }
+

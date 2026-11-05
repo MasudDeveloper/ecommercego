@@ -54,6 +54,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 '*get-payment-easebuzz*',
                 '/login',
                 '/duologin',
+                '/agent/login',
+                'agent/login',
                 'plan-get-Powertranz-status*',
                 'store-get-Powertranz-status*',
                 'campaigns-card-payment/',

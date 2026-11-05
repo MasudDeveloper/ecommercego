@@ -389,3 +389,4 @@ class AgentPortalController extends Controller
         return back()->with('success', 'আপনার প্রোফাইল তথ্য সফলভাবে আপডেট হয়েছে!');
     }
 }
+

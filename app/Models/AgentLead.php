@@ -27,16 +27,6 @@ class AgentLead extends Model
         'follow_up_date' => 'date',
     ];
 
-    public function getFacebookPageAttribute()
-    {
-        return $this->page_url;
-    }
-
-    public function setFacebookPageAttribute($value)
-    {
-        $this->attributes['page_url'] = $value;
-    }
-
     public function agent()
     {
         return $this->belongsTo(MarketingAgent::class, 'agent_id');
@@ -73,3 +63,4 @@ class AgentLead extends Model
         return "https://api.whatsapp.com/send?phone={$cleanPhone}&text=" . urlencode($message);
     }
 }
+
