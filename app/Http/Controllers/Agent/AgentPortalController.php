@@ -268,7 +268,8 @@ class AgentPortalController extends Controller
 
         $inboxScripts = $resources->where('category', 'inbox_script');
         $commentScripts = $resources->where('category', 'comment_script');
-        $objections = $resources->where('category', 'objection');
+        $objections = $resources->filter(fn($r) => in_array($r->category, ['objection', 'objection_handling']));
+        $guides = $resources->where('category', 'guide');
         $banners = $resources->where('category', 'banner');
         $videoGuides = $resources->where('category', 'video_guide');
         $ebooks = $resources->where('category', 'ebook');
@@ -278,6 +279,7 @@ class AgentPortalController extends Controller
             'inboxScripts',
             'commentScripts',
             'objections',
+            'guides',
             'banners',
             'videoGuides',
             'ebooks'
