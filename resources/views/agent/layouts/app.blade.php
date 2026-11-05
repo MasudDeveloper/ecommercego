@@ -244,6 +244,34 @@
             font-weight: 700;
         }
 
+        /* Modern Tier Badges */
+        .tier-badge-bronze {
+            background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+        }
+        .tier-badge-silver {
+            background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+        }
+        .tier-badge-gold {
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+        }
+        .tier-badge-diamond {
+            background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(79, 70, 229, 0.4);
+        }
+        .tier-badge-legend {
+            background: linear-gradient(135deg, #0f172a 0%, #7c3aed 100%) !important;
+            color: #fbbf24 !important;
+            border: 1px solid rgba(251, 191, 36, 0.5) !important;
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+        }
+
         /* Modern Card Styling */
         .stat-card {
             background: #ffffff;
