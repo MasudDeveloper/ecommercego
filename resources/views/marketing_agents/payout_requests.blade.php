@@ -170,7 +170,7 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label">{{ __('অ্যাডমিন নোট (ঐচ্ছিক)') }}</label>
-                                                                <input type="text" name="admin_note" class="form-control" placeholder="যেমন: সেন্ট মানি ফি সহ প্রদান করা হয়েছে">
+                                                                <input type="text" name="admin_note" class="form-control" placeholder="যেমন: সফলভাবে পেমেন্ট প্রদান করা হয়েছে">
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">

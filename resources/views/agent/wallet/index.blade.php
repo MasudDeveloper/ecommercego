@@ -386,7 +386,7 @@
                     <!-- Note -->
                     <div class="mb-3">
                         <label class="form-label">{{ __('নোট (ঐচ্ছিক)') }}</label>
-                        <input type="text" name="notes" class="form-control" placeholder="যেমন: সেন্ট মানি ফি সহ দিবেন">
+                        <input type="text" name="notes" class="form-control" placeholder="যেমন: জরুরি প্রসেস করার অনুরোধ / কোনো বিশেষ তথ্য থাকলে লিখুন">
                     </div>
                 </div>
                 <div class="modal-footer border-top p-3">
