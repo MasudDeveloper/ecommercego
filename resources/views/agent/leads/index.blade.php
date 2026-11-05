@@ -14,7 +14,7 @@
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
     }
     .crm-status-pill {
-        padding: 6px 14px;
+        padding: 7px 16px;
         border-radius: 50px;
         font-size: 13px;
         font-weight: 700;
@@ -22,8 +22,24 @@
         transition: all 0.2s ease;
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        border: 1px solid transparent;
+        gap: 8px;
+        background: #f8fafc;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+    }
+    .crm-status-pill:hover {
+        background: #f1f5f9;
+        color: #1e293b;
+    }
+    .crm-status-pill.active {
+        background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+        color: #ffffff !important;
+        border-color: #4338ca !important;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3) !important;
+    }
+    .crm-status-pill.active .badge {
+        background: #ffffff !important;
+        color: #4338ca !important;
     }
     .crm-table-card {
         background: #ffffff;
@@ -33,23 +49,43 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
     .btn-whatsapp-direct {
-        background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+        background: linear-gradient(135deg, #25d366 0%, #128c7e 100%) !important;
         color: #ffffff !important;
-        border: 0;
-        font-weight: 700;
-        padding: 4px 12px;
-        border-radius: 50px;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 12px;
-        box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
-        transition: all 0.2s ease;
+        border: 0 !important;
+        font-weight: 700 !important;
+        padding: 5px 12px !important;
+        border-radius: 50px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        font-size: 12px !important;
+        box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3) !important;
+        transition: all 0.2s ease !important;
+        text-decoration: none !important;
     }
     .btn-whatsapp-direct:hover {
-        opacity: 0.95;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+        opacity: 0.95 !important;
+        color: #ffffff !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.45) !important;
+    }
+    .btn-page-visit {
+        background: #eff6ff !important;
+        color: #2563eb !important;
+        border: 1px solid #bfdbfe !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        padding: 4px 10px !important;
+        border-radius: 50px !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        transition: all 0.2s ease !important;
+    }
+    .btn-page-visit:hover {
+        background: #2563eb !important;
+        color: #ffffff !important;
     }
 </style>
 @endpush
@@ -83,34 +119,34 @@
     <div class="row align-items-center g-3">
         <div class="col-xl-9 col-lg-8">
             <div class="d-flex flex-wrap gap-2">
-                <a href="{{ route('agent.leads') }}" class="crm-status-pill {{ !request('status') ? 'bg-primary text-white shadow-sm' : 'bg-light text-muted border' }}">
+                <a href="{{ route('agent.leads') }}" class="crm-status-pill {{ !request('status') ? 'active' : '' }}">
                     <span>সকল লিড</span>
-                    <span class="badge {{ !request('status') ? 'bg-white text-primary' : 'bg-secondary text-white' }} rounded-pill">{{ $counts['all'] }}</span>
+                    <span class="badge rounded-pill" style="{{ !request('status') ? 'background: #ffffff; color: #4338ca;' : 'background: #e2e8f0; color: #475569;' }}">{{ $counts['all'] }}</span>
                 </a>
 
-                <a href="{{ route('agent.leads', ['status' => 'new']) }}" class="crm-status-pill {{ request('status') == 'new' ? 'bg-warning text-dark shadow-sm' : 'bg-light text-muted border' }}">
+                <a href="{{ route('agent.leads', ['status' => 'new']) }}" class="crm-status-pill {{ request('status') == 'new' ? 'active' : '' }}">
                     <span>নতুন লিড</span>
-                    <span class="badge {{ request('status') == 'new' ? 'bg-white text-dark' : 'bg-warning text-dark' }} rounded-pill">{{ $counts['new'] }}</span>
+                    <span class="badge rounded-pill" style="{{ request('status') == 'new' ? 'background: #ffffff; color: #4338ca;' : 'background: #fef3c7; color: #92400e;' }}">{{ $counts['new'] }}</span>
                 </a>
 
-                <a href="{{ route('agent.leads', ['status' => 'contacted']) }}" class="crm-status-pill {{ request('status') == 'contacted' ? 'bg-info text-white shadow-sm' : 'bg-light text-muted border' }}">
+                <a href="{{ route('agent.leads', ['status' => 'contacted']) }}" class="crm-status-pill {{ request('status') == 'contacted' ? 'active' : '' }}">
                     <span>যোগাযোগ হয়েছে</span>
-                    <span class="badge {{ request('status') == 'contacted' ? 'bg-white text-info' : 'bg-info text-white' }} rounded-pill">{{ $counts['contacted'] }}</span>
+                    <span class="badge rounded-pill" style="{{ request('status') == 'contacted' ? 'background: #ffffff; color: #4338ca;' : 'background: #e0f2fe; color: #075985;' }}">{{ $counts['contacted'] }}</span>
                 </a>
 
-                <a href="{{ route('agent.leads', ['status' => 'trial_started']) }}" class="crm-status-pill {{ request('status') == 'trial_started' ? 'bg-dark text-white shadow-sm' : 'bg-light text-muted border' }}">
+                <a href="{{ route('agent.leads', ['status' => 'trial_started']) }}" class="crm-status-pill {{ request('status') == 'trial_started' ? 'active' : '' }}">
                     <span>ট্রায়াল শুরু</span>
-                    <span class="badge {{ request('status') == 'trial_started' ? 'bg-white text-dark' : 'bg-dark text-white' }} rounded-pill">{{ $counts['trial_started'] }}</span>
+                    <span class="badge rounded-pill" style="{{ request('status') == 'trial_started' ? 'background: #ffffff; color: #4338ca;' : 'background: #f3e8ff; color: #6b21a8;' }}">{{ $counts['trial_started'] }}</span>
                 </a>
 
-                <a href="{{ route('agent.leads', ['status' => 'converted']) }}" class="crm-status-pill {{ request('status') == 'converted' ? 'bg-success text-white shadow-sm' : 'bg-light text-muted border' }}">
+                <a href="{{ route('agent.leads', ['status' => 'converted']) }}" class="crm-status-pill {{ request('status') == 'converted' ? 'active' : '' }}">
                     <span>কনভার্টেড 🎉</span>
-                    <span class="badge {{ request('status') == 'converted' ? 'bg-white text-success' : 'bg-success text-white' }} rounded-pill">{{ $counts['converted'] }}</span>
+                    <span class="badge rounded-pill" style="{{ request('status') == 'converted' ? 'background: #ffffff; color: #4338ca;' : 'background: #dcfce7; color: #166534;' }}">{{ $counts['converted'] }}</span>
                 </a>
 
-                <a href="{{ route('agent.leads', ['status' => 'follow_up']) }}" class="crm-status-pill {{ request('status') == 'follow_up' ? 'bg-secondary text-white shadow-sm' : 'bg-light text-muted border' }}">
+                <a href="{{ route('agent.leads', ['status' => 'follow_up']) }}" class="crm-status-pill {{ request('status') == 'follow_up' ? 'active' : '' }}">
                     <span>ফলো-আপ</span>
-                    <span class="badge {{ request('status') == 'follow_up' ? 'bg-white text-secondary' : 'bg-secondary text-white' }} rounded-pill">{{ $counts['follow_up'] }}</span>
+                    <span class="badge rounded-pill" style="{{ request('status') == 'follow_up' ? 'background: #ffffff; color: #4338ca;' : 'background: #ffedd5; color: #9a3412;' }}">{{ $counts['follow_up'] }}</span>
                 </a>
             </div>
         </div>
@@ -136,17 +172,16 @@
 <div class="crm-table-card">
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover align-middle mb-0" style="min-width: 900px;">
                 <thead class="bg-light">
                     <tr>
-                        <th class="ps-4">{{ __('শপ ও ওনারের বিবরণ') }}</th>
-                        <th>{{ __('মোবাইল ও হোয়াটসঅ্যাপ') }}</th>
-                        <th>{{ __('ক্যাটাগরি') }}</th>
-                        <th>{{ __('ফেসবুক পেইজ') }}</th>
-                        <th>{{ __('স্ট্যাটাস') }}</th>
-                        <th>{{ __('ফলো-আপ তারিখ') }}</th>
-                        <th>{{ __('নোট') }}</th>
-                        <th class="text-end pe-4">{{ __('অ্যাকশন') }}</th>
+                        <th class="ps-4" style="width: 28%;">{{ __('শপ ও ওনারের বিবরণ') }}</th>
+                        <th style="width: 22%;">{{ __('মোবাইল ও হোয়াটসঅ্যাপ') }}</th>
+                        <th style="width: 12%;">{{ __('ক্যাটাগরি') }}</th>
+                        <th style="width: 13%;">{{ __('ফেসবুক পেইজ') }}</th>
+                        <th style="width: 13%;">{{ __('স্ট্যাটাস') }}</th>
+                        <th style="width: 12%;">{{ __('ফলো-আপ') }}</th>
+                        <th class="text-end pe-4" style="width: 10%;">{{ __('অ্যাকশন') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -154,21 +189,28 @@
                     <tr>
                         <td class="ps-4">
                             <div class="d-flex align-items-center gap-3">
-                                <div class="rounded-3 bg-light-primary text-primary d-flex align-items-center justify-content-center font-weight-bold" style="width: 40px; height: 40px; font-size: 16px;">
+                                <div class="rounded-3 bg-light-primary text-primary d-flex align-items-center justify-content-center font-weight-bold flex-shrink-0" style="width: 40px; height: 40px; font-size: 16px;">
                                     <i class="ti ti-building-store"></i>
                                 </div>
-                                <div>
-                                    <h6 class="mb-0 font-weight-bold text-dark">{{ $lead->shop_name }}</h6>
-                                    @if($lead->owner_name)
-                                        <small class="text-muted"><i class="ti ti-user"></i> {{ $lead->owner_name }}</small>
-                                    @endif
+                                <div class="overflow-hidden">
+                                    <h6 class="mb-0 font-weight-bold text-dark text-truncate">{{ $lead->shop_name }}</h6>
+                                    <div class="d-flex align-items-center gap-2 mt-0.5 text-xs">
+                                        @if($lead->owner_name)
+                                            <span class="text-muted"><i class="ti ti-user"></i> {{ $lead->owner_name }}</span>
+                                        @endif
+                                        @if($lead->notes)
+                                            <span class="text-secondary text-truncate" style="max-width: 180px;" title="{{ $lead->notes }}">
+                                                • {{ $lead->notes }}
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
                                 <span class="font-monospace text-dark font-weight-bold">{{ $lead->phone }}</span>
-                                <a href="{{ $lead->whatsapp_url }}" target="_blank" class="btn-whatsapp-direct" title="হোয়াটসঅ্যাপে রেডিমেড পিচ পাঠান">
+                                <a href="{{ $lead->whatsapp_url }}" target="_blank" class="btn-whatsapp-direct" title="হোয়াটসঅ্যাপে মেসেজ পাঠান">
                                     <i class="ti ti-brand-whatsapp"></i> <span>WhatsApp</span>
                                 </a>
                             </div>
@@ -182,7 +224,7 @@
                         </td>
                         <td>
                             @if($lead->page_url)
-                                <a href="{{ str_starts_with($lead->page_url, 'http') ? $lead->page_url : 'https://' . $lead->page_url }}" target="_blank" class="btn btn-xs btn-outline-primary d-inline-flex align-items-center gap-1 rounded-pill px-2" title="পেইজ ভিজিট করুন">
+                                <a href="{{ str_starts_with($lead->page_url, 'http') ? $lead->page_url : 'https://' . $lead->page_url }}" target="_blank" class="btn-page-visit" title="ফেসবুক পেইজ ভিজিট করুন">
                                     <i class="ti ti-brand-facebook"></i> <span>পেইজ দেখুন</span>
                                 </a>
                             @else
@@ -193,37 +235,28 @@
                             @php
                                 $badge = $lead->status_badge;
                             @endphp
-                            <span class="badge {{ $badge['bg'] }} border px-2 py-1 font-weight-bold">
+                            <span class="badge px-2.5 py-1.5 font-weight-bold" style="{{ $badge['style'] ?? 'background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;' }}">
                                 {{ $badge['label'] }}
                             </span>
                         </td>
                         <td>
                             @if($lead->follow_up_date)
-                                <span class="badge bg-light-warning text-dark font-weight-bold">
-                                    <i class="ti ti-calendar me-1"></i> {{ $lead->follow_up_date->format('d M, Y') }}
+                                <span class="badge bg-light-warning text-dark font-weight-bold" style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a;">
+                                    <i class="ti ti-calendar me-1"></i> {{ $lead->follow_up_date->format('d M') }}
                                 </span>
-                            @else
-                                <span class="text-muted text-xs">-</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if($lead->notes)
-                                <small class="text-muted d-block" style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $lead->notes }}">
-                                    {{ $lead->notes }}
-                                </small>
                             @else
                                 <span class="text-muted text-xs">-</span>
                             @endif
                         </td>
                         <td class="text-end pe-4">
                             <div class="d-inline-flex gap-1">
-                                <button type="button" class="btn btn-sm btn-outline-primary rounded-2" data-bs-toggle="modal" data-bs-target="#editLeadModal{{ $lead->id }}" title="এডিট">
+                                <button type="button" class="btn btn-sm btn-outline-primary rounded-2 px-2 py-1" data-bs-toggle="modal" data-bs-target="#editLeadModal{{ $lead->id }}" title="এডিট">
                                     <i class="ti ti-pencil"></i>
                                 </button>
                                 <form method="POST" action="{{ route('agent.leads.delete', $lead->id) }}" onsubmit="return confirm('আপনি কি এই লিডটি মুছে ফেলতে চান?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-2" title="মুছে ফেলুন">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-2 px-2 py-1" title="মুছে ফেলুন">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </form>

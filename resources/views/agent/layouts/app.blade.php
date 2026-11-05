@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('page-title', 'মার্কেটিং এজেন্ট ড্যাশবোর্ড') - edokanpro</title>
     
-    <!-- Google Fonts: Hind Siliguri (Bengali) + Plus Jakarta Sans / Inter -->
+    <!-- Google Fonts: Hind Siliguri (Bengali) + Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -30,44 +30,64 @@
             --agent-border: #e2e8f0;
         }
 
-        body {
-            font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--agent-body-bg);
-            color: #1e293b;
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            overflow: hidden; /* Prevents global page horizontal and vertical overflow */
+            background-color: var(--agent-body-bg);
+            color: #1e293b;
+            font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Layout Structure */
+        /* SaaS Master Flexbox Layout */
         .agent-layout {
             display: flex;
-            min-height: 100vh;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* Sidebar Styling */
+        /* 1. Left Sidebar Navigation (Fully anchored, cannot be pushed off-screen) */
         .agent-sidebar {
             width: 270px;
+            min-width: 270px;
+            max-width: 270px;
+            height: 100vh;
             background-color: var(--agent-sidebar-bg);
             color: #ffffff;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 1040;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-right: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.08);
+            overflow-y: auto;
+            overflow-x: hidden;
+            flex-shrink: 0;
+            z-index: 1040;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .agent-sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .agent-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
         }
 
         .agent-sidebar-brand {
-            padding: 24px 20px 20px 20px;
+            padding: 22px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
         }
 
         .brand-logo-text {
@@ -87,23 +107,24 @@
 
         .portal-badge {
             font-size: 10px;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 0.8px;
             text-transform: uppercase;
             padding: 3px 8px;
             border-radius: 6px;
-            background: rgba(99, 102, 241, 0.2);
-            color: #a5b4fc;
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: rgba(99, 102, 241, 0.25);
+            color: #c7d2fe;
+            border: 1px solid rgba(99, 102, 241, 0.4);
         }
 
-        /* Sidebar Agent Card */
+        /* Sidebar Agent Profile Card */
         .sidebar-agent-profile {
-            padding: 18px 20px;
-            margin: 14px 16px;
+            padding: 16px;
+            margin: 14px 14px 8px 14px;
             background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
+            flex-shrink: 0;
         }
 
         .agent-avatar-circle {
@@ -118,13 +139,14 @@
             font-size: 18px;
             font-weight: 800;
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+            flex-shrink: 0;
         }
 
-        /* Navigation List */
+        /* Sidebar Menu Links */
         .sidebar-nav-container {
             flex: 1;
+            padding: 8px 12px;
             overflow-y: auto;
-            padding: 10px 14px;
         }
 
         .nav-category-title {
@@ -145,7 +167,7 @@
             border-radius: 10px;
             color: var(--agent-sidebar-text);
             text-decoration: none;
-            font-size: 14.5px;
+            font-size: 14px;
             font-weight: 600;
             transition: all 0.2s ease;
             margin-bottom: 4px;
@@ -154,16 +176,13 @@
         .agent-side-link i {
             font-size: 19px;
             transition: transform 0.2s ease;
+            flex-shrink: 0;
         }
 
         .agent-side-link:hover {
             color: #ffffff;
             background-color: var(--agent-sidebar-hover);
             transform: translateX(3px);
-        }
-
-        .agent-side-link:hover i {
-            transform: scale(1.15);
         }
 
         .agent-side-link.active {
@@ -176,27 +195,39 @@
             color: #ffffff !important;
         }
 
-        /* Sidebar Footer / Wallet Box */
+        /* Sidebar Footer Card */
         .sidebar-footer-card {
-            padding: 16px;
-            margin: 12px 14px 16px 14px;
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(99, 102, 241, 0.05) 100%);
-            border: 1px dashed rgba(99, 102, 241, 0.3);
+            padding: 14px;
+            margin: 10px 14px 14px 14px;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(99, 102, 241, 0.06) 100%);
+            border: 1px dashed rgba(99, 102, 241, 0.35);
             border-radius: 12px;
             text-align: center;
+            flex-shrink: 0;
         }
 
-        /* Main Content Container */
+        /* 2. Main Content Wrapper (Handles all vertical scrolling cleanly) */
         .agent-main-wrapper {
             flex: 1;
-            margin-left: 270px;
+            min-width: 0; /* Prevents overflow from flex child */
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            min-width: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--agent-body-bg);
+            position: relative;
         }
 
-        /* Top Header */
+        .agent-main-wrapper::-webkit-scrollbar {
+            width: 8px;
+        }
+        .agent-main-wrapper::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        /* Top Header Navbar */
         .agent-top-header {
             height: 72px;
             background: #ffffff;
@@ -209,13 +240,14 @@
             top: 0;
             z-index: 1030;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            flex-shrink: 0;
         }
 
         .top-referral-bar {
-            background: #f1f5f9;
-            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            border: 1.5px solid #cbd5e1;
             border-radius: 10px;
-            padding: 6px 12px;
+            padding: 5px 12px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -228,12 +260,13 @@
             border: 0;
             font-size: 13px;
             font-family: monospace;
-            font-weight: 600;
-            color: #334155;
+            font-weight: 700;
+            color: #1e293b;
             width: 100%;
             outline: none;
         }
 
+        /* Rank Pills */
         .rank-pill {
             display: inline-flex;
             align-items: center;
@@ -244,7 +277,6 @@
             font-weight: 700;
         }
 
-        /* Modern Tier Badges */
         .tier-badge-bronze {
             background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
             color: #ffffff !important;
@@ -272,7 +304,7 @@
             box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
         }
 
-        /* Modern Card Styling */
+        /* Stat Cards */
         .stat-card {
             background: #ffffff;
             border: 1px solid var(--agent-border);
@@ -283,18 +315,110 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
         }
 
         .icon-badge {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
+        }
+
+        /* Global Solid High-Contrast Buttons */
+        .btn-primary, .btn-primary:active, .btn-primary:visited {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+            border: 1px solid #4338ca !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 3px 10px rgba(79, 70, 229, 0.25) !important;
+        }
+        .btn-primary:hover, .btn-primary:focus {
+            background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%) !important;
+            border-color: #3730a3 !important;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(79, 70, 229, 0.35) !important;
+        }
+
+        .btn-success, .btn-success:active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            border: 1px solid #059669 !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25) !important;
+        }
+
+        .btn-outline-primary {
+            border: 1.5px solid #4f46e5 !important;
+            color: #4f46e5 !important;
+            background: transparent !important;
+            font-weight: 600 !important;
+        }
+        .btn-outline-primary:hover {
+            background: #4f46e5 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-whatsapp-direct {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%) !important;
+            color: #ffffff !important;
+            border: 0 !important;
+            font-weight: 700 !important;
+            padding: 5px 14px !important;
+            border-radius: 50px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            font-size: 12.5px !important;
+            box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3) !important;
+            text-decoration: none !important;
+        }
+        .btn-whatsapp-direct:hover {
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(37, 211, 102, 0.45) !important;
+        }
+
+        .btn-stat-withdraw {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+            color: #ffffff !important;
+            border: none !important;
+            font-weight: 700 !important;
+            padding: 5px 12px !important;
+            font-size: 12px !important;
+            border-radius: 6px !important;
+            box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3) !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+        }
+        .btn-stat-withdraw:hover {
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.45) !important;
+        }
+
+        .btn-sidebar-withdraw {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+            color: #ffffff !important;
+            border: none !important;
+            font-weight: 700 !important;
+            border-radius: 6px !important;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35) !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .btn-sidebar-withdraw:hover {
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.5) !important;
         }
 
         /* Mobile Backdrop */
@@ -312,13 +436,14 @@
 
         @media (max-width: 991.98px) {
             .agent-sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
                 transform: translateX(-100%);
             }
             .agent-sidebar.show {
                 transform: translateX(0);
-            }
-            .agent-main-wrapper {
-                margin-left: 0;
             }
             .sidebar-backdrop.show {
                 display: block;
@@ -344,7 +469,7 @@
     <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleAgentSidebar()"></div>
 
     <!-- ============================================== -->
-    <!-- MODERN SIDEBAR NAVIGATION                      -->
+    <!-- MODERN SAAS SIDEBAR NAVIGATION                 -->
     <!-- ============================================== -->
     <aside class="agent-sidebar" id="agentSidebar">
         <!-- Brand Header -->
@@ -364,8 +489,8 @@
                 <div class="overflow-hidden">
                     <h6 class="mb-0 text-white font-weight-bold text-truncate" style="font-size: 15px;">{{ $authAgent->name ?? 'Agent' }}</h6>
                     <div class="d-flex align-items-center gap-1 mt-1">
-                        <span class="badge bg-secondary font-monospace text-xs" style="font-size: 11px;">{{ $authAgent->referral_code ?? '' }}</span>
-                        <button type="button" class="btn btn-xs p-0 text-white-50 hover-text-white" onclick="copyTextToClipboard('{{ $authAgent->referral_code ?? '' }}', this)" title="কোড কপি">
+                        <span class="badge bg-secondary font-monospace" style="font-size: 11px;">{{ $authAgent->referral_code ?? '' }}</span>
+                        <button type="button" class="btn btn-xs p-0 text-white-50" onclick="copyTextToClipboard('{{ $authAgent->referral_code ?? '' }}', this)" title="কোড কপি">
                             <i class="ti ti-copy" style="font-size: 13px;"></i>
                         </button>
                     </div>
@@ -382,7 +507,7 @@
             @endif
         </div>
 
-        <!-- Sidebar Navigation Menu -->
+        <!-- Navigation Links -->
         <div class="sidebar-nav-container">
             <p class="nav-category-title">{{ __('প্রধান মেনু') }}</p>
 
@@ -423,17 +548,17 @@
             </a>
         </div>
 
-        <!-- Sidebar Bottom Quick Wallet Widget -->
+        <!-- Sidebar Bottom Wallet Box -->
         <div class="sidebar-footer-card">
             <div class="text-xs text-white-50 mb-1">{{ __('উত্তোলনযোগ্য ব্যালেন্স') }}</div>
             <h5 class="text-warning font-weight-bold mb-2">৳{{ number_format($availableBal, 2) }}</h5>
             <div class="d-flex gap-2">
-                <a href="{{ route('agent.wallet') }}" class="btn btn-xs btn-warning flex-grow-1 font-weight-bold text-dark py-1">
+                <a href="{{ route('agent.wallet') }}" class="btn btn-xs btn-sidebar-withdraw flex-grow-1 font-weight-bold text-white py-1.5">
                     <i class="ti ti-cash me-1"></i> {{ __('উত্তোলন') }}
                 </a>
                 <form method="POST" action="{{ route('agent.logout') }}">
                     @csrf
-                    <button type="submit" class="btn btn-xs btn-outline-danger py-1 px-2" title="লগআউট">
+                    <button type="submit" class="btn btn-xs py-1.5 px-2.5 rounded-2" title="লগআউট" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5;">
                         <i class="ti ti-logout"></i>
                     </button>
                 </form>
@@ -442,7 +567,7 @@
     </aside>
 
     <!-- ============================================== -->
-    <!-- MAIN CONTENT WRAPPER                           -->
+    <!-- MAIN CONTENT CONTAINER                         -->
     <!-- ============================================== -->
     <div class="agent-main-wrapper">
 
@@ -462,7 +587,7 @@
             <div class="top-referral-bar d-none d-md-flex">
                 <i class="ti ti-link text-primary fs-5"></i>
                 <input type="text" id="topHeaderRefLink" value="{{ $authAgent ? $authAgent->referral_url : '' }}" readonly>
-                <button type="button" class="btn btn-xs btn-primary d-flex align-items-center gap-1 text-nowrap px-2" onclick="copyReferralLinkTop(this)">
+                <button type="button" class="btn btn-xs btn-primary d-flex align-items-center gap-1 text-nowrap px-3 py-1" onclick="copyReferralLinkTop(this)">
                     <i class="ti ti-copy"></i> <span>কপি</span>
                 </button>
             </div>
@@ -572,7 +697,7 @@ function toggleAgentSidebar() {
 function copyTextToClipboard(text, btnElement) {
     navigator.clipboard.writeText(text).then(function() {
         var originalHtml = btnElement.innerHTML;
-        btnElement.innerHTML = '<i class="ti ti-check"></i>';
+        btnElement.innerHTML = '<i class="ti ti-check text-success"></i>';
         setTimeout(function() {
             btnElement.innerHTML = originalHtml;
         }, 1500);

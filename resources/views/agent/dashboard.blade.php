@@ -107,7 +107,7 @@
             <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
                 <small class="text-muted text-xs">মিনিমাম পেআউট: ৳৫০০</small>
                 @if($pendingBalance >= 500)
-                    <a href="{{ route('agent.wallet') }}" class="btn btn-xs btn-outline-warning font-weight-bold px-2 py-1 rounded-2">
+                    <a href="{{ route('agent.wallet') }}" class="btn btn-xs btn-stat-withdraw">
                         <i class="ti ti-cash me-1"></i> {{ __('উত্তোলন করুন') }}
                     </a>
                 @else
@@ -197,10 +197,10 @@
                         $prog = $target->progress;
                     @endphp
                     <div class="col-md-6 col-lg-4">
-                        <div class="p-3 rounded-3 border {{ $prog['completed'] ? 'border-success bg-light-success bg-opacity-25' : 'bg-light' }}">
+                        <div class="p-3 rounded-3 border {{ $prog['completed'] ? 'border-success bg-light-success bg-opacity-25' : '' }}" style="background: #ffffff; border-color: #e2e8f0 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h6 class="mb-0 font-weight-bold text-dark">{{ $target->title }}</h6>
-                                <span class="badge bg-success font-weight-bold" style="font-size: 11px;">
+                                <span class="badge font-weight-bold" style="font-size: 11px; background: #dcfce7 !important; color: #166534 !important; border: 1px solid #86efac;">
                                     +৳{{ number_format($target->bonus_amount, 2) }} বোনাস
                                 </span>
                             </div>

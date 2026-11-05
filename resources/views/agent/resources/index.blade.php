@@ -92,28 +92,28 @@
         <button class="toolkit-tab-btn active" id="inbox-tab" data-bs-toggle="pill" data-bs-target="#inbox-pane" type="button" role="tab">
             <i class="ti ti-message-circle fs-5"></i>
             <span>{{ __('ইনবক্স পিচ স্ক্রিপ্ট') }}</span>
-            <span class="badge bg-white text-primary rounded-pill ms-1">{{ $inboxScripts->count() }}</span>
+            <span class="badge rounded-pill ms-1" style="background: #ffffff; color: #4338ca;">{{ $inboxScripts->count() }}</span>
         </button>
     </li>
     <li class="nav-item">
         <button class="toolkit-tab-btn" id="comment-tab" data-bs-toggle="pill" data-bs-target="#comment-pane" type="button" role="tab">
             <i class="ti ti-messages fs-5"></i>
             <span>{{ __('গ্রুপ ও কমেন্ট ফর্মুলা') }}</span>
-            <span class="badge bg-light text-muted rounded-pill ms-1">{{ $commentScripts->count() }}</span>
+            <span class="badge rounded-pill ms-1" style="background: #e2e8f0; color: #475569;">{{ $commentScripts->count() }}</span>
         </button>
     </li>
     <li class="nav-item">
         <button class="toolkit-tab-btn" id="objection-tab" data-bs-toggle="pill" data-bs-target="#objection-pane" type="button" role="tab">
             <i class="ti ti-shield-check fs-5"></i>
             <span>{{ __('আপত্তি হ্যান্ডলিং (Objection FAQ)') }}</span>
-            <span class="badge bg-light text-muted rounded-pill ms-1">{{ $objections->count() }}</span>
+            <span class="badge rounded-pill ms-1" style="background: #e2e8f0; color: #475569;">{{ $objections->count() }}</span>
         </button>
     </li>
     <li class="nav-item">
         <button class="toolkit-tab-btn" id="media-tab" data-bs-toggle="pill" data-bs-target="#media-pane" type="button" role="tab">
             <i class="ti ti-photo-video fs-5"></i>
             <span>{{ __('সোশ্যাল ব্যানার ও ভিডিও') }}</span>
-            <span class="badge bg-light text-muted rounded-pill ms-1">{{ $banners->count() + $videoGuides->count() }}</span>
+            <span class="badge rounded-pill ms-1" style="background: #e2e8f0; color: #475569;">{{ $banners->count() + $videoGuides->count() }}</span>
         </button>
     </li>
 </ul>
@@ -135,7 +135,7 @@
                             <small class="text-muted">ফেসবুক পেজ ও মেসেঞ্জারে সরাসরি ব্যবহারের জন্য</small>
                         </div>
                         @if($res->badge)
-                            <span class="badge bg-primary bg-opacity-10 text-primary font-weight-bold px-3 py-1 rounded-pill" style="font-size: 11px;">
+                            <span class="badge font-weight-bold px-3 py-1 rounded-pill" style="font-size: 11px; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe;">
                                 {{ $res->badge }}
                             </span>
                         @endif

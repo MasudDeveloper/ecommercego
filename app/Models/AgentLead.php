@@ -38,13 +38,41 @@ class AgentLead extends Model
     public function getStatusBadgeAttribute(): array
     {
         return match ($this->status) {
-            'new' => ['label' => 'নতুন লিড', 'bg' => 'bg-amber-100 text-amber-800 border-amber-300'],
-            'contacted' => ['label' => 'মেসেজ/কল দেওয়া হয়েছে', 'bg' => 'bg-blue-100 text-blue-800 border-blue-300'],
-            'trial_started' => ['label' => 'ট্রায়াল শুরু করেছে', 'bg' => 'bg-purple-100 text-purple-800 border-purple-300'],
-            'converted' => ['label' => 'সফল সাবস্ক্রিপশন', 'bg' => 'bg-emerald-100 text-emerald-800 border-emerald-300'],
-            'follow_up' => ['label' => 'ফলো-আপ রিমাইন্ডার', 'bg' => 'bg-orange-100 text-orange-800 border-orange-300'],
-            'lost' => ['label' => 'আগ্রহী নয়', 'bg' => 'bg-gray-100 text-gray-700 border-gray-300'],
-            default => ['label' => 'নতুন', 'bg' => 'bg-gray-100 text-gray-800 border-gray-300'],
+            'new' => [
+                'label' => 'নতুন লিড',
+                'bg' => 'crm-badge-new',
+                'style' => 'background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;',
+            ],
+            'contacted' => [
+                'label' => 'মেসেজ/কল হয়েছে',
+                'bg' => 'crm-badge-contacted',
+                'style' => 'background: #e0f2fe; color: #075985; border: 1px solid #bae6fd;',
+            ],
+            'trial_started' => [
+                'label' => 'ট্রায়াল শুরু করেছে',
+                'bg' => 'crm-badge-trial',
+                'style' => 'background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff;',
+            ],
+            'converted' => [
+                'label' => 'কনভার্টেড 🎉',
+                'bg' => 'crm-badge-converted',
+                'style' => 'background: #dcfce7; color: #166534; border: 1px solid #86efac;',
+            ],
+            'follow_up' => [
+                'label' => 'ফলো-আপ রিমাইন্ডার',
+                'bg' => 'crm-badge-followup',
+                'style' => 'background: #ffedd5; color: #9a3412; border: 1px solid #fdba74;',
+            ],
+            'lost' => [
+                'label' => 'আগ্রহী নয়',
+                'bg' => 'crm-badge-lost',
+                'style' => 'background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;',
+            ],
+            default => [
+                'label' => 'নতুন',
+                'bg' => 'crm-badge-new',
+                'style' => 'background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;',
+            ],
         };
     }
 

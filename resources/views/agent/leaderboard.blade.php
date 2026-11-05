@@ -305,10 +305,10 @@
 
         <div class="col-md-4 text-md-end">
             <div class="d-inline-flex align-items-center gap-2">
-                <span class="rank-pill {{ $currentAgent->rank_details['badge_class'] }} shadow-sm">
+                <span class="rank-pill shadow-sm" style="{{ $currentAgent->rank_details['badge_style'] ?? '' }}">
                     {{ $currentAgent->rank_details['badge'] }} {{ $currentAgent->rank_details['name'] }}
                 </span>
-                <a href="{{ route('agent.dashboard') }}" class="btn btn-sm btn-light font-weight-bold text-primary px-3 rounded-pill shadow-sm">
+                <a href="{{ route('agent.dashboard') }}" class="btn btn-sm font-weight-bold px-3 py-1.5 rounded-pill shadow-sm" style="background: #ffffff !important; color: #4338ca !important; border: 1px solid #ffffff;">
                     <i class="ti ti-link me-1"></i> {{ __('রেফারেল লিংক') }}
                 </a>
             </div>
@@ -330,7 +330,7 @@
             <div class="podium-avatar podium-avatar-2">
                 {{ strtoupper(substr($topThree[1]->name, 0, 1)) }}
             </div>
-            <span class="podium-badge-ribbon bg-secondary text-white shadow-sm">
+            <span class="podium-badge-ribbon shadow-sm" style="background: linear-gradient(135deg, #475569 0%, #334155 100%) !important; color: #ffffff !important;">
                 🥈 ২য় স্থান
             </span>
         </div>
@@ -340,7 +340,7 @@
         </h5>
 
         <div class="mb-2">
-            <span class="badge {{ $topThree[1]->rank_details['badge_class'] }}" style="font-size: 11px;">
+            <span class="badge" style="{{ $topThree[1]->rank_details['badge_style'] ?? '' }} font-size: 11px; padding: 4px 10px; border-radius: 20px;">
                 {{ $topThree[1]->rank_details['badge'] }} {{ $topThree[1]->rank_details['name'] }}
             </span>
         </div>
@@ -366,7 +366,7 @@
             <div class="podium-avatar podium-avatar-1">
                 {{ strtoupper(substr($topThree[0]->name, 0, 1)) }}
             </div>
-            <span class="podium-badge-ribbon bg-warning text-dark font-weight-bold shadow">
+            <span class="podium-badge-ribbon shadow-sm" style="background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(180, 83, 9, 0.4);">
                 🥇 চ্যাম্পিয়ন (#১)
             </span>
         </div>
@@ -376,7 +376,7 @@
         </h4>
 
         <div class="mb-2">
-            <span class="badge {{ $topThree[0]->rank_details['badge_class'] }}" style="font-size: 11px;">
+            <span class="badge" style="{{ $topThree[0]->rank_details['badge_style'] ?? '' }} font-size: 11px; padding: 4px 10px; border-radius: 20px;">
                 {{ $topThree[0]->rank_details['badge'] }} {{ $topThree[0]->rank_details['name'] }}
             </span>
         </div>
@@ -384,7 +384,7 @@
         <div class="podium-stand podium-stand-1">
             <div>
                 <small class="text-muted text-xs d-block font-weight-bold">পেইড কনভার্সন</small>
-                <span class="fs-4 font-weight-bold text-warning">🔥 {{ $topThree[0]->conversions }} টি</span>
+                <span class="fs-4 font-weight-bold text-dark">🔥 {{ $topThree[0]->conversions }} টি</span>
             </div>
             <div class="border-start border-warning ps-3">
                 <small class="text-muted text-xs d-block font-weight-bold">মোট আয়</small>
@@ -401,7 +401,7 @@
             <div class="podium-avatar podium-avatar-3">
                 {{ strtoupper(substr($topThree[2]->name, 0, 1)) }}
             </div>
-            <span class="podium-badge-ribbon bg-amber-700 text-white shadow-sm" style="background: #b45309;">
+            <span class="podium-badge-ribbon shadow-sm" style="background: linear-gradient(135deg, #92400e 0%, #78350f 100%) !important; color: #ffffff !important;">
                 🥉 ৩য় স্থান
             </span>
         </div>
@@ -411,7 +411,7 @@
         </h5>
 
         <div class="mb-2">
-            <span class="badge {{ $topThree[2]->rank_details['badge_class'] }}" style="font-size: 11px;">
+            <span class="badge" style="{{ $topThree[2]->rank_details['badge_style'] ?? '' }} font-size: 11px; padding: 4px 10px; border-radius: 20px;">
                 {{ $topThree[2]->rank_details['badge'] }} {{ $topThree[2]->rank_details['name'] }}
             </span>
         </div>
@@ -491,7 +491,7 @@
                                     <h6 class="mb-0 font-weight-bold text-dark">
                                         {{ $row->name }}
                                         @if($row->is_current)
-                                            <span class="badge bg-primary ms-1" style="font-size: 10px;">✨ আপনি</span>
+                                            <span class="badge ms-1" style="font-size: 10px; background: #4f46e5; color: #ffffff;">✨ আপনি</span>
                                         @endif
                                     </h6>
                                     <small class="text-muted font-monospace">{{ $row->referral_code }}</small>
@@ -499,12 +499,12 @@
                             </div>
                         </td>
                         <td>
-                            <span class="badge {{ $row->rank_details['badge_class'] }}" style="font-size: 12px; padding: 5px 12px; border-radius: 20px;">
+                            <span class="badge" style="{{ $row->rank_details['badge_style'] ?? '' }} font-size: 12px; padding: 5px 12px; border-radius: 20px;">
                                 {{ $row->rank_details['badge'] }} {{ $row->rank_details['name'] }}
                             </span>
                         </td>
                         <td class="text-center">
-                            <span class="badge bg-primary bg-opacity-10 text-primary font-weight-bold px-3 py-2" style="font-size: 14px; border-radius: 8px;">
+                            <span class="badge font-weight-bold px-3 py-2" style="background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; font-size: 13.5px; border-radius: 8px;">
                                 🔥 {{ $row->conversions }} টি
                             </span>
                         </td>

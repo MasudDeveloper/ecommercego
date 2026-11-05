@@ -801,6 +801,17 @@ Route::middleware(['web'])->group(function () {
   // ==========================================
   // Marketing Agent Portal & Ecosystem Routes
   // ==========================================
+  if (config('app.env') === 'local') {
+      Route::get('agent/dev-login/{id?}', function ($id = 1) {
+          $agent = \App\Models\MarketingAgent::find($id) ?? \App\Models\MarketingAgent::first();
+          if ($agent) {
+              \Illuminate\Support\Facades\Auth::guard('agent')->login($agent);
+              return redirect()->route('agent.dashboard');
+          }
+          return 'No agent found';
+      })->name('agent.dev-login');
+  }
+
   Route::get('agent/login', [\App\Http\Controllers\Agent\AgentAuthController::class, 'showLoginForm'])->name('agent.login');
   Route::post('agent/login', [\App\Http\Controllers\Agent\AgentAuthController::class, 'login'])->name('agent.login.submit');
 
