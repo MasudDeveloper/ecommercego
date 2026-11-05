@@ -56,6 +56,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 '/duologin',
                 '/agent/login',
                 'agent/login',
+                '/agent/register',
+                'agent/register',
                 'plan-get-Powertranz-status*',
                 'store-get-Powertranz-status*',
                 'campaigns-card-payment/',

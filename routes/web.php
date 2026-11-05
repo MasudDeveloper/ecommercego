@@ -179,6 +179,8 @@ Route::middleware(['web'])->group(function () {
     Route::put('marketing-agents/{id}', [MarketingAgentController::class, 'update'])->name('marketing-agents.update');
     Route::delete('marketing-agents/{id}', [MarketingAgentController::class, 'destroy'])->name('marketing-agents.destroy');
     Route::post('marketing-agents/{id}/toggle-status', [MarketingAgentController::class, 'toggleStatus'])->name('marketing-agents.toggle-status');
+    Route::post('marketing-agents/{id}/approve', [MarketingAgentController::class, 'approveAgent'])->name('marketing-agents.approve');
+    Route::post('marketing-agents/{id}/reject', [MarketingAgentController::class, 'rejectAgent'])->name('marketing-agents.reject');
 
     Route::get('marketing-agents/payout-requests', [MarketingAgentController::class, 'payoutRequests'])->name('marketing-agents.payout-requests');
     Route::post('marketing-agents/payout-requests/{id}/approve', [MarketingAgentController::class, 'approvePayoutRequest'])->name('marketing-agents.payout-requests.approve');
@@ -814,6 +816,8 @@ Route::middleware(['web'])->group(function () {
 
   Route::get('agent/login', [\App\Http\Controllers\Agent\AgentAuthController::class, 'showLoginForm'])->name('agent.login');
   Route::post('agent/login', [\App\Http\Controllers\Agent\AgentAuthController::class, 'login'])->name('agent.login.submit');
+  Route::get('agent/register', [\App\Http\Controllers\Agent\AgentAuthController::class, 'showRegisterForm'])->name('agent.register');
+  Route::post('agent/register', [\App\Http\Controllers\Agent\AgentAuthController::class, 'register'])->name('agent.register.submit');
 
   Route::group(['prefix' => 'agent', 'as' => 'agent.', 'middleware' => ['auth:agent']], function () {
       Route::post('logout', [\App\Http\Controllers\Agent\AgentAuthController::class, 'logout'])->name('logout');

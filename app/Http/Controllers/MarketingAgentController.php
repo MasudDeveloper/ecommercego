@@ -36,6 +36,8 @@ class MarketingAgentController extends Controller
         $pendingPayout = AgentCommission::where('status', 'pending')->selectRaw('SUM(commission_amount + bonus_amount) as total')->value('total') ?? 0;
         $totalPaidOut = AgentCommission::where('status', 'paid')->selectRaw('SUM(commission_amount + bonus_amount) as total')->value('total') ?? 0;
 
+        $pendingAgentsCount = MarketingAgent::where('approval_status', 'pending')->count();
+
         return view('marketing_agents.index', compact(
             'agents',
             'targets',
@@ -43,7 +45,8 @@ class MarketingAgentController extends Controller
             'totalReferredUsers',
             'totalEarned',
             'pendingPayout',
-            'totalPaidOut'
+            'totalPaidOut',
+            'pendingAgentsCount'
         ));
     }
 
@@ -153,6 +156,40 @@ class MarketingAgentController extends Controller
         $msgType = $agent->is_active ? 'success' : 'warning';
 
         return redirect()->back()->with($msgType, "এজেন্ট '{$agent->name}' এর অ্যাকাউন্ট {$statusText} করা হয়েছে।");
+    }
+
+    /**
+     * Approve Agent Registration
+     */
+    public function approveAgent($id)
+    {
+        if (!auth()->check() || auth()->user()->type != 'super admin') {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+
+        $agent = MarketingAgent::findOrFail($id);
+        $agent->approval_status = 'approved';
+        $agent->is_active = true;
+        $agent->save();
+
+        return redirect()->back()->with('success', "এজেন্ট '{$agent->name}' এর অ্যাকাউন্ট সফলভাবে অনুমোদিত (Approved) ও সক্রিয় করা হয়েছে।");
+    }
+
+    /**
+     * Reject Agent Registration
+     */
+    public function rejectAgent($id)
+    {
+        if (!auth()->check() || auth()->user()->type != 'super admin') {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+
+        $agent = MarketingAgent::findOrFail($id);
+        $agent->approval_status = 'rejected';
+        $agent->is_active = false;
+        $agent->save();
+
+        return redirect()->back()->with('warning', "এজেন্ট '{$agent->name}' এর রেজিস্ট্রেশন আবেদন বাতিল (Rejected) করা হয়েছে।");
     }
 
     /**

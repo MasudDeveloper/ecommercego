@@ -27,6 +27,20 @@
 @endsection
 
 @section('content')
+
+@if(isset($pendingAgentsCount) && $pendingAgentsCount > 0)
+    <div class="alert alert-warning d-flex align-items-center justify-content-between p-3 rounded-3 mb-4 shadow-sm" style="background: #fffbeb; border: 1.5px solid #fde68a;">
+        <div class="d-flex align-items-center gap-2">
+            <i class="ti ti-bell-ringing fs-3 text-warning"></i>
+            <div>
+                <strong class="text-dark">{{ $pendingAgentsCount }} জন নতুন এজেন্টের রেজিস্ট্রেশন আবেদন অনুমোদনের অপেক্ষায় রয়েছে!</strong>
+                <div class="text-muted text-xs">নিচের তালিকা থেকে আবেদন দেখে 'অনুমোদন' বাটনে ক্লিক করে সক্রিয় করুন।</div>
+            </div>
+        </div>
+        <span class="badge bg-warning text-dark font-weight-bold px-3 py-1.5 fs-6">{{ $pendingAgentsCount }} টি নতুন আবেদন</span>
+    </div>
+@endif
+
 <div class="row">
     <!-- Quick Metric Cards -->
     <div class="col-lg-3 col-6">
@@ -149,17 +163,45 @@
                                     <small class="text-muted font-monospace">{{ $agent->payout_details ?? $agent->phone }}</small>
                                 </td>
                                 <td>
-                                    @if($agent->is_active)
-                                        <span class="badge bg-success mb-1">{{ __('সক্রিয়') }}</span>
+                                    @if($agent->approval_status === 'pending')
+                                        <span class="badge bg-warning text-dark font-weight-bold mb-1 d-inline-block">
+                                            <i class="ti ti-clock"></i> {{ __('অপেক্ষমান (Pending)') }}
+                                        </span>
+                                        <div class="d-flex gap-1 mt-1">
+                                            <form method="POST" action="{{ route('marketing-agents.approve', $agent->id) }}">
+                                                @csrf
+                                                <button type="submit" class="btn btn-xs btn-success font-weight-bold" title="{{ __('অনুমোদন করুন') }}" onclick="return confirm('আপনি কি এই এজেন্টের অ্যাকাউন্ট অনুমোদন ও সক্রিয় করতে চান?')">
+                                                    <i class="ti ti-check"></i> {{ __('অনুমোদন') }}
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="{{ route('marketing-agents.reject', $agent->id) }}">
+                                                @csrf
+                                                <button type="submit" class="btn btn-xs btn-outline-danger" title="{{ __('বাতিল করুন') }}" onclick="return confirm('আপনি কি এই রেজিস্ট্রেশন আবেদন বাতিল করতে চান?')">
+                                                    <i class="ti ti-x"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @elseif($agent->approval_status === 'rejected')
+                                        <span class="badge bg-secondary mb-1 d-inline-block">{{ __('বাতিলকৃত (Rejected)') }}</span>
+                                        <form method="POST" action="{{ route('marketing-agents.approve', $agent->id) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-xs btn-outline-success" title="{{ __('পুনরায় অনুমোদন করুন') }}">
+                                                <i class="ti ti-check"></i> {{ __('অনুমোদন') }}
+                                            </button>
+                                        </form>
                                     @else
-                                        <span class="badge bg-danger mb-1">{{ __('স্থগিত (Suspended)') }}</span>
+                                        @if($agent->is_active)
+                                            <span class="badge bg-success mb-1">{{ __('সক্রিয়') }}</span>
+                                        @else
+                                            <span class="badge bg-danger mb-1">{{ __('স্থগিত (Suspended)') }}</span>
+                                        @endif
+                                        <form method="POST" action="{{ route('marketing-agents.toggle-status', $agent->id) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-xs {{ $agent->is_active ? 'btn-outline-danger' : 'btn-outline-success' }}" onclick="return confirm('{{ $agent->is_active ? 'আপনি কি এই এজেন্টের অ্যাকাউন্ট স্থগিত (Suspend) করতে চান? স্থগিত করলে সে পোর্টাল লগইন করতে পারবে না।' : 'আপনি কি এই এজেন্টের অ্যাকাউন্ট পুনরায় সক্রিয় করতে চান?' }}')">
+                                                <i class="ti {{ $agent->is_active ? 'ti-user-off' : 'ti-user-check' }}"></i> {{ $agent->is_active ? __('স্থগিত করুন') : __('সক্রিয় করুন') }}
+                                            </button>
+                                        </form>
                                     @endif
-                                    <form method="POST" action="{{ route('marketing-agents.toggle-status', $agent->id) }}">
-                                        @csrf
-                                        <button type="submit" class="btn btn-xs {{ $agent->is_active ? 'btn-outline-danger' : 'btn-outline-success' }}" onclick="return confirm('{{ $agent->is_active ? 'আপনি কি এই এজেন্টের অ্যাকাউন্ট স্থগিত (Suspend) করতে চান? স্থগিত করলে সে পোর্টাল লগইন করতে পারবে না।' : 'আপনি কি এই এজেন্টের অ্যাকাউন্ট পুনরায় সক্রিয় করতে চান?' }}')">
-                                            <i class="ti {{ $agent->is_active ? 'ti-user-off' : 'ti-user-check' }}"></i> {{ $agent->is_active ? __('স্থগিত করুন') : __('সক্রিয় করুন') }}
-                                        </button>
-                                    </form>
                                 </td>
                                 <td class="text-end">
                                     <div class="d-inline-flex gap-1">

@@ -26,6 +26,7 @@ class MarketingAgent extends Authenticatable
         'payment_method',
         'payout_details',
         'is_active',
+        'approval_status',
         'notes',
     ];
 

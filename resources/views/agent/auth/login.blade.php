@@ -108,6 +108,24 @@
             </div>
         @endif
 
+        @if(session('registration_success'))
+            @php $regData = session('registration_success'); @endphp
+            <div class="alert alert-success p-3 mb-4 rounded-3 border-0 shadow-sm" style="background: #f0fdf4; border: 1px solid #bbf7d0;">
+                <div class="d-flex align-items-start gap-2">
+                    <i class="ti ti-circle-check text-success fs-3 flex-shrink-0 mt-0.5"></i>
+                    <div>
+                        <h6 class="font-weight-bold text-success mb-1">🎉 রেজিস্ট্রেশন সফল হয়েছে!</h6>
+                        <p class="text-dark text-xs mb-2">
+                            স্বাগতম <strong>{{ $regData['name'] ?? '' }}</strong>! আপনার রেফারেল কোড: <strong class="font-monospace text-primary">{{ $regData['code'] ?? '' }}</strong>।
+                        </p>
+                        <div class="p-2 rounded-2 text-xs" style="background: #ffffff; border: 1px dashed #86efac; color: #166534;">
+                            <i class="ti ti-clock me-1"></i> আপনার অ্যাকাউন্টটি বর্তমানে <strong>অ্যাডমিন অনুমোদনের অপেক্ষায় (Pending Approval)</strong> রয়েছে। সুপার অ্যাডমিন অনুমোদন করলেই আপনি এই মোবাইল নম্বর ও পাসওয়ার্ড দিয়ে লগইন করতে পারবেন।
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         @if($errors->any())
             <div class="alert alert-danger py-2 px-3 mb-3 text-sm rounded-3">
                 @foreach($errors->all() as $err)
@@ -155,8 +173,11 @@
             </button>
         </form>
 
-        <div class="info-box">
-            <i class="ti ti-info-circle text-primary me-1"></i> <strong>নতুন এজেন্ট অনবোর্ডিং:</strong> এজেন্ট অ্যাকাউন্ট কেবল এডমিন প্যানেল থেকে তৈরি ও সক্রিয় করা হয়। একাউন্টের জন্য কর্তৃপক্ষের সাথে যোগাযোগ করুন।
+        <div class="text-center mt-4 pt-3 border-top">
+            <p class="text-muted text-sm mb-2">আপনি কি মার্কেটিং পার্টনার হিসেবে যুক্ত হতে চান?</p>
+            <a href="{{ route('agent.register') }}" class="btn btn-outline-primary btn-sm px-4 py-2 rounded-pill font-weight-bold d-inline-flex align-items-center gap-2">
+                <i class="ti ti-user-plus"></i> {{ __('নতুন এজেন্ট রেজিস্ট্রেশন করুন') }}
+            </a>
         </div>
     </div>
 </div>
