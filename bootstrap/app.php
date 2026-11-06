@@ -73,5 +73,13 @@ return Application::configure(basePath: dirname(__DIR__))
         );
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->respond(function (\Symfony\Component\HttpFoundation\Response $response, \Throwable $exception, \Illuminate\Http\Request $request) {
+            if ($response->getStatusCode() === 419) {
+                if ($request->is('agent/*') || $request->is('agent') || str_contains($request->header('referer', ''), 'agent')) {
+                    return redirect()->route('agent.login')->with('info', 'আপনার সেশনের সময় শেষ হয়ে গেছে। অনুগ্রহ করে আবার লগইন করুন।');
+                }
+                return back()->with('info', 'আপনার সেশনের সময় শেষ হয়ে গেছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+            }
+            return $response;
+        });
     })->create();

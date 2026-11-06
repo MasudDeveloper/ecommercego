@@ -29,9 +29,10 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof TokenMismatchException || ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException && $exception->getStatusCode() == 419)) {
+            \Illuminate\Support\Facades\Log::info('419 caught on path: ' . $request->path() . ' agent_match: ' . ($request->is('agent/*') || $request->is('agent') ? 'yes' : 'no'));
             // If request is from Agent portal
             if ($request->is('agent/*') || $request->is('agent')) {
-                return redirect()->route('agent.login')->with('info', 'আপনার সেশনের সময় শেষ হয়ে গেছে। অনুগ্রহ করে আবার লগইন করুন।');
+                return redirect()->to(url('/agent/login'))->with('info', 'আপনার সেশনের সময় শেষ হয়ে গেছে। অনুগ্রহ করে আবার লগইন করুন।');
             }
             // Check if the request is for the customer store
             if ($request->is('{storeSlug}/*') || $request->is('{storeSlug}')) {

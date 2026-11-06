@@ -194,12 +194,12 @@
                                 </div>
                                 <div class="overflow-hidden">
                                     <h6 class="mb-0 font-weight-bold text-dark text-truncate">{{ $lead->shop_name }}</h6>
-                                    <div class="d-flex align-items-center gap-2 mt-0.5 text-xs">
+                                    <div class="d-flex align-items-center gap-2 mt-1 text-xs">
                                         @if($lead->owner_name)
-                                            <span class="text-muted"><i class="ti ti-user"></i> {{ $lead->owner_name }}</span>
+                                            <span class="font-weight-bold" style="color: #334155 !important;"><i class="ti ti-user me-0.5"></i> {{ $lead->owner_name }}</span>
                                         @endif
                                         @if($lead->notes)
-                                            <span class="text-secondary text-truncate" style="max-width: 180px;" title="{{ $lead->notes }}">
+                                            <span class="text-truncate font-weight-medium" style="max-width: 240px; color: #475569 !important;" title="{{ $lead->notes }}">
                                                 • {{ $lead->notes }}
                                             </span>
                                         @endif
@@ -209,7 +209,7 @@
                         </td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                <span class="font-monospace text-dark font-weight-bold">{{ $lead->phone }}</span>
+                                <span class="font-monospace text-dark font-weight-bold" style="font-size: 13.5px;">{{ $lead->phone }}</span>
                                 <a href="{{ $lead->whatsapp_url }}" target="_blank" class="btn-whatsapp-direct" title="হোয়াটসঅ্যাপে মেসেজ পাঠান">
                                     <i class="ti ti-brand-whatsapp"></i> <span>WhatsApp</span>
                                 </a>
@@ -217,7 +217,7 @@
                         </td>
                         <td>
                             @if($lead->category)
-                                <span class="badge bg-light text-dark border">{{ $lead->category }}</span>
+                                <span class="badge font-weight-semibold px-2 py-1" style="background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1;">{{ $lead->category }}</span>
                             @else
                                 <span class="text-muted text-xs">-</span>
                             @endif

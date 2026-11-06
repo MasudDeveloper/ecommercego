@@ -1,7 +1,7 @@
 @extends('front_end.layouts.app')
 
 @section('page-title')
-    {{ $store->name ?? 'Islamic Lifestyle & Quran Lamp' }}
+    {{ $store->name ?? 'Digital Quran Speaker & Touch Moon Lamp Combo' }}
 @endsection
 
 @section('content')
@@ -19,19 +19,20 @@
     };
 
     $mainProduct = $all_products->first() ?? $bestseller_products->first() ?? null;
-    $productTitle = $mainProduct ? $mainProduct->name : ($themeSettings['hero_title'] ?? 'রিমোট কন্ট্রোল ৭ কালার টাচ ডিজিটাল কুরআন স্পিকার ও মুন ল্যাম্প');
-    $productDesc = $mainProduct ? strip_tags($mainProduct->description) : ($themeSettings['hero_subtitle'] ?? '১৮ জন বিশ্ববিখ্যাত ক্বারীর সুরে পূর্ণাঙ্গ কুরআন তেলাওয়াত, বাংলা তাফসীর ও অনুবাদ, সহিহ বুখারী, রিয়াযুস সালেহীন ও দোয়া সমূহ।');
+    $productTitle = $themeSettings['hero_title'] ?? 'রিমোট কন্ট্রোল ৭ কালার টাচ ডিজিটাল কুরআন স্পিকার ও মুন ল্যাম্প';
+    $productDesc = $themeSettings['hero_subtitle'] ?? '১৮ জন বিশ্বখ্যাত ক্বারীর সম্পূর্ণ কুরআন তেলাওয়াত, বাংলা তাফসির ও রিমোট কন্ট্রোল। ৭ কালার টাচ এলইডি নাইট ল্যাম্প। সাথে পাচ্ছেন একটি প্রিমিয়াম ভেলভেট জায়নামাজ সম্পূর্ণ উপহার!';
     
-    $regularPrice = $mainProduct ? $toNum($mainProduct->price, 2400) : $toNum($themeSettings['hero_regular_price'] ?? 2400, 2400);
-    $offerPrice = $mainProduct ? $toNum($mainProduct->sale_price ?? $mainProduct->price, 1650) : $toNum($themeSettings['hero_offer_price'] ?? 1650, 1650);
+    $regularPrice = $toNum($themeSettings['hero_regular_price'] ?? 2450, 2450);
+    $offerPrice = $toNum($themeSettings['hero_offer_price'] ?? 1650, 1650);
     
-    if ($regularPrice <= 0) $regularPrice = 2400;
+    if ($regularPrice <= 0) $regularPrice = 2450;
     if ($offerPrice <= 0) $offerPrice = 1650;
-    if ($offerPrice > $regularPrice) {
-        $offerPrice = round($regularPrice * 0.75);
-    }
     
-    $productImg = ($mainProduct && !empty($mainProduct->cover_image_url)) ? get_file($mainProduct->cover_image_url) : asset('themes/' . $currentTheme . '/assets/images/product-01.png');
+    $productImg1 = asset('themes/' . $currentTheme . '/assets/images/product-01.png');
+    $productImg2 = asset('themes/' . $currentTheme . '/assets/images/product-02.png');
+    $productImg3 = asset('themes/' . $currentTheme . '/assets/images/product-03.png');
+    $aboutImg = asset('themes/' . $currentTheme . '/assets/images/about-image.png');
+
     $dhakaCharge = (int)$toNum($themeSettings['delivery_charge_dhaka'] ?? 70, 70);
     $outsideCharge = (int)$toNum($themeSettings['delivery_charge_outside'] ?? 130, 130);
 
@@ -47,288 +48,444 @@
     }
 @endphp
 
-<main class="space-y-12 sm:space-y-20 bg-[#06241b] text-emerald-50">
+<main class="space-y-12 sm:space-y-20 bg-emerald-50/50 text-stone-900 font-sans">
 
-    <!-- 1. ISLAMIC MIHRAB ARCH HERO -->
-    <section class="relative pt-10 sm:pt-16 pb-16 bg-gradient-to-b from-[#06241b] via-[#093528] to-[#06241b] text-emerald-50 border-b border-yellow-600/30">
+    <!-- 1. SPIRITUAL ISLAMIC EDITORIAL HERO -->
+    <section class="relative pt-10 sm:pt-16 pb-16 bg-gradient-to-b from-emerald-100/70 via-teal-50/40 to-white border-b border-emerald-200">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center max-w-3xl mx-auto space-y-6">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-900 border border-yellow-500/50 text-yellow-300 text-xs font-bold">
-                    <i class="fas fa-moon text-yellow-400"></i>
-                    <span>{{ $themeSettings['hero_badge'] ?? '🌙 ডিজিটাল কুরআন লাইফস্টাইল • পরিবার ও সন্তানদের জন্য সেরা উপহার' }}</span>
-                </div>
-
-                <h1 class="text-3xl sm:text-5xl font-black text-white leading-tight font-serif">
-                    {{ $productTitle }}
-                </h1>
-
-                <p class="text-emerald-200/90 text-sm sm:text-base leading-relaxed">
-                    {{ $productDesc }}
-                </p>
-
-                <!-- Arch Card -->
-                <div class="p-6 rounded-3xl bg-emerald-900/60 border-2 border-yellow-600/40 shadow-2xl max-w-md mx-auto">
-                    <img src="{{ $productImg }}" alt="{{ $productTitle }}" class="w-full h-72 object-contain drop-shadow-xl mb-4">
-                    <div class="flex items-center justify-around border-t border-yellow-600/30 pt-4">
-                        <div>
-                            <span class="text-xs text-emerald-300 block">রেগুলার মূল্য</span>
-                            <span class="text-lg font-bold text-emerald-400 line-through">৳{{ number_format($regularPrice) }}</span>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left Portrait with Islamic gold frame -->
+                <div class="lg:col-span-5 flex justify-center order-2 lg:order-1">
+                    <div class="relative p-3 bg-white rounded-3xl shadow-2xl border-4 border-emerald-400 max-w-sm w-full">
+                        <div class="absolute -top-3.5 -right-3.5 bg-gradient-to-r from-emerald-700 to-teal-800 text-white font-extrabold text-xs uppercase px-3.5 py-1.5 rounded-full shadow-lg tracking-wider animate-pulse">
+                            PREMIUM ISLAMIC GIFT
                         </div>
-                        <div>
-                            <span class="text-xs text-yellow-400 font-bold block">বরকতপূর্ণ অফার</span>
-                            <span class="text-3xl font-black text-yellow-300">৳{{ number_format($offerPrice) }}</span>
+                        <img src="{{ $productImg1 }}" alt="{{ $productTitle }}" class="w-full h-[380px] object-cover rounded-2xl shadow-inner">
+                        <div class="mt-3 text-center text-xs font-serif text-emerald-950 font-bold bg-emerald-50 py-2 px-3 rounded-xl border border-emerald-200">
+                            ✦ ১৮ জন ক্বারীর কুরআন তেলাওয়াত • ফ্রি ভেলভেট জায়নামাজ ✦
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    <a href="#fast-order-form" class="pulse-btn inline-flex items-center gap-3 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-emerald-950 font-black text-lg px-8 py-4 rounded-xl shadow-xl transition">
-                        <i class="fas fa-hand-holding-heart text-xl"></i>
-                        <span>{{ $themeSettings['hero_button_text'] ?? '👉 এখনই অর্ডার করুন (ক্যাশ অন ডেলিভারি)' }}</span>
-                    </a>
+                <!-- Right Editorial Text -->
+                <div class="lg:col-span-7 space-y-5 text-center lg:text-left order-1 lg:order-2">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-950 text-xs sm:text-sm font-black border border-emerald-300 shadow-sm">
+                        <i class="fas fa-mosque text-emerald-700"></i>
+                        <span>{{ $themeSettings['hero_badge'] ?? '🌙 পবিত্র ঘরের বরকতময় ডিজিটাল উপহার' }}</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-black text-emerald-950 leading-tight">
+                        {{ $productTitle }}
+                    </h1>
+
+                    <p class="text-stone-700 text-base sm:text-lg leading-relaxed font-medium">
+                        {{ $productDesc }}
+                    </p>
+
+                    <!-- Urgent Countdown Timer -->
+                    <div class="p-3.5 bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-900 text-white rounded-2xl shadow-md flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center gap-2 font-bold text-xs sm:text-sm">
+                            <span class="inline-block w-2.5 h-2.5 bg-yellow-300 rounded-full animate-ping"></span>
+                            <span>🔥 বিশেষ হাদিয়া অফার শেষ হতে বাকি:</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-xs sm:text-sm font-black text-stone-900 font-mono">
+                            <span class="bg-white px-2 py-1 rounded shadow text-emerald-800 font-bold" id="islamic_timer_hours">06</span> :
+                            <span class="bg-white px-2 py-1 rounded shadow text-emerald-800 font-bold" id="islamic_timer_minutes">34</span> :
+                            <span class="bg-white px-2 py-1 rounded shadow text-emerald-800 font-bold" id="islamic_timer_seconds">18</span>
+                        </div>
+                    </div>
+
+                    <!-- Price Badge -->
+                    <div class="inline-flex flex-wrap items-center gap-6 p-4 rounded-2xl bg-white border-2 border-emerald-300 shadow-md">
+                        <div>
+                            <span class="text-xs text-stone-500 block font-bold uppercase">রেগুলার হাদিয়া</span>
+                            <span class="text-xl font-extrabold text-stone-400 line-through">৳{{ number_format($regularPrice) }}</span>
+                        </div>
+                        <div class="h-8 w-px bg-emerald-200 hidden sm:block"></div>
+                        <div>
+                            <span class="text-xs text-emerald-900 font-black block uppercase">অফার হাদিয়া</span>
+                            <span class="text-3xl sm:text-4xl font-black text-emerald-800">৳{{ number_format($offerPrice) }}</span>
+                        </div>
+                        <span class="bg-gradient-to-r from-emerald-700 to-teal-700 text-white text-xs font-black px-3.5 py-1.5 rounded-full shadow-sm">
+                            {{ $themeSettings['hero_discount_tag'] ?? '৳৮০০ বিশেষ ছাড়!' }}
+                        </span>
+                    </div>
+
+                    <!-- Bullet Features Checklist -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-left text-xs sm:text-sm text-stone-800 font-bold">
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-emerald-700 text-base"></i> ১৮ জন ক্বারীর পূর্ণ কুরআন ও বাংলা তাফসির</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-emerald-700 text-base"></i> ৭ কালার টাচ নাইট মুন ল্যাম্প</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-emerald-700 text-base"></i> পার্সেল চেক করে ক্যাশ অন ডেলিভারি</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-emerald-700 text-base"></i> সাথে প্রিমিয়াম ভেলভেট জায়নামাজ ফ্রি</div>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <div class="pt-2">
+                        <a href="#fast-order-form" class="pulse-btn inline-flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-800 to-teal-800 hover:from-emerald-900 hover:to-teal-900 text-yellow-300 font-black text-lg px-8 py-4 rounded-xl shadow-xl transition transform hover:-translate-y-0.5 w-full sm:w-auto">
+                            <i class="fas fa-gift text-yellow-300"></i>
+                            <span>{{ $themeSettings['hero_button_text'] ?? '👉 এখনই অর্ডার করুন (ক্যাশ অন ডেলিভারি)' }}</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 2. DISTINCT CATEGORY FEATURES SECTION -->
+    <!-- 2. ISLAMIC FEATURES GALLERY -->
     <section class="max-w-6xl mx-auto px-4">
         <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <span class="text-xs uppercase font-extrabold text-primary tracking-widest">ইসলামিক লাইফস্টাইল ও উপহার</span>
-            <h2 class="text-2xl sm:text-4xl font-black text-white">আমাদের সেরা বিশেষত্ব ও সুযোগ-সুবিধা</h2>
+            <span class="text-xs uppercase font-extrabold text-emerald-800 tracking-widest">আধুনিক প্রযুক্তি ও ইসলামিক জ্ঞান</span>
+            <h2 class="text-2xl sm:text-4xl font-black text-stone-900">ঘরে আনুন প্রশান্তিময় আধ্যাত্মিক পরিবেশ</h2>
+            <p class="text-stone-600 font-medium text-sm">শিশুদের কুরআন শিক্ষা, বয়োবৃদ্ধদের তেলাওয়াত শোনা কিংবা রিমোট কন্ট্রোলে শোবার ঘরকে আলোকিত করার সেরা সঙ্গী</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl border-2 border-emerald-200 overflow-hidden shadow-md group hover:shadow-xl transition">
+                <div class="h-64 overflow-hidden bg-emerald-50 flex items-center justify-center">
+                    <img src="{{ $productImg1 }}" alt="ডিজিটাল কুরআন স্পিকার" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-black text-base text-emerald-950 mb-1">এইচডি সাউন্ড কোয়ালিটি</h3>
+                    <p class="text-xs text-stone-600 font-medium">উচ্চ আওয়াজ ও স্পষ্ট উচ্চারণে কুরআন তেলাওয়াত ও বাংলা তরজমা</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border-2 border-emerald-200 overflow-hidden shadow-md group hover:shadow-xl transition">
+                <div class="h-64 overflow-hidden bg-emerald-50 flex items-center justify-center">
+                    <img src="{{ $productImg2 }}" alt="৭ কালার টাচ নাইট ল্যাম্প" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-black text-base text-emerald-950 mb-1">৭ কালার সফট মুন লাইট</h3>
+                    <p class="text-xs text-stone-600 font-medium">হাতে স্পর্শ করেই লাইটের কালার ও ব্রাইটনেস পরিবর্তন করার সুবিধা</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border-2 border-emerald-200 overflow-hidden shadow-md group hover:shadow-xl transition">
+                <div class="h-64 overflow-hidden bg-emerald-50 flex items-center justify-center">
+                    <img src="{{ $productImg3 }}" alt="রিমোট কন্ট্রোল ও হাদিয়া জায়নামাজ" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-black text-base text-emerald-950 mb-1">রিমোট ও উপহার জায়নামাজ</h3>
+                    <p class="text-xs text-stone-600 font-medium">দূর থেকে সুরত নির্বাচন ও সাথে ১টি প্রিমিয়াম ভেলভেট জায়নামাজ উপহার</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TECHNICAL SPECIFICATIONS TABLE -->
+    <section class="max-w-4xl mx-auto px-4">
+        <div class="bg-white rounded-3xl border-2 border-emerald-200 shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-800 to-teal-800 text-white p-5 text-center">
+                <h3 class="text-xl sm:text-2xl font-black text-yellow-300">কুরআন স্পিকারের বিস্তারিত ফিচার ও স্পেক্স</h3>
+                <p class="text-emerald-100 text-xs mt-1">অর্ডার করার পূর্বে ডিভাইসের সকল তথ্য দেখে নিন</p>
+            </div>
+            <div class="p-6">
+                <div class="divide-y divide-emerald-100 text-sm">
+                    <div class="py-3.5 flex justify-between items-center">
+                        <span class="font-bold text-stone-700">ক্বারীদের তালিকা</span>
+                        <span class="font-bold text-emerald-900">১৮ জন বিশ্বখ্যাত ক্বারী (মিশারি, সুদাইস, আফাসি সহ)</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center">
+                        <span class="font-bold text-stone-700">তরজমা ও তাফসির</span>
+                        <span class="font-bold text-emerald-900">শব্দে শব্দে আয়াত ও সম্পূর্ণ বাংলা তাফসির অডিও</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center">
+                        <span class="font-bold text-stone-700">মুন লাইট মোড</span>
+                        <span class="font-bold text-emerald-900">৭ কালার টাচ কন্ট্রোল সফট নাইট ল্যাম্প</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center">
+                        <span class="font-bold text-stone-700">কন্ট্রোল সিস্টেম</span>
+                        <span class="font-bold text-emerald-900">স্মার্ট ওয়্যারলেস রিমোট ও ব্লুটুথ কানেক্টিভিটি</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center">
+                        <span class="font-bold text-stone-700">অতিরিক্ত কনটেন্ট</span>
+                        <span class="font-bold text-emerald-900">বুখারি, মুসলিম, হিসনুল মুসলিম দোয়া ও রুকিয়াহ</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center">
+                        <span class="font-bold text-stone-700">স্পেশাল হাদিয়া</span>
+                        <span class="font-bold text-emerald-900">১টি প্রিমিয়াম তুর্কি ভেলভেট জায়নামাজ সম্পূর্ণ উপহার</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. TRUST & GUARANTEE PILLARS -->
+    <section class="max-w-6xl mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-200 shadow-sm text-center">
+                <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl mb-3">
+                    <i class="fas fa-hand-holding-dollar"></i>
+                </div>
+                <h4 class="font-black text-base text-stone-900 mb-1">ক্যাশ অন ডেলিভারি</h4>
+                <p class="text-xs text-stone-600 font-medium leading-relaxed">আগে ১ টাকাও দিতে হবে না, পণ্য হাতে পেয়ে মূল্য পরিশোধ করুন।</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-200 shadow-sm text-center">
+                <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl mb-3">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <h4 class="font-black text-base text-stone-900 mb-1">১ বছরের গ্যারান্টি</h4>
+                <p class="text-xs text-stone-600 font-medium leading-relaxed">স্পিকারে কোনো সমস্যা হলে ১ বছরের ফ্রি সার্ভিস ও রিপ্লেসমেন্ট।</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-200 shadow-sm text-center">
+                <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl mb-3">
+                    <i class="fas fa-truck-fast"></i>
+                </div>
+                <h4 class="font-black text-base text-stone-900 mb-1">সারা দেশে ডেলিভারি</h4>
+                <p class="text-xs text-stone-600 font-medium leading-relaxed">ঢাকায় ২৪-৪৮ ঘণ্টায় এবং ঢাকার বাইরে ২-৩ দিনের মধ্যে ডেলিভারি।</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-200 shadow-sm text-center">
+                <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl mb-3">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <h4 class="font-black text-base text-stone-900 mb-1">দেখে নেওয়ার সুযোগ</h4>
+                <p class="text-xs text-stone-600 font-medium leading-relaxed">ডেলিভারিম্যানের সামনে চেক করে নিশ্চিন্তে পার্সেল রিসিভ করুন।</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. VERIFIED CUSTOMER REVIEWS (SOCIAL PROOF) -->
+    <section class="max-w-6xl mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+            <span class="text-xs uppercase font-extrabold text-emerald-800 tracking-widest">সম্মানিত গ্রাহকদের মতামত</span>
+            <h2 class="text-2xl sm:text-4xl font-black text-stone-900">আমাদের সন্তুষ্ট ভাই-বোনদের রিভিউ</h2>
+            <div class="flex items-center justify-center gap-1 text-amber-500 text-sm">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <span class="text-stone-700 font-bold ml-2">৫.০/৫ (৫০০+ গ্রাহক রিভিউ)</span>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-[#093528]/90 p-6 rounded-2xl border-2 border-yellow-600/40 shadow-sm hover:shadow-lg transition">
-                <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center text-xl mb-4">
-                    <i class="fas fa-certificate"></i>
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-100 shadow-md flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-1 text-amber-400 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
+                        "মাশাআল্লাহ, কুরআন তেলাওয়াতের সাউন্ড অনেক মিষ্টি ও স্পষ্ট। রিমোট কন্ট্রোল থাকায় চালানো খুব সহজ।"
+                    </p>
                 </div>
-                <h3 class="font-black text-lg mb-2">১০০% অরিজিনাল ও অথেনটিক</h3>
-                <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">সর্বোচ্চ গুণমান নিশ্চিত করে সরাসরি প্রস্তুতকারক বা বিশ্বস্ত উৎস থেকে সংগৃহীত।</p>
+                <div class="pt-4 border-t border-emerald-50 flex items-center justify-between mt-4">
+                    <div>
+                        <h4 class="text-xs font-bold text-emerald-950">মাওলানা আবদুল্লাহ</h4>
+                        <span class="text-[11px] text-stone-500 font-medium">উত্তরা, ঢাকা</span>
+                    </div>
+                    <span class="text-[10px] bg-green-100 text-green-800 font-bold px-2 py-0.5 rounded-full">ভেরিফায়েড</span>
+                </div>
             </div>
 
-            <div class="bg-[#093528]/90 p-6 rounded-2xl border-2 border-yellow-600/40 shadow-sm hover:shadow-lg transition">
-                <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center text-xl mb-4">
-                    <i class="fas fa-truck-ramp-box"></i>
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-100 shadow-md flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-1 text-amber-400 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
+                        "বাচ্চাদের ঘরে রাতের বেলা চালিয়ে রাখি। ৭ কালারের মুন লাইটটা দেখতে খুব স্নিগ্ধ লাগে।"
+                    </p>
                 </div>
-                <h3 class="font-black text-lg mb-2">ক্যাশ অন ডেলিভারি</h3>
-                <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">আগে কোনো টাকা দিতে হবে না, পণ্য হাতে পেয়ে দেখে তবেই মূল্য পরিশোধ করুন।</p>
+                <div class="pt-4 border-t border-emerald-50 flex items-center justify-between mt-4">
+                    <div>
+                        <h4 class="text-xs font-bold text-emerald-950">জান্নাতুল ফেরদৌস</h4>
+                        <span class="text-[11px] text-stone-500 font-medium">সিলেট সদর</span>
+                    </div>
+                    <span class="text-[10px] bg-green-100 text-green-800 font-bold px-2 py-0.5 rounded-full">ভেরিফায়েড</span>
+                </div>
             </div>
 
-            <div class="bg-[#093528]/90 p-6 rounded-2xl border-2 border-yellow-600/40 shadow-sm hover:shadow-lg transition">
-                <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center text-xl mb-4">
-                    <i class="fas fa-arrows-rotate"></i>
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-100 shadow-md flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-1 text-amber-400 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
+                        "বাংলা তাফসির সহ দেওয়াতে পরিবারের সবাই খুব উপকৃত হচ্ছি। সাথে পাওয়া জায়নামাজটিও খুব উন্নত।"
+                    </p>
                 </div>
-                <h3 class="font-black text-lg mb-2">সহজ রিটার্ন ও রিপ্লেসমেন্ট</h3>
-                <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">কোনো ত্রুটি বা অমিল পেলে দ্রুত পরিবর্তন বা রিটার্ন করার শতভাগ সুযোগ।</p>
+                <div class="pt-4 border-t border-emerald-50 flex items-center justify-between mt-4">
+                    <div>
+                        <h4 class="text-xs font-bold text-emerald-950">হাফেজ মোশাররফ</h4>
+                        <span class="text-[11px] text-stone-500 font-medium">চট্টগ্রাম সদর</span>
+                    </div>
+                    <span class="text-[10px] bg-green-100 text-green-800 font-bold px-2 py-0.5 rounded-full">ভেরিফায়েড</span>
+                </div>
             </div>
 
-            <div class="bg-[#093528]/90 p-6 rounded-2xl border-2 border-yellow-600/40 shadow-sm hover:shadow-lg transition">
-                <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center text-xl mb-4">
-                    <i class="fas fa-headset"></i>
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-100 shadow-md flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-1 text-amber-400 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
+                        "ক্যাশ অন ডেলিভারিতে চেক করে নিয়েছি। প্যাকেজিং ও প্রডাক্ট কোয়ালিটি ১০০ তে ১০০।"
+                    </p>
                 </div>
-                <h3 class="font-black text-lg mb-2">২৪/৭ কাস্টমার সাপোর্ট</h3>
-                <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">যেকোনো তথ্য বা সহায়তার জন্য আমাদের হটলাইনে সরাসরি কথা বলুন।</p>
+                <div class="pt-4 border-t border-emerald-50 flex items-center justify-between mt-4">
+                    <div>
+                        <h4 class="text-xs font-bold text-emerald-950">শফিকুল ইসলাম</h4>
+                        <span class="text-[11px] text-stone-500 font-medium">রাজশাহী</span>
+                    </div>
+                    <span class="text-[10px] bg-green-100 text-green-800 font-bold px-2 py-0.5 rounded-full">ভেরিফায়েড</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 3. YOUTUBE VIDEO SECTION (SHOWN ONLY IF URL IS SET) -->
-    @if(!empty($embedUrl))
-    <section class="max-w-5xl mx-auto px-4">
-        <div class="bg-[#093528]/90 p-6 sm:p-10 rounded-3xl border-2 border-yellow-600/40 shadow-2xl text-center space-y-6">
-            <div class="space-y-2">
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 text-red-600 text-xs font-bold uppercase">
-                    <i class="fab fa-youtube text-base"></i> ভিডিও রিভিউ
+    <!-- 6. HIGH CONVERTING 1-PAGE CASH ON DELIVERY CHECKOUT FORM -->
+    <section id="fast-order-form" class="max-w-4xl mx-auto px-4 scroll-mt-20">
+        <div class="bg-white rounded-3xl border-4 border-emerald-400 shadow-2xl overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-900 text-white p-6 sm:p-8 text-center">
+                <span class="inline-block bg-yellow-300 text-emerald-950 text-xs font-black uppercase px-3 py-1 rounded-full mb-2">
+                    ⚡ সহজ ১-মিনিট ক্যাশ অন ডেলিভারি ফর্ম
                 </span>
-                <h2 class="text-2xl sm:text-3xl font-black text-white">
-                    {{ $themeSettings['video_title'] ?? 'পণ্যটির আসল ব্যবহার ও কার্যকারিতা সরাসরি ভিডিওতে দেখুন' }}
-                </h2>
-                <p class="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto">
-                    {{ $themeSettings['video_subtitle'] ?? 'অর্ডার করার আগে ভিডিওটি দেখে পণ্যের কোয়ালিটি যাচাই করে নিন' }}
-                </p>
+                <h3 class="text-2xl sm:text-4xl font-black">অর্ডার করতে নিচের তথ্যগুলো দিন</h3>
+                <p class="text-emerald-100 text-xs sm:text-sm mt-1">অগ্রিম ১ টাকাও লাগবে না, পণ্য হাতে পেয়ে দেখে মূল্য পরিশোধ করবেন</p>
             </div>
 
-            <!-- Responsive 16:9 Video Frame -->
-            <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl border-2 border-yellow-600/40 aspect-video max-w-4xl mx-auto bg-black">
-                <iframe 
-                    class="absolute inset-0 w-full h-full"
-                    src="{{ $embedUrl }}" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-                </iframe>
-            </div>
-
-            <div class="pt-2">
-                <a href="#fast-order-form" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-extrabold text-base px-8 py-3.5 rounded-xl shadow-lg transition">
-                    <i class="fas fa-hand-point-right"></i> ভিডিও দেখা শেষ হলে অর্ডার করতে এখানে ক্লিক করুন
-                </a>
-            </div>
-        </div>
-    </section>
-    @endif
-
-    <!-- 4. 1-CLICK CASH ON DELIVERY CHECKOUT FORM -->
-    <section id="fast-order-form" class="max-w-4xl mx-auto px-4 scroll-mt-24">
-        <div class="bg-[#093528]/90 rounded-3xl shadow-2xl border-4 border-yellow-600/40 overflow-hidden">
-            
-            <div class="bg-primary text-white p-6 sm:p-8 text-center space-y-2">
-                <span class="inline-block bg-white/20 text-white text-xs font-black uppercase px-3.5 py-1 rounded-full">ক্যাশ অন ডেলিভারি</span>
-                <h2 class="text-2xl sm:text-3xl font-black">অর্ডার ফর্মটি সঠিকভাবে পূরণ করুন</h2>
-                <p class="text-xs sm:text-sm text-white/90">পণ্য হাতে পেয়ে দেখে টাকা পরিশোধ করুন। কোনো প্রকার অগ্রিম পেমেন্টের প্রয়োজন নেই।</p>
-            </div>
-
-            <form id="singleProductFastForm" class="p-6 sm:p-10 space-y-8" method="POST" action="{{ route('single.fast.order', $slug) }}">
+            <form action="{{ route('single.fast.order', $slug ?? ($store->slug ?? 'shop001')) }}" method="POST" class="p-6 sm:p-10 space-y-6" id="islamicOrderForm">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $mainProduct->id ?? 1 }}">
-                <input type="hidden" id="base_price" value="{{ $offerPrice }}">
+                <input type="hidden" name="unit_price" id="islamic_unit_price" value="{{ $offerPrice }}">
+                <input type="hidden" name="product_variant" id="islamic_selected_variant" value="১টি কুরআন মুন স্পিকার + ফ্রি জায়নামাজ (৳১,৬৫০)">
+                <input type="hidden" name="selected_package" id="islamic_selected_package" value="১টি কুরআন মুন স্পিকার + ফ্রি জায়নামাজ">
 
-                <!-- STEP 1: PACKAGE SELECTOR -->
-                <div>
-                    <label class="block text-sm font-extrabold text-white uppercase tracking-wider mb-3">
-                        ১. আপনার প্যাকেজ বা পরিমাণ নির্বাচন করুন:
+                <!-- Step 1: Package Selection -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-black text-emerald-950">
+                        ১. প্যাকেজ নির্বাচন করুন <span class="text-red-500">*</span>
                     </label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <label class="relative flex items-center justify-between p-4 rounded-2xl border-2 border-primary bg-primary/10 cursor-pointer package-card hover:shadow-md transition">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="relative flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 cursor-pointer package-card hover:bg-emerald-50 transition" onclick="selectIslamicPackage(1, {{ $offerPrice }}, '১টি কুরআন স্পিকার + ফ্রি জায়নামাজ', this)">
                             <div class="flex items-center gap-3">
-                                <input type="radio" name="order_package" value="1" class="w-5 h-5 text-primary accent-primary" checked onchange="updateTotalCalculation()">
+                                <input type="radio" name="pkg_choice" value="1" checked class="text-emerald-700 focus:ring-emerald-500">
                                 <div>
-                                    <span class="font-extrabold text-white text-sm sm:text-base block">১টি ডিজিটাল কুরআন মুন ল্যাম্প (ফুল সেট)</span>
-                                    <span class="text-xs text-gray-400">স্ট্যান্ডার্ড প্যাক</span>
+                                    <span class="font-black text-stone-900 text-sm block">১টি কুরআন মুন স্পিকার</span>
+                                    <span class="text-xs text-stone-600 font-medium">+ ১টি ভেলভেট জায়নামাজ ফ্রি</span>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <span class="font-black text-primary text-lg">৳{{ number_format($offerPrice) }}</span>
-                            </div>
+                            <span class="text-lg font-black text-emerald-800">৳{{ number_format($offerPrice) }}</span>
                         </label>
 
-                        <label class="relative flex items-center justify-between p-4 rounded-2xl border-2 border-slate-700 bg-slate-800/60 cursor-pointer package-card hover:border-primary/50 transition">
-                            <span class="absolute -top-2.5 right-4 bg-amber-500 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full shadow-sm">
-                                সেরা অফার
-                            </span>
+                        <label class="relative flex items-center justify-between p-4 rounded-2xl border-2 border-stone-200 bg-white cursor-pointer package-card hover:bg-emerald-50 transition" onclick="selectIslamicPackage(2, 3090, '২টি কুরআন স্পিকার ফ্যামিলি কম্বো (ফ্রি ডেলিভারি)', this)">
                             <div class="flex items-center gap-3">
-                                <input type="radio" name="order_package" value="2" data-special-price="3100" class="w-5 h-5 text-primary accent-primary" onchange="updateTotalCalculation()">
+                                <input type="radio" name="pkg_choice" value="2" class="text-emerald-700 focus:ring-emerald-500">
                                 <div>
-                                    <span class="font-extrabold text-white text-sm sm:text-base block">২টি কুরআন ল্যাম্প (প্রিয়জনকে উপহার দেওয়ার স্পেশাল ডিল)</span>
-                                    <span class="text-xs text-gray-400">ফ্যামিলি মেগা সেভিংস</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-black text-stone-900 text-sm block">২টি স্পিকার মেগা কম্বো</span>
+                                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">ফ্রি ডেলিভারি</span>
+                                    </div>
+                                    <span class="text-xs text-stone-600 font-medium">৳২১০ ছাড় + ২টি ফ্রি জায়নামাজ</span>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <span class="font-black text-primary text-lg">৳3,100</span>
-                            </div>
+                            <span class="text-lg font-black text-emerald-800">৳৩,০৯০</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- STEP 2: CUSTOMER DETAILS -->
-                <div class="space-y-4">
-                    <label class="block text-sm font-extrabold text-white uppercase tracking-wider">
-                        ২. আপনার নাম, মোবাইল নম্বর ও ঠিকানা লিখুন:
+                <!-- Step 2: Customer Details -->
+                <div class="space-y-4 pt-2">
+                    <label class="block text-sm font-black text-emerald-950">
+                        ২. আপনার ডেলিভারি তথ্য দিন <span class="text-red-500">*</span>
                     </label>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-300 mb-1">আপনার পূর্ণ নাম <span class="text-red-500">*</span></label>
-                        <input type="text" name="customer_name" required placeholder="যেমন: মোঃ সাকিব হোসেন" class="w-full px-4 py-3 rounded-xl border-2 border-slate-700 bg-slate-800 text-white focus:border-primary focus:bg-white text-sm outline-none transition">
+                        <label class="block text-xs font-bold text-stone-700 mb-1">আপনার পূর্ণ নাম *</label>
+                        <input type="text" name="customer_name" required placeholder="যেমন: মোহাম্মদ আবদুল্লাহ" class="w-full px-4 py-3 rounded-xl border-2 border-stone-300 focus:border-emerald-600 focus:outline-none text-stone-900 font-medium text-sm">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-300 mb-1">মোবাইল নম্বর (১১ ডিজিট) <span class="text-red-500">*</span></label>
-                        <input type="tel" name="customer_phone" required placeholder="যেমন: 01712345678" pattern="[0-9]{11}" class="w-full px-4 py-3 rounded-xl border-2 border-slate-700 bg-slate-800 text-white focus:border-primary focus:bg-white text-sm outline-none transition">
+                        <label class="block text-xs font-bold text-stone-700 mb-1">সচল মোবাইল নম্বর *</label>
+                        <input type="tel" name="customer_phone" required placeholder="যেমন: 017xxxxxxxx" class="w-full px-4 py-3 rounded-xl border-2 border-stone-300 focus:border-emerald-600 focus:outline-none text-stone-900 font-medium text-sm">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-300 mb-1">সম্পূর্ণ ডেলিভারি ঠিকানা <span class="text-red-500">*</span></label>
-                        <textarea name="delivery_address" rows="3" required placeholder="বাড়ি নম্বর, রোড নম্বর/গ্রাম, থানা এবং জেলার নাম বিস্তারিত লিখুন..." class="w-full px-4 py-3 rounded-xl border-2 border-slate-700 bg-slate-800 text-white focus:border-primary focus:bg-white text-sm outline-none transition"></textarea>
+                        <label class="block text-xs font-bold text-stone-700 mb-1">সম্পূর্ণ ডেলিভারি ঠিকানা *</label>
+                        <textarea name="customer_address" rows="2" required placeholder="যেমন: বাসা নং, রোড নং, থানা ও জেলার নাম" class="w-full px-4 py-3 rounded-xl border-2 border-stone-300 focus:border-emerald-600 focus:outline-none text-stone-900 font-medium text-sm"></textarea>
+                    </div>
+
+                    <!-- Delivery Area -->
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 mb-2">ডেলিভারি এরিয়া বেছে নিন *</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center justify-between p-3.5 rounded-xl border-2 border-emerald-600 bg-emerald-50/60 cursor-pointer delivery-card transition" onclick="setIslamicDelivery({{ $dhakaCharge }}, this)">
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="delivery_location" value="dhaka" checked class="text-emerald-700">
+                                    <span class="text-xs sm:text-sm font-bold text-stone-900">ঢাকা সিটির ভিতরে</span>
+                                </div>
+                                <span class="text-xs sm:text-sm font-bold text-emerald-800">৳{{ $dhakaCharge }}</span>
+                            </label>
+
+                            <label class="flex items-center justify-between p-3.5 rounded-xl border-2 border-stone-200 bg-white cursor-pointer delivery-card transition hover:bg-emerald-50" onclick="setIslamicDelivery({{ $outsideCharge }}, this)">
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="delivery_location" value="outside" class="text-emerald-700">
+                                    <span class="text-xs sm:text-sm font-bold text-stone-900">ঢাকা সিটির বাইরে</span>
+                                </div>
+                                <span class="text-xs sm:text-sm font-bold text-emerald-800">৳{{ $outsideCharge }}</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <!-- STEP 3: SHIPPING AREA -->
-                <div>
-                    <label class="block text-sm font-extrabold text-white uppercase tracking-wider mb-3">
-                        ৩. আপনার ডেলিভারি এলাকা নির্বাচন করুন:
-                    </label>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <label class="flex items-center justify-between p-3.5 rounded-xl border-2 border-primary bg-primary/10 cursor-pointer shipping-option">
-                            <div class="flex items-center gap-2.5">
-                                <input type="radio" name="shipping_area" value="dhaka" data-charge="{{ $dhakaCharge }}" class="w-4 h-4 text-primary accent-primary" checked onchange="updateTotalCalculation()">
-                                <span class="text-xs sm:text-sm font-bold text-white">ঢাকার ভেতরে ডেলিভারি</span>
-                            </div>
-                            <span class="text-xs sm:text-sm font-black text-primary">৳{{ $dhakaCharge }}</span>
-                        </label>
-
-                        <label class="flex items-center justify-between p-3.5 rounded-xl border-2 border-slate-700 bg-slate-800/60 cursor-pointer shipping-option">
-                            <div class="flex items-center gap-2.5">
-                                <input type="radio" name="shipping_area" value="outside" data-charge="{{ $outsideCharge }}" class="w-4 h-4 text-primary accent-primary" onchange="updateTotalCalculation()">
-                                <span class="text-xs sm:text-sm font-bold text-white">ঢাকার বাইরে (সারা দেশ)</span>
-                            </div>
-                            <span class="text-xs sm:text-sm font-black text-primary">৳{{ $outsideCharge }}</span>
-                        </label>
+                <!-- Price Summary Box -->
+                <div class="p-5 bg-emerald-50 rounded-2xl border-2 border-emerald-200 space-y-2 text-sm">
+                    <div class="flex justify-between text-stone-700 font-medium">
+                        <span>হাদিয়া মূল্য:</span>
+                        <span class="font-bold text-stone-900" id="islamic_subtotal_text">৳{{ number_format($offerPrice) }}</span>
                     </div>
-                </div>
-
-                <!-- STEP 4: ORDER SUMMARY & SUBMIT -->
-                <div class="bg-slate-800/80 border-slate-700 p-5 rounded-2xl border space-y-3">
-                    <div class="flex justify-between text-xs sm:text-sm text-gray-300">
-                        <span>পণ্যের মূল্য:</span>
-                        <span id="summary_subtotal" class="font-bold text-white">৳{{ number_format($offerPrice) }}</span>
-                    </div>
-                    <div class="flex justify-between text-xs sm:text-sm text-gray-300">
+                    <div class="flex justify-between text-stone-700 font-medium">
                         <span>ডেলিভারি চার্জ:</span>
-                        <span id="summary_shipping" class="font-bold text-white">৳{{ $dhakaCharge }}</span>
+                        <span class="font-bold text-stone-900" id="islamic_delivery_text">৳{{ $dhakaCharge }}</span>
                     </div>
-                    <div class="border-t border-slate-700 pt-3 flex justify-between items-center text-base sm:text-lg font-black">
-                        <span class="text-white">সর্বমোট প্রদেয় মূল্য:</span>
-                        <span id="summary_total" class="text-2xl text-primary font-black">৳{{ number_format($offerPrice + $dhakaCharge) }}</span>
+                    <div class="h-px bg-emerald-200 my-1"></div>
+                    <div class="flex justify-between text-base sm:text-lg font-black text-emerald-950">
+                        <span>সর্বমোট প্রদেয় বিল:</span>
+                        <span class="text-2xl font-black text-emerald-800" id="islamic_total_text">৳{{ number_format($offerPrice + $dhakaCharge) }}</span>
                     </div>
                 </div>
 
-                <button type="submit" id="submitOrderBtn" class="pulse-btn w-full bg-primary hover:bg-primary-dark text-white font-black text-lg sm:text-xl py-4 sm:py-5 rounded-2xl shadow-xl flex items-center justify-center gap-3 transition">
-                    <i class="fas fa-check-circle text-2xl"></i>
+                <button type="submit" class="pulse-btn w-full bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-900 hover:from-emerald-900 hover:to-teal-900 text-yellow-300 font-black text-lg sm:text-xl py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                    <i class="fas fa-lock text-yellow-300"></i>
                     <span>অর্ডার কনফার্ম করুন (ক্যাশ অন ডেলিভারি)</span>
                 </button>
-
-                <p class="text-center text-xs text-gray-400">
-                    🔒 আপনার তথ্য সম্পূর্ণ নিরাপদ। কোনো প্রশ্ন থাকলে সরাসরি কল করুন: 
-                    <a href="tel:{{ $themeSettings['header_call'] ?? '01700-000000' }}" class="text-primary font-bold">{{ $themeSettings['header_call'] ?? '01700-000000' }}</a>
-                </p>
             </form>
         </div>
     </section>
 
-    <!-- 5. FAQS ACCORDION -->
-    <section class="max-w-4xl mx-auto px-4 pb-16">
+    <!-- 7. FREQUENTLY ASKED QUESTIONS (FAQ) -->
+    <section class="max-w-4xl mx-auto px-4 pb-12">
         <div class="text-center mb-8">
-            <h2 class="text-2xl sm:text-3xl font-black text-white">সাধারণ জিজ্ঞাসা ও উত্তর (FAQ)</h2>
+            <span class="text-xs uppercase font-extrabold text-emerald-800 tracking-widest">সাধারণ প্রশ্নোত্তর</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-stone-900 mt-1">সচরাচর জানতে চাওয়া প্রশ্ন ও উত্তর</h2>
         </div>
 
-        <div class="space-y-4">
-            <div class="bg-[#093528]/90 p-5 rounded-2xl border border-yellow-600/40 shadow-sm space-y-2">
-                <h3 class="font-extrabold text-base text-white flex items-center gap-2">
-                    <i class="fas fa-circle-question text-primary"></i> পণ্য হাতে পাওয়ার পর কি চেক করতে পারব?
-                </h3>
-                <p class="text-xs sm:text-sm text-gray-400 pl-6 leading-relaxed">
-                    হ্যাঁ, অবশ্যই! ডেলিভারিম্যানের সামনে পার্সেল খুলে পণ্য দেখে সন্তুষ্ট হয়ে তবেই মূল্য পরিশোধ করবেন।
+        <div class="space-y-3">
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-100 shadow-sm">
+                <h4 class="font-black text-stone-900 text-sm sm:text-base flex items-center gap-2">
+                    <i class="fas fa-question-circle text-emerald-700"></i> এতে কি সম্পূর্ণ ৩০ পারা কুরআন তেলাওয়াত আছে?
+                </h4>
+                <p class="text-xs sm:text-sm text-stone-600 font-medium mt-2 leading-relaxed pl-6">
+                    জী, এতে ১৮ জন বিশ্বখ্যাত ক্বারীর সুললিত কণ্ঠে সম্পূর্ণ ৩০ পারা ১১৪টি সূরার বিশুদ্ধ তেলাওয়াত ও বাংলা অনুবাদ রয়েছে।
                 </p>
             </div>
 
-            <div class="bg-[#093528]/90 p-5 rounded-2xl border border-yellow-600/40 shadow-sm space-y-2">
-                <h3 class="font-extrabold text-base text-white flex items-center gap-2">
-                    <i class="fas fa-circle-question text-primary"></i> ডেলিভারি পেতে কতদিন সময় লাগবে?
-                </h3>
-                <p class="text-xs sm:text-sm text-gray-400 pl-6 leading-relaxed">
-                    ঢাকার ভেতরে ২৪ থেকে ৪৮ ঘণ্টার মধ্যে এবং ঢাকার বাইরে সারা বাংলাদেশে ২ থেকে ৩ কার্যদিবসের মধ্যে হোম ডেলিভারি পাবেন।
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-100 shadow-sm">
+                <h4 class="font-black text-stone-900 text-sm sm:text-base flex items-center gap-2">
+                    <i class="fas fa-question-circle text-emerald-700"></i> চার্জ কীভাবে দিতে হয় এবং ব্যাকআপ কেমন?
+                </h4>
+                <p class="text-xs sm:text-sm text-stone-600 font-medium mt-2 leading-relaxed pl-6">
+                    যেকোনো মোবাইল চার্জার বা ইউএসবি ক্যাবল দিয়ে চার্জ দেওয়া যায়। একবার ফুল চার্জে একটানা ৮-১০ ঘণ্টা তেলাওয়াত চালানো যায়।
                 </p>
             </div>
 
-            <div class="bg-[#093528]/90 p-5 rounded-2xl border border-yellow-600/40 shadow-sm space-y-2">
-                <h3 class="font-extrabold text-base text-white flex items-center gap-2">
-                    <i class="fas fa-circle-question text-primary"></i> কোনো সমস্যা হলে রিটার্ন করার নিয়ম কী?
-                </h3>
-                <p class="text-xs sm:text-sm text-gray-400 pl-6 leading-relaxed">
-                    ডেলিভারির সময় বা পণ্য ব্যবহারে কোনো প্রকার সমস্যা পেলে আমাদের হটলাইনে কল দিন, আমরা বিনামূল্যে রিপ্লেসমেন্ট বা রিটার্ন ব্যবস্থা করব।
+            <div class="bg-white p-5 rounded-2xl border-2 border-emerald-100 shadow-sm">
+                <h4 class="font-black text-stone-900 text-sm sm:text-base flex items-center gap-2">
+                    <i class="fas fa-question-circle text-emerald-700"></i> পণ্য নষ্ট বা ত্রুটিযুক্ত পেলে করণীয় কী?
+                </h4>
+                <p class="text-xs sm:text-sm text-stone-600 font-medium mt-2 leading-relaxed pl-6">
+                    আমরা ১ বছরের ফ্রি রিপ্লেসমেন্ট সুবিধা দিয়ে থাকি। ডেলিভারিম্যানের সামনে চেক করে নিতে পারবেন, কোনো সমস্যা হলে নতুন ডিভাইস পাবেন।
                 </p>
             </div>
         </div>
@@ -336,55 +493,81 @@
 
 </main>
 
-<!-- FLOATING MOBILE BOTTOM CTA -->
-<div class="sm:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 border-slate-800 backdrop-blur-md p-3 border-t shadow-2xl z-40 flex items-center justify-between gap-3">
-    <div>
-        <span class="text-[10px] text-gray-400 uppercase font-bold block">অফার মূল্য</span>
-        <span class="text-lg font-black text-primary">৳{{ number_format($offerPrice) }}</span>
+<!-- FLOATING WHATSAPP BUTTON -->
+<a href="https://wa.me/8801700000000?text=আসসালামু%20আলাইকুম!%20কুরআন%20স্পিকার%20সম্পর্কে%20জানতে%20চাই" target="_blank" class="fixed bottom-20 right-4 z-40 bg-green-500 hover:bg-green-600 text-white p-3.5 rounded-full shadow-2xl flex items-center justify-center transition transform hover:scale-110" title="হোয়াটসঅ্যাপে কথা বলুন">
+    <i class="fab fa-whatsapp text-3xl"></i>
+</a>
+
+<!-- MOBILE STICKY CTA -->
+<div class="fixed bottom-0 left-0 right-0 z-30 sm:hidden bg-white/95 backdrop-blur-md border-t-2 border-emerald-300 p-3 shadow-2xl">
+    <div class="flex items-center justify-between gap-3 max-w-md mx-auto">
+        <div>
+            <span class="text-[11px] text-stone-500 font-bold block">অফার হাদিয়া</span>
+            <span class="text-xl font-black text-emerald-800">৳{{ number_format($offerPrice) }}</span>
+        </div>
+        <a href="#fast-order-form" class="bg-emerald-800 hover:bg-emerald-900 text-yellow-300 font-black text-sm px-5 py-2.5 rounded-xl shadow-lg transition flex items-center gap-1.5">
+            <i class="fas fa-gift"></i> এখনই নিন
+        </a>
     </div>
-    <a href="#fast-order-form" class="pulse-btn flex-1 bg-primary text-white text-center font-black py-2.5 px-4 rounded-xl text-sm shadow-md flex items-center justify-center gap-2">
-        <i class="fas fa-shopping-cart"></i>
-        <span>অর্ডার করুন</span>
-    </a>
 </div>
 
-@endsection
-
-@push('custom-scripts')
 <script>
-    function updateTotalCalculation() {
-        var basePrice = parseFloat($("#base_price").val()) || 1650;
-        var selectedPkg = $('input[name="order_package"]:checked');
-        var pkgVal = parseInt(selectedPkg.val()) || 1;
-        var subtotal = basePrice;
-        
-        if (pkgVal === 2) {
-            var specialPrice = parseFloat(selectedPkg.data('special-price'));
-            subtotal = specialPrice ? specialPrice : (basePrice * 2 * 0.9);
+    // Live Countdown Timer
+    let islamicHours = 6, islamicMinutes = 34, islamicSeconds = 18;
+    setInterval(function() {
+        if (islamicSeconds > 0) {
+            islamicSeconds--;
         } else {
-            subtotal = basePrice * pkgVal;
+            islamicSeconds = 59;
+            if (islamicMinutes > 0) {
+                islamicMinutes--;
+            } else {
+                islamicMinutes = 59;
+                if (islamicHours > 0) islamicHours--;
+            }
         }
+        document.getElementById('islamic_timer_hours').textContent = String(islamicHours).padStart(2, '0');
+        document.getElementById('islamic_timer_minutes').textContent = String(islamicMinutes).padStart(2, '0');
+        document.getElementById('islamic_timer_seconds').textContent = String(islamicSeconds).padStart(2, '0');
+    }, 1000);
 
-        var shippingCharge = parseFloat($('input[name="shipping_area"]:checked').data('charge')) || 70;
-        var total = subtotal + shippingCharge;
+    let currentIslamicSubtotal = {{ $offerPrice }};
+    let currentIslamicDelivery = {{ $dhakaCharge }};
+    let isIslamicFreeDelivery = false;
 
-        $("#summary_subtotal").text("৳" + Math.round(subtotal).toLocaleString());
-        $("#summary_shipping").text("৳" + Math.round(shippingCharge).toLocaleString());
-        $("#summary_total").text("৳" + Math.round(total).toLocaleString());
+    function selectIslamicPackage(pkgId, price, label, el) {
+        currentIslamicSubtotal = price;
+        isIslamicFreeDelivery = (pkgId === 2);
+        document.getElementById('islamic_unit_price').value = price;
+        document.getElementById('islamic_selected_variant').value = label;
+        document.getElementById('islamic_selected_package').value = label;
+
+        document.querySelectorAll('.package-card').forEach(c => {
+            c.classList.remove('border-emerald-500', 'bg-emerald-50/70');
+            c.classList.add('border-stone-200', 'bg-white');
+        });
+        el.classList.add('border-emerald-500', 'bg-emerald-50/70');
+        el.classList.remove('border-stone-200', 'bg-white');
+        updateIslamicBill();
     }
 
-    $(document).ready(function() {
-        updateTotalCalculation();
-
-        $(".package-card").click(function() {
-            $(".package-card").removeClass("border-primary bg-primary/10 shadow-lg").addClass("border-slate-700 bg-slate-800/60");
-            $(this).removeClass("border-slate-700 bg-slate-800/60").addClass("border-primary bg-primary/10 shadow-lg");
+    function setIslamicDelivery(charge, el) {
+        currentIslamicDelivery = charge;
+        document.querySelectorAll('.delivery-card').forEach(d => {
+            d.classList.remove('border-emerald-600', 'bg-emerald-50/60');
+            d.classList.add('border-stone-200', 'bg-white');
         });
+        el.classList.add('border-emerald-600', 'bg-emerald-50/60');
+        el.classList.remove('border-stone-200', 'bg-white');
+        updateIslamicBill();
+    }
 
-        $(".shipping-option").click(function() {
-            $(".shipping-option").removeClass("border-primary bg-primary/10 shadow-md").addClass("border-slate-700 bg-slate-800/60");
-            $(this).removeClass("border-slate-700 bg-slate-800/60").addClass("border-primary bg-primary/10 shadow-md");
-        });
-    });
+    function updateIslamicBill() {
+        let deliveryToApply = isIslamicFreeDelivery ? 0 : currentIslamicDelivery;
+        let total = currentIslamicSubtotal + deliveryToApply;
+        document.getElementById('islamic_subtotal_text').textContent = '৳' + currentIslamicSubtotal.toLocaleString();
+        document.getElementById('islamic_delivery_text').textContent = isIslamicFreeDelivery ? 'ফ্রি (৳০)' : '৳' + deliveryToApply;
+        document.getElementById('islamic_total_text').textContent = '৳' + total.toLocaleString();
+    }
 </script>
-@endpush
+@endsection

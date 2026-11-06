@@ -54,9 +54,9 @@
 
             <!-- Rank Level Milestone Widget -->
             <div class="col-xl-5 col-lg-5">
-                <div class="p-4 rounded-4" style="background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15);">
+                <div class="p-4 rounded-4" style="background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.25);">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="text-xs text-uppercase font-weight-bold text-white-50 letter-spacing-1">পার্টনার লেভেল অগ্রগতি</span>
+                        <span class="text-xs text-uppercase font-weight-bold letter-spacing-1" style="color: rgba(255, 255, 255, 0.95);">পার্টনার লেভেল অগ্রগতি</span>
                         <span class="badge bg-warning text-dark font-weight-bold px-2 py-1" style="font-size: 11px;">
                             {{ $rank['progress_percent'] }}% সম্পন্ন
                         </span>
@@ -66,18 +66,18 @@
                         <div class="fs-1">{{ $rank['badge'] }}</div>
                         <div>
                             <h5 class="mb-0 text-white font-weight-bold">{{ $rank['name'] }}</h5>
-                            <small class="text-white-50">মোট সফল কনভার্সন: <strong>{{ $totalPaidOrders }}টি</strong></small>
+                            <small style="color: rgba(255, 255, 255, 0.9);">মোট সফল কনভার্সন: <strong class="text-white">{{ $totalPaidOrders }}টি</strong></small>
                         </div>
                     </div>
 
-                    <div class="progress my-3" style="height: 9px; background: rgba(255,255,255,0.15); border-radius: 20px;">
+                    <div class="progress my-3" style="height: 9px; background: rgba(255,255,255,0.2); border-radius: 20px;">
                         <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ $rank['progress_percent'] }}%; border-radius: 20px;"></div>
                     </div>
 
                     @if($rank['next_target'])
-                        <div class="d-flex align-items-center gap-2 text-xs text-white-50">
+                        <div class="d-flex align-items-center gap-2 text-xs" style="color: #ffffff;">
                             <i class="ti ti-info-circle text-warning fs-6"></i>
-                            <span>পরবর্তী পদবীতে উন্নীত হতে আর মাত্র <strong>{{ $rank['target_remaining'] }}টি</strong> পেইড মার্চেন্ট প্রয়োজন।</span>
+                            <span>পরবর্তী পদবীতে উন্নীত হতে আর মাত্র <strong class="text-warning">{{ $rank['target_remaining'] }}টি</strong> পেইড মার্চেন্ট প্রয়োজন।</span>
                         </div>
                     @else
                         <div class="text-xs text-warning font-weight-bold">

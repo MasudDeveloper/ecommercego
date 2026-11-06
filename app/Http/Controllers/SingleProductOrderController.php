@@ -122,8 +122,13 @@ class SingleProductOrderController extends Controller
         $order->product_order_status = 0; // Pending
         $order->delivered_status = 0; // Pending
         $order->delivery_id = 0;
-        $order->delivery_comment = ($shippingArea == 'outside_dhaka') ? 'ঢাকার বাইরে ক্যাশ অন ডেলিভারি' : 'ঢাকার ভেতরে হোম ডেলিভারি';
-        $order->additional_note = 'প্যাকেজ: ' . ($qty == 2 ? '২টি (ডাবল প্যাক)' : '১টি (সিঙ্গেল প্যাক)');
+        $variantInfo = $request->product_variant ?? $request->size ?? $request->color ?? '';
+        $note = 'প্যাকেজ: ' . ($qty == 2 ? '২টি (ডাবল প্যাক)' : '১টি (সিঙ্গেল প্যাক)');
+        if (!empty($variantInfo)) {
+            $note .= ' | পছন্দ/সাইজ: ' . $variantInfo;
+        }
+        $order->delivery_comment = ($shippingArea == 'outside_dhaka' || $shippingArea == 'outside') ? 'ঢাকার বাইরে ক্যাশ অন ডেলিভারি' : 'ঢাকার ভেতরে হোম ডেলিভারি';
+        $order->additional_note = $note;
         $order->store_id = $store->id;
         $order->save();
 
