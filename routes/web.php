@@ -154,6 +154,42 @@ Route::middleware(['web'])->group(function () {
   Route::any('/', [HomeController::class, 'Landing'])->name('start')->middleware('setlocate');
   Route::get('pricing', [HomeController::class, 'Pricing'])->name('apps.pricing');
 
+  // Direct Landing Page Preview Route for all 10 Landing Page Themes
+  Route::get('landing-preview/{theme}', function ($theme) {
+      $allowed = [
+          'landing-panjabi', 'landing-saree', 'landing-gadget', 'landing-skincare',
+          'landing-kitchen', 'landing-leather', 'landing-islamic', 'landing-fitness',
+          'landing-kids', 'single-product'
+      ];
+      if (!in_array($theme, $allowed)) {
+          abort(404, 'Theme not found');
+      }
+
+      if (class_exists(\Qirolab\Theme\Theme::class)) {
+          \Qirolab\Theme\Theme::set($theme);
+      }
+
+      $store = \App\Models\Store::where('slug', 'shop001')->first() ?? \App\Models\Store::first();
+      if ($store) {
+          $store->theme_id = $theme;
+      }
+      
+      $themeViewPath = base_path('themes/' . $theme . '/views');
+      if (file_exists($themeViewPath)) {
+          app('view.finder')->prependLocation($themeViewPath);
+      }
+
+      $settingsPath = base_path('themes/' . $theme . '/default_data/settings.php');
+      $themeSettings = file_exists($settingsPath) ? include($settingsPath) : [];
+
+      $currentTheme = $theme;
+      $slug = $store->slug ?? 'shop001';
+      $all_products = collect([]);
+      $bestseller_products = collect([]);
+
+      return view('main_file', compact('themeSettings', 'currentTheme', 'store', 'slug', 'all_products', 'bestseller_products'));
+  })->name('landing.preview');
+
   // Session Save Addon Routes
   Route::get('add-on/session/create', [ModuleController::class, 'AddOnSessioncreate'])->name('add-on.session.create');
   Route::post('add-on/session/save', [ModuleController::class, 'AddOnSessionSave'])->name('add-on.session.save');

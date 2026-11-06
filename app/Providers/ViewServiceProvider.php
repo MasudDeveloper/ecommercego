@@ -21,23 +21,33 @@ class ViewServiceProvider extends ConcreteViewServiceProvider
     public function boot()
     {
         View::composer(['front_end.layouts.app', 'main_file', 'front_end.pages.*', 'front_end.Auth.*'], function ($view) {
+            $store = null;
             if (request()->route('storeSlug') && !request()->route('theme')) {
                 $store = Store::where('slug', request()->route('storeSlug'))->first();
             } else if (request()->route('theme')) {
-                $store = Store::find(getCurrentStore());
+                $storeId = getCurrentStore();
+                $store = $storeId ? Store::find($storeId) : null;
                 if ($store) {
                     $store->theme_id = request()->route('theme');
                 } 
             }
-            
+
+            if (!$store) {
+                $store = Store::where('slug', 'shop001')->first() ?? Store::first();
+                if ($store && request()->route('theme')) {
+                    $store->theme_id = request()->route('theme');
+                }
+            }
+
+            if (!$store) {
+                abort(404, 'Store not found');
+            }
+
             $customer = auth('customers')->user() ?? null;
             $customer_name = $customer ? $customer->first_name . ' ' . $customer->last_name : null;
             $themeSettings = getThemeSetting($store->id, $store->theme_id);
             $adminSetting = getAdminAllSetting($store->created_by, $store->id);
             $CategoryList = Category::where('status', 1)->where('store_id', $store->id)->get();
-            if (!$store) {
-                abort(404);
-            }
             
             $search_products = Product::where('store_id', $store->id)
             ->pluck('name', 'id');

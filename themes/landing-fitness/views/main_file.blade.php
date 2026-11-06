@@ -94,7 +94,7 @@
                     <div class="p-6 bg-zinc-900 rounded-3xl border border-red-600/50 shadow-2xl max-w-sm w-full text-center">
                         <img src="{{ $productImg }}" alt="{{ $productTitle }}" class="w-full h-80 object-contain drop-shadow-lg">
                         <div class="mt-3 text-xs font-bold text-red-400 uppercase">
-                            [ ৪টি প্রফেশনাল হেড + ৬ স্পিড গিয়ার ]
+                            [ ১১-পিস কমপ্লিট সেট + ডোর অ্যাঙ্কর ও ওয়ার্কআউট গাইড ]
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
     <!-- 2. DISTINCT CATEGORY FEATURES SECTION -->
     <section class="max-w-6xl mx-auto px-4">
         <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <span class="text-xs uppercase font-extrabold text-primary tracking-widest">ফিটনেস ও পেইন রিলিফ</span>
+            <span class="text-xs uppercase font-extrabold text-primary tracking-widest">হোম ওয়ার্কআউট ও ফিটনেস</span>
             <h2 class="text-2xl sm:text-4xl font-black text-white">আমাদের সেরা বিশেষত্ব ও সুযোগ-সুবিধা</h2>
         </div>
 
@@ -206,7 +206,7 @@
                             <div class="flex items-center gap-3">
                                 <input type="radio" name="order_package" value="1" class="w-5 h-5 text-primary accent-primary" checked onchange="updateTotalCalculation()">
                                 <div>
-                                    <span class="font-extrabold text-white text-sm sm:text-base block">১টি প্রফেশনাল ম্যাসাজ গান (৪টি স্পেশালাইজড হেড সহ)</span>
+                                    <span class="font-extrabold text-white text-sm sm:text-base block">১টি সম্পূর্ণ হোম জিম কিট (১১-পিস ব্যান্ড + ডাম্বেল ও ব্যাগ)</span>
                                     <span class="text-xs text-gray-400">স্ট্যান্ডার্ড প্যাক</span>
                                 </div>
                             </div>
@@ -220,14 +220,14 @@
                                 সেরা অফার
                             </span>
                             <div class="flex items-center gap-3">
-                                <input type="radio" name="order_package" value="2" data-special-price="3250" class="w-5 h-5 text-primary accent-primary" onchange="updateTotalCalculation()">
+                                <input type="radio" name="order_package" value="2" data-special-price="2490" class="w-5 h-5 text-primary accent-primary" onchange="updateTotalCalculation()">
                                 <div>
-                                    <span class="font-extrabold text-white text-sm sm:text-base block">২টি সম্পূর্ণ সেট (প্যারেন্টস ও ফ্যামিলি প্যাক)</span>
-                                    <span class="text-xs text-gray-400">ফ্যামিলি মেগা সেভিংস</span>
+                                    <span class="font-extrabold text-white text-sm sm:text-base block">২টি সম্পূর্ণ সেট (ফ্রেন্ডস ও ফ্যামিলি মেগা কম্বো)</span>
+                                    <span class="text-xs text-gray-400">মেগা সেভিংস</span>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <span class="font-black text-primary text-lg">৳3,250</span>
+                                <span class="font-black text-primary text-lg">৳2,490</span>
                             </div>
                         </label>
                     </div>
