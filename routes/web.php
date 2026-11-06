@@ -165,6 +165,10 @@ Route::middleware(['web'])->group(function () {
           abort(404, 'Theme not found');
       }
 
+      if (class_exists(\Barryvdh\Debugbar\Facades\Debugbar::class)) {
+          \Barryvdh\Debugbar\Facades\Debugbar::disable();
+      }
+
       if (class_exists(\Qirolab\Theme\Theme::class)) {
           \Qirolab\Theme\Theme::set($theme);
       }
@@ -840,6 +844,15 @@ Route::middleware(['web'])->group(function () {
   // Marketing Agent Portal & Ecosystem Routes
   // ==========================================
   if (config('app.env') === 'local') {
+      Route::get('admin/dev-login/{id?}', function ($id = 5) {
+          $user = \App\Models\User::find($id) ?? \App\Models\User::where('type', 'admin')->first();
+          if ($user) {
+              \Illuminate\Support\Facades\Auth::login($user);
+              return redirect()->route('theme.index');
+          }
+          return 'No user found';
+      })->name('admin.dev-login');
+
       Route::get('agent/dev-login/{id?}', function ($id = 1) {
           $agent = \App\Models\MarketingAgent::find($id) ?? \App\Models\MarketingAgent::first();
           if ($agent) {

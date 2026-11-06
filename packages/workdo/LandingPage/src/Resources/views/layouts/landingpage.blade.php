@@ -1658,7 +1658,7 @@
 
                 <ul class="nav-menu">
                     <li><a href="#features">ফিচারসমূহ</a></li>
-                    <li><a href="#themes">রেডি থিমসমূহ</a></li>
+                    <li><a href="#themes">রেডি থিম ও ল্যান্ডিং পেজ</a></li>
                     <li><a href="#how-it-works">কীভাবে কাজ করে</a></li>
                     <li><a href="#pricing">প্যাকেজ ও মূল্য</a></li>
                     <li><a href="#faq">প্রশ্ন-উত্তর</a></li>
@@ -2311,6 +2311,206 @@
                     </div>
                 </div>
 
+            </div>
+
+            <!-- Subsection: 1-Page High-Converting Single Product Landing Pages -->
+            <div class="section-header" style="margin-top: 60px; padding-top: 40px; border-top: 1px dashed rgba(255, 255, 255, 0.1);">
+                <span class="section-tag" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25);">
+                    <span class="pulse-mini" style="background: #ef4444;"></span> ১-ক্লিক ফাস্ট ক্যাশ অন ডেলিভারি
+                </span>
+                <h2 class="section-title">সোশ্যাল মিডিয়া ও ভাইরাল প্রোডাক্টের জন্য <br><span class="gradient-text" style="background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">সিঙ্গেল প্রোডাক্ট ল্যান্ডিং পেজ</span></h2>
+                <p class="section-subtitle">লগইন বা অ্যাড-টু-কার্টের কোনো ঝামেলা নেই! মাত্র ১ পৃষ্ঠায় কাউন্টডাউন টাইমার, কাস্টমার রিভিউ ও ৩-ক্লিক ক্যাশ অন ডেলিভারি অর্ডার ফর্ম।</p>
+            </div>
+
+            <div class="theme-showcase-grid">
+
+                <!-- Landing Page 1: Panjabi Special -->
+                <div class="theme-card">
+                    <!-- Browser Chrome Header -->
+                    <div class="theme-browser-top">
+                        <div class="window-dots">
+                            <span class="window-dot dot-red"></span>
+                            <span class="window-dot dot-yellow"></span>
+                            <span class="window-dot dot-green"></span>
+                        </div>
+                        <div class="browser-address">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            eid-panjabi.edokanpro.bd
+                        </div>
+                        <div class="browser-badge-live" style="color: #f59e0b; background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.25);">
+                            <span class="pulse-mini" style="background: #f59e0b;"></span> হট ডেমো
+                        </div>
+                    </div>
+
+                    <!-- Long Scroll Screenshot Preview -->
+                    <div class="theme-preview-box">
+                        <img src="{{ url('themes/landing-panjabi/theme_img/img_1.png') }}" class="theme-long-screen" alt="Panjabi Single Product Landing Page Preview">
+                        <div class="theme-preview-overlay">
+                            <span class="hover-scroll-hint">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+                                মাউস রেখে স্ক্রল প্রিভিউ দেখুন
+                            </span>
+                            <a href="{{ url('landing-preview/landing-panjabi') }}" target="_blank" class="hover-visit-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                                লাইভ ল্যান্ডিং পেজ দেখুন
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Theme Details & Actions -->
+                    <div class="theme-info">
+                        <div>
+                            <div class="theme-title-row">
+                                <h4 class="theme-title">Eid & Festival Panjabi</h4>
+                                <span class="theme-category-pill pill-pink">👑 এথনিক ও ফ্যাশন</span>
+                            </div>
+                            <p class="theme-desc">ঈদ ও উৎসব কালেকশনের পাঞ্জাবির জন্য হাই-কনভার্টিং ল্যান্ডিং পেজ। কলারে কারচুপির কাজ ও প্রিমিয়াম জ্যাকার্ড ফেব্রিক প্রেজেন্টেশন।</p>
+                            
+                            <div class="theme-feature-tags">
+                                <span class="tag-item">✓ কাউন্টডাউন অফার টাইমার</span>
+                                <span class="tag-item">✓ নিখুঁত সাইজ ও কালার সিলেক্টর</span>
+                                <span class="tag-item">✓ ১-পেজ ফাস্ট COD চেকআউট</span>
+                            </div>
+                        </div>
+
+                        <div class="theme-actions">
+                            <a href="{{ url('landing-preview/landing-panjabi') }}" target="_blank" class="btn btn-secondary" style="padding: 10px 14px; font-size: 14px;">
+                                👁️ ডেমো দেখুন
+                            </a>
+                            <a href="{{ route('register') }}" class="btn btn-primary" style="padding: 10px 14px; font-size: 14px;">
+                                🚀 পেজটি নিন
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Landing Page 2: Organic Food & Honey -->
+                <div class="theme-card">
+                    <!-- Browser Chrome Header -->
+                    <div class="theme-browser-top">
+                        <div class="window-dots">
+                            <span class="window-dot dot-red"></span>
+                            <span class="window-dot dot-yellow"></span>
+                            <span class="window-dot dot-green"></span>
+                        </div>
+                        <div class="browser-address">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            organic-food.edokanpro.bd
+                        </div>
+                        <div class="browser-badge-live">
+                            <span class="pulse-mini"></span> লাইভ
+                        </div>
+                    </div>
+
+                    <!-- Long Scroll Screenshot Preview -->
+                    <div class="theme-preview-box">
+                        <img src="{{ url('themes/single-product/theme_img/img_1.png') }}" class="theme-long-screen" alt="Organic Mustard Oil & Honey Landing Page Preview">
+                        <div class="theme-preview-overlay">
+                            <span class="hover-scroll-hint">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+                                মাউস রেখে স্ক্রল প্রিভিউ দেখুন
+                            </span>
+                            <a href="{{ url('landing-preview/single-product') }}" target="_blank" class="hover-visit-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                                লাইভ ল্যান্ডিং পেজ দেখুন
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Theme Details & Actions -->
+                    <div class="theme-info">
+                        <div>
+                            <div class="theme-title-row">
+                                <h4 class="theme-title">Pure Organic & Honey</h4>
+                                <span class="theme-category-pill pill-green">🌿 অর্গানিক ও গ্রোসারি</span>
+                            </div>
+                            <p class="theme-desc">ঘানিতে ভাঙানো খাঁটি সরিষার তেল ও সুন্দরবনের চাকভাঙা মধু। পুষ্টি ও বিশুদ্ধতার স্পেসিফিকেশন চার্ট সহ পরীক্ষিত সেলস ফানেল।</p>
+                            
+                            <div class="theme-feature-tags">
+                                <span class="tag-item">✓ উপাদানের বিশুদ্ধতা স্পেক্স</span>
+                                <span class="tag-item">✓ সিঙ্গেল ও মেগা ফ্যামিলি প্যাক</span>
+                                <span class="tag-item">✓ ঢাকা ৳৭০ / বাইরে ৳১৩০ ক্যালকুলেটর</span>
+                            </div>
+                        </div>
+
+                        <div class="theme-actions">
+                            <a href="{{ url('landing-preview/single-product') }}" target="_blank" class="btn btn-secondary" style="padding: 10px 14px; font-size: 14px;">
+                                👁️ ডেমো দেখুন
+                            </a>
+                            <a href="{{ route('register') }}" class="btn btn-primary" style="padding: 10px 14px; font-size: 14px;">
+                                🚀 পেজটি নিন
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Landing Page 3: T9 Ultra AMOLED Gadget -->
+                <div class="theme-card">
+                    <!-- Browser Chrome Header -->
+                    <div class="theme-browser-top">
+                        <div class="window-dots">
+                            <span class="window-dot dot-red"></span>
+                            <span class="window-dot dot-yellow"></span>
+                            <span class="window-dot dot-green"></span>
+                        </div>
+                        <div class="browser-address">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            t9-gadget.edokanpro.bd
+                        </div>
+                        <div class="browser-badge-live" style="color: #38bdf8; background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.25);">
+                            <span class="pulse-mini" style="background: #38bdf8;"></span> ট্রেন্ডিং
+                        </div>
+                    </div>
+
+                    <!-- Long Scroll Screenshot Preview -->
+                    <div class="theme-preview-box">
+                        <img src="{{ url('themes/landing-gadget/theme_img/img_1.png') }}" class="theme-long-screen" alt="T9 AMOLED Smartwatch Gadget Landing Page Preview">
+                        <div class="theme-preview-overlay">
+                            <span class="hover-scroll-hint">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+                                মাউস রেখে স্ক্রল প্রিভিউ দেখুন
+                            </span>
+                            <a href="{{ url('landing-preview/landing-gadget') }}" target="_blank" class="hover-visit-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                                লাইভ ল্যান্ডিং পেজ দেখুন
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Theme Details & Actions -->
+                    <div class="theme-info">
+                        <div>
+                            <div class="theme-title-row">
+                                <h4 class="theme-title">T9 Ultra AMOLED Watch</h4>
+                                <span class="theme-category-pill pill-cyan">⚡ গ্যাজেট ও ইলেকট্রনিক্স</span>
+                            </div>
+                            <p class="theme-desc">স্মার্টওয়াচ, ইয়ারবাডস ও টেক ড্রপশিপিংয়ের জন্য দৃষ্টিনন্দন সাইবার ডার্ক ল্যান্ডিং পেজ। টেকনিক্যাল স্পেক্স ও সরাসরি কলিং সুবিধা।</p>
+                            
+                            <div class="theme-feature-tags">
+                                <span class="tag-item">✓ সাইবার ডার্ক মোড ডিজাইন</span>
+                                <span class="tag-item">✓ কালার সোয়াচ পিল সিলেক্টর</span>
+                                <span class="tag-item">✓ ৪টি গোল্ড স্টার কাস্টমার রিভিউ</span>
+                            </div>
+                        </div>
+
+                        <div class="theme-actions">
+                            <a href="{{ url('landing-preview/landing-gadget') }}" target="_blank" class="btn btn-secondary" style="padding: 10px 14px; font-size: 14px;">
+                                👁️ ডেমো দেখুন
+                            </a>
+                            <a href="{{ route('register') }}" class="btn btn-primary" style="padding: 10px 14px; font-size: 14px;">
+                                🚀 পেজটি নিন
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- All 10 Landing Themes Category Strip -->
+            <div style="margin-top: 36px; padding: 20px 24px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; text-align: center;">
+                <p style="margin: 0; color: #cbd5e1; font-size: 14.5px;">
+                    ✨ এছাড়াও পাচ্ছেন <strong>ঢাকাই জামদানি শাড়ি (Saree)</strong>, <strong>রূপচর্চা ও সিরাম (Skincare)</strong>, <strong>কিচেন চপার (Kitchen)</strong>, <strong>কাউ লেদার গিফট সেট (Leather)</strong>, <strong>ডিজিটাল কুরআন স্পিকার (Islamic)</strong>, <strong>ফিটনেস ব্যান্ড (Fitness)</strong> ও <strong>কিডস লার্নিং বুক (Kids)</strong> সহ <u>১০টি ক্যাটাগরির রেডি ল্যান্ডিং পেজ</u>!
+                </p>
             </div>
         </div>
     </section>
