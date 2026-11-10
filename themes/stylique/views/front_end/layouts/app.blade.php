@@ -112,5 +112,6 @@
             }
         }
     </script>
+@include('front_end.common.conversion_boosters')
 </body>
 </html>

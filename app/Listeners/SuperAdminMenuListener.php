@@ -107,6 +107,19 @@ class SuperAdminMenuListener
         ]);
 
         $menu->add([
+            'title' => __('প্ল্যান পেমেন্ট (বিকাশ ভেরিফায়ার)'),
+            'icon' => 'wallet',
+            'name' => 'plan-bkash-payments',
+            'parent' => null,
+            'order' => 145,
+            'ignore_if' => [],
+            'depend_on' => [],
+            'route' => 'admin.plan.payments',
+            'module' => $module,
+            'permission' => ''
+        ]);
+
+        $menu->add([
             'title' => __('Email Templates'),
             'icon' => 'mail',
             'name' => 'email-templates',

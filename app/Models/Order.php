@@ -41,6 +41,11 @@ class Order extends Model
         'additional_note',
         'deliveryboy_id',
         'store_id',
+        'courier_name',
+        'courier_consignment_id',
+        'courier_tracking_code',
+        'courier_status',
+        'fraud_check_score',
     ];
 
     protected $appends = [

@@ -156,6 +156,25 @@ class SingleProductOrderController extends Controller
             $product->save();
         }
 
+        // Auto-Recover Abandoned Cart if customer completed checkout
+        try {
+            $rawPhone = preg_replace('/[^0-9]/', '', (string)$request->customer_phone);
+            \App\Models\AbandonedCart::where('store_id', $store->id)
+                ->where('customer_phone', $rawPhone)
+                ->where('status', 'abandoned')
+                ->update(['status' => 'recovered']);
+        } catch (\Throwable $e) {}
+
+        // Trigger Local Bangladeshi SMS (Greenweb / BulksmsBD)
+        try {
+            \App\Services\BanglaSmsService::sendOrderConfirmation($order);
+        } catch (\Throwable $e) {}
+
+        // Trigger Facebook Conversions API (CAPI)
+        try {
+            \App\Services\FacebookCapiService::sendPurchaseEvent($order);
+        } catch (\Throwable $e) {}
+
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'status' => 'success',

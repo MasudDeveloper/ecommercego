@@ -26,6 +26,10 @@ class PlanOrder extends Model
         'receipt',
         'user_id',
         'store_id',
+        'sender_number',
+        'verified_at',
+        'verified_by',
+        'admin_notes',
     ];
     public static function total_plan_price()
     {

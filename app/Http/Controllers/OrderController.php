@@ -203,6 +203,23 @@ class OrderController extends Controller
         }
     }
 
+    public function thermalPrint($id)
+    {
+        try {
+            if (!is_numeric($id)) {
+                $id = \Illuminate\Support\Facades\Crypt::decrypt($id);
+            }
+            $order = Order::order_detail($id);
+            if (!empty($order['message'])) {
+                return redirect()->back()->with('error', __('Order Not Found.'));
+            }
+            $store = \App\Models\Store::find($order['store_id'] ?? (getCurrentStore() ?: 1));
+            return view('order.thermal_print', compact('order', 'store'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', __('Something went wrong: ' . $e->getMessage()));
+        }
+    }
+
     public function order_return(Request $request)
     {
         $data['product_id'] = $request->product_id;

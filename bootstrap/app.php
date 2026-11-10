@@ -68,7 +68,9 @@ return Application::configure(basePath: dirname(__DIR__))
                 '*/checkout',
                 '*/get-ticket-payment-paytm',
                 '*/get-ticket-payment-aamarpay',
-                'join_us/store/'
+                'join_us/store/',
+                'api/*',
+                'api/v1/payment/verify-notification'
             ] // Add your routes here
         );
     })

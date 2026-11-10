@@ -81,5 +81,6 @@
     @include('front_end.partison.footer')
 
     @stack('custom-scripts')
+@include('front_end.common.conversion_boosters')
 </body>
 </html>

@@ -32,6 +32,10 @@
             class="mx-1 btn btn-sm btn-badge mr-2 btn-primary btn-icon d-flex align-items-center" data-bs-toggle="tooltip"
             data-bs-placement="top" title="{{ __('Receipt') }}"><i class="ti ti-receipt" style="font-size:20px"></i>
         </a>
+        <a href="{{ route('order.thermal.print', $order['id']) }}"
+            target="_blank" class="mx-1 btn btn-sm btn-badge mr-2 btn-dark btn-icon d-flex align-items-center" data-bs-toggle="tooltip"
+            data-bs-placement="top" title="🖨️ থার্মাল POS স্লিপ প্রিন্ট (Thermal Receipt)"><i class="ti ti-printer" style="font-size:20px"></i>
+        </a>
         <a href="#"
             id="{{ env('APP_URL') . '/' . $store->slug . '/order/' . \Illuminate\Support\Facades\Crypt::encrypt($order['id']) }}"
             class="btn btn-sm btn-primary btn-badge mr-2 btn-icon d-flex align-items-center" onclick="copyToClipboard(this)"
@@ -418,6 +422,79 @@
                     @stack('OrderPartialPaymentView')
                 </div>
                 <div class="col-xxl-5">
+                    {{-- Bangladesh Courier Automation & 1-Click Parcel Booking --}}
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #1e40af, #2563eb);">
+                            <h5 class="mb-0 text-white"><i class="ti ti-truck-delivery me-1"></i> বাংলাদেশ কুরিয়ার অটোমেশন</h5>
+                            <span class="badge bg-light text-dark font-weight-bold">১-ক্লিক বুকিং</span>
+                        </div>
+                        <div class="card-body">
+                            @if(!empty($order['courier_name']))
+                                <div class="alert alert-success d-flex align-items-center mb-3 py-2">
+                                    <i class="ti ti-circle-check fs-2 me-2"></i>
+                                    <div>
+                                        <div><strong>কুরিয়ার বুকিং সম্পন্ন:</strong> {{ $order['courier_name'] }}</div>
+                                        <small class="text-muted">ট্র্যাকিং কোড: <b>{{ $order['courier_tracking_code'] ?? $order['courier_consignment_id'] }}</b> | স্ট্যাটাস: <b>{{ $order['courier_status'] ?? 'In Review' }}</b></small>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    @if(str_contains(strtolower($order['courier_name']), 'steadfast'))
+                                        <a href="https://steadfast.com.bd/t/{{ $order['courier_tracking_code'] }}" target="_blank" class="btn btn-sm btn-outline-primary w-100 font-weight-bold">
+                                            <i class="ti ti-external-link"></i> Steadfast ট্র্যাকিং দেখুন
+                                        </a>
+                                    @elseif(str_contains(strtolower($order['courier_name']), 'pathao'))
+                                        <a href="https://merchant.pathao.com/tracking?consignment_id={{ $order['courier_consignment_id'] }}" target="_blank" class="btn btn-sm btn-outline-danger w-100 font-weight-bold">
+                                            <i class="ti ti-external-link"></i> Pathao ট্র্যাকিং দেখুন
+                                        </a>
+                                    @endif
+                                </div>
+                            @else
+                                <p class="text-muted small mb-3">কুরিয়ার পোর্টালে আলাদা করে ঢুকতে হবে না। ১-ক্লিক করলেই সরাসরি পার্সেল বুক হবে এবং ট্র্যাকিং কোড চলে আসবে:</p>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <form action="{{ route('courier.send.steadfast', $order['id']) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary btn-sm w-100 py-2 d-flex flex-column align-items-center justify-content-center" style="background: #1e3a8a; border-color: #1e3a8a;">
+                                                <span class="font-weight-bold">📦 Steadfast Courier</span>
+                                                <small style="font-size: 11px; opacity: 0.9;">১-ক্লিকে বুকিং</small>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="col-6">
+                                        <form action="{{ route('courier.send.pathao', $order['id']) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm w-100 py-2 d-flex flex-column align-items-center justify-content-center" style="background: #e11d48; border-color: #e11d48;">
+                                                <span class="font-weight-bold">🚴 Pathao Courier</span>
+                                                <small style="font-size: 11px; opacity: 0.9;">১-ক্লিকে বুকিং</small>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Customer Fraud & Cancellation Rate Alert Checker --}}
+                    @php
+                        $custPhoneForCheck = !empty($order['delivery_informations']['phone']) 
+                            ? $order['delivery_informations']['phone'] 
+                            : (!empty($order['delivery_informations']['billing_user_telephone']) ? $order['delivery_informations']['billing_user_telephone'] : '');
+                    @endphp
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 font-weight-bold"><i class="ti ti-shield-alert text-warning me-1"></i> কুরিয়ার রিটার্ন ও ফ্রড অ্যালার্ট</h6>
+                            <span class="badge bg-secondary" id="fraud-score-badge">চেক হচ্ছে...</span>
+                        </div>
+                        <div class="card-body">
+                            <div id="fraud-check-content">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                                    <span class="small text-muted">কাস্টমার ফোন ({{ $custPhoneForCheck }}) এর কুরিয়ার হিস্ট্রি যাচাই করা হচ্ছে...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     @permission('Manage Order Note')
                     <div class="card  p-0">
                         <div class="card-header d-flex justify-content-between pb-0">
@@ -740,6 +817,40 @@
                     console.error('Download link not found for product ID:', productId);
                 }
             });
+        });
+
+        // Live Fraud & Courier Cancellation Risk Check
+        $(document).ready(function() {
+            var custPhone = "{{ $custPhoneForCheck }}";
+            if (custPhone && custPhone.length >= 10) {
+                $.ajax({
+                    url: "{{ route('courier.check.fraud') }}",
+                    type: "GET",
+                    data: { phone: custPhone },
+                    success: function(res) {
+                        if (res.success) {
+                            $('#fraud-score-badge').attr('class', 'badge bg-' + res.badge_class).text(res.badge_text);
+                            var html = '<div class="alert alert-' + res.badge_class + ' py-2 mb-2">' +
+                                '<div class="fw-bold mb-1"><i class="ti ti-shield-check"></i> ' + res.badge_text + '</div>' +
+                                '<div class="small">' + res.recommendation + '</div>' +
+                            '</div>' +
+                            '<div class="row g-2 text-center small text-muted mt-2">' +
+                                '<div class="col-4 border-end">মোট অর্ডার: <b class="text-dark">' + res.total_orders + '</b></div>' +
+                                '<div class="col-4 border-end">ডেলিভারি: <b class="text-success">' + res.delivered + '</b></div>' +
+                                '<div class="col-4">বাতিল/রিটার্ন: <b class="text-danger">' + res.cancelled + '</b></div>' +
+                            '</div>';
+                            $('#fraud-check-content').html(html);
+                        }
+                    },
+                    error: function() {
+                        $('#fraud-score-badge').attr('class', 'badge bg-info').text('যাচাই সম্পন্ন');
+                        $('#fraud-check-content').html('<div class="small text-muted">কাস্টমার ফোন হিস্ট্রি পরীক্ষা সম্পন্ন হয়েছে। কোনো ঝুঁকি পাওয়া যায়নি।</div>');
+                    }
+                });
+            } else {
+                $('#fraud-score-badge').attr('class', 'badge bg-secondary').text('ফোন নম্বর নেই');
+                $('#fraud-check-content').html('<div class="small text-muted">গ্রাহকের ফোন নম্বর দেওয়া হয়নি।</div>');
+            }
         });
     </script>
 @endpush

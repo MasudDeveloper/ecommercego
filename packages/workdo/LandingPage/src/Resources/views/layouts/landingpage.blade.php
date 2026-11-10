@@ -2557,18 +2557,33 @@
                 <p class="section-subtitle">লুকানো কোনো চার্জ নেই। যেকোনো সময় প্ল্যান আপগ্রেড বা ক্যান্সেল করতে পারবেন।</p>
             </div>
 
+            <!-- Monthly / Yearly Billing Cycle Switcher -->
+            <div class="pricing-switcher-wrapper" style="display: flex; justify-content: center; margin-bottom: 40px;">
+                <div style="background: rgba(255, 255, 255, 0.08); padding: 6px; border-radius: 50px; display: inline-flex; align-items: center; border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);">
+                    <button type="button" id="lpBtnMonthly" class="lp-billing-btn active" style="padding: 10px 24px; border-radius: 40px; border: none; font-weight: 700; font-size: 14.5px; cursor: pointer; transition: all 0.3s ease; background: #ffffff; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+                        মাসিক (Monthly)
+                    </button>
+                    <button type="button" id="lpBtnYearly" class="lp-billing-btn" style="padding: 10px 24px; border-radius: 40px; border: none; font-weight: 700; font-size: 14.5px; cursor: pointer; transition: all 0.3s ease; background: transparent; color: #94a3b8;">
+                        বাৎসরিক (Yearly)
+                        <span style="background: linear-gradient(135deg, #e2136e 0%, #be125a 100%); color: #ffffff; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 20px; margin-left: 6px;">
+                            ২ মাস ফ্রি! 🎉
+                        </span>
+                    </button>
+                </div>
+            </div>
+
             <div class="pricing-grid">
                 @php
-                    $activePlans = \App\Models\Plan::where('is_disable', 1)->orderBy('price', 'asc')->get();
+                    $activePlans = \App\Models\Plan::where('is_disable', 1)->where('price', '>', 0)->orderBy('price', 'asc')->get();
                     $currencySymbol = !empty($setting['CURRENCY']) ? $setting['CURRENCY'] : (!empty($setting['CURRENCYCURRENCY']) ? $setting['CURRENCYCURRENCY'] : '৳');
                 @endphp
 
                 @forelse($activePlans as $index => $plan)
                     @php
                         // Highlight the best-selling / popular plan
-                        $isPopular = ($plan->price == 599 || ($activePlans->where('price', 599)->count() == 0 && $index == 1));
+                        $isPopular = ($plan->price == 599 || $plan->price == 5990);
                     @endphp
-                    <div class="price-card {{ $isPopular ? 'popular' : '' }}">
+                    <div class="price-card {{ $isPopular ? 'popular' : '' }} lp-plan-card lp-plan-{{ strtolower($plan->duration) }}" style="{{ $plan->duration == 'Year' ? 'display: none;' : '' }}">
                         @if($isPopular)
                             <span class="popular-pill">সবচেয়ে জনপ্রিয়</span>
                         @elseif($plan->trial == 1 && $plan->trial_days > 0)
@@ -2581,6 +2596,12 @@
                                 {{ $plan->description ?: 'অনলাইন উদ্যোক্তাদের জন্য সাশ্রয়ী ও কার্যকরী ই-কমার্স সলিউশন।' }}
                             </p>
                             
+                            @if($plan->duration == 'Year')
+                                <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                                    <span>🎁</span> <span>বাৎসরিক স্পেশাল: ১০ মাসের মূল্যে ১২ মাস!</span>
+                                </div>
+                            @endif
+
                             <div class="plan-price-box" style="margin-bottom: 16px;">
                                 <span class="plan-amount" @if($isPopular) style="color: #ffffff;" @endif>
                                     {{ $currencySymbol }}{{ number_format($plan->price) }}
@@ -2635,12 +2656,7 @@
                                         <span>PWA মোবাইল অ্যাপ সুবিধা</span>
                                     </li>
                                 @endif
-                                @if($plan->enable_chatgpt == 'on')
-                                    <li>
-                                        <span class="check-icon" @if($isPopular) style="background: #10b981; color: #fff;" @endif>✓</span>
-                                        <span>AI / ChatGPT ডেসক্রিপশন হেল্প</span>
-                                    </li>
-                                @endif
+
                                 <li>
                                     <span class="check-icon" @if($isPopular) style="background: #10b981; color: #fff;" @endif>✓</span>
                                     <span>{{ $plan->storage_limit ?? 500 }}MB ক্লাউড স্টোরেজ</span>
@@ -2670,6 +2686,39 @@
                     </div>
                 @endforelse
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const btnM = document.getElementById('lpBtnMonthly');
+                    const btnY = document.getElementById('lpBtnYearly');
+                    const monthCards = document.querySelectorAll('.lp-plan-month');
+                    const yearCards = document.querySelectorAll('.lp-plan-year');
+
+                    if (btnM && btnY) {
+                        btnM.addEventListener('click', function () {
+                            monthCards.forEach(c => c.style.display = '');
+                            yearCards.forEach(c => c.style.display = 'none');
+                            btnM.style.background = '#ffffff';
+                            btnM.style.color = '#0f172a';
+                            btnM.style.boxShadow = '0 4px 15px rgba(0,0,0,0.15)';
+                            btnY.style.background = 'transparent';
+                            btnY.style.color = '#94a3b8';
+                            btnY.style.boxShadow = 'none';
+                        });
+
+                        btnY.addEventListener('click', function () {
+                            monthCards.forEach(c => c.style.display = 'none');
+                            yearCards.forEach(c => c.style.display = '');
+                            btnY.style.background = '#ffffff';
+                            btnY.style.color = '#0f172a';
+                            btnY.style.boxShadow = '0 4px 15px rgba(0,0,0,0.15)';
+                            btnM.style.background = 'transparent';
+                            btnM.style.color = '#94a3b8';
+                            btnM.style.boxShadow = 'none';
+                        });
+                    }
+                });
+            </script>
         </div>
     </section>
 

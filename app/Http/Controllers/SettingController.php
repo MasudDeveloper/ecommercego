@@ -1385,7 +1385,10 @@ class SettingController extends Controller
                 'whatsapp_msg_setting' => 'setting.whatsapp_msg_setting',
                 'tax_opt_setting' => 'setting.tax_opt_setting',
                 'refund_setting' => 'setting.refund_setting',
-                'seo_setting' => 'setting.seo_setting'
+                'seo_setting' => 'setting.seo_setting',
+                'courier_setting' => 'setting.courier_setting',
+                'bangla_sms_setting' => 'setting.bangla_sms_setting',
+                'ad_tracking_setting' => 'setting.ad_tracking_setting'
             ];
 
             // Default tab type to 'email_setting' if not provided

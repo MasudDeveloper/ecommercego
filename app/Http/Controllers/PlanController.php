@@ -22,7 +22,7 @@ class PlanController extends Controller
             if (auth()->user()->type == 'super admin') {
                 $plans = Plan::get();
             } else {                
-                $plans = Plan::where('is_disable', 1)->get();
+                $plans = Plan::where('is_disable', 1)->where('price', '>', 0)->get();
             }
             return  $dataTable->render('plans.index', compact('plans','setting'));
         } else {

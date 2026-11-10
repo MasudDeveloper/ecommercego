@@ -25,6 +25,182 @@ $setting = getAdminAllSetting();
 <div class="row">
     <!-- [ sample-page ] start -->
     <div class="col-12">
+
+        {{-- Merchant Onboarding 3-Step Wizard --}}
+        @php
+            $currStoreId = getCurrentStore() ?: 1;
+            $totalProducts = \App\Models\Product::where('store_id', $currStoreId)->count();
+            $isProfileDone = !empty($store->name);
+            $isThemeDone = !empty(APP_THEME());
+            $isProductDone = $totalProducts > 0;
+            
+            $completedSteps = ($isProfileDone ? 1 : 0) + ($isThemeDone ? 1 : 0) + ($isProductDone ? 1 : 0);
+            $progressPct = round(($completedSteps / 3) * 100);
+        @endphp
+
+        <div class="card border-0 shadow-sm mb-4" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #ffffff; border-radius: 16px;">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                    <div>
+                        <span class="badge bg-primary px-3 py-1 mb-2 font-weight-bold" style="border-radius: 20px;">
+                            🚀 মার্চেন্ট সাকসেস হাব
+                        </span>
+                        <h4 class="text-white font-weight-bold mb-1">৩-ধাপে আপনার স্টোর শুরু করুন</h4>
+                        <p class="text-white-50 text-sm mb-0">মাত্র কয়েক মিনিটেই আপনার অনলাইন ব্যবসা ও ল্যান্ডিং পেজ সম্পূর্ণ প্রস্তুত করে ফেলুন</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-warning font-weight-bold px-3 py-2 d-flex align-items-center gap-2 rounded-pill shadow-sm text-dark" data-bs-toggle="modal" data-bs-target="#videoTutorialModal">
+                            <span>🎥</span> <span>ভিডিও টিউটোরিয়াল ও হেল্প সেন্টার</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between text-xs text-white-50 mb-1 font-weight-bold">
+                        <span>স্টোর সেটআপ প্রোগ্রেস</span>
+                        <span class="text-warning">{{ $progressPct }}% সম্পন্ন</span>
+                    </div>
+                    <div class="progress" style="height: 10px; border-radius: 10px; background: rgba(255,255,255,0.15);">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $progressPct }}%; border-radius: 10px;"></div>
+                    </div>
+                </div>
+
+                <!-- 3 Steps Grid -->
+                <div class="row g-3">
+                    <!-- Step 1 -->
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 d-flex align-items-center justify-content-between" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);">
+                            <div>
+                                <div class="text-xs text-white-50 font-weight-bold">ধাপ ১: শপ প্রোফাইল</div>
+                                <div class="text-white font-weight-bold text-sm">শপের নাম ও মোবাইল সেট করুন</div>
+                            </div>
+                            <span class="badge {{ $isProfileDone ? 'bg-success' : 'bg-secondary' }} rounded-circle p-2">
+                                <i class="ti ti-{{ $isProfileDone ? 'check' : 'clock' }} fs-5"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 d-flex align-items-center justify-content-between" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);">
+                            <div>
+                                <div class="text-xs text-white-50 font-weight-bold">ধাপ ২: ল্যান্ডিং পেজ থিম</div>
+                                <div class="text-white font-weight-bold text-sm">পছন্দের প্রিমিয়াম থিম সিলেক্ট করুন</div>
+                            </div>
+                            @if($isThemeDone)
+                                <span class="badge bg-success rounded-circle p-2"><i class="ti ti-check fs-5"></i></span>
+                            @else
+                                <a href="{{ route('theme.index') }}" class="btn btn-sm btn-outline-warning rounded-pill">সিলেক্ট করুন</a>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 d-flex align-items-center justify-content-between" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);">
+                            <div>
+                                <div class="text-xs text-white-50 font-weight-bold">ধাপ ৩: প্রথম প্রোডাক্ট</div>
+                                <div class="text-white font-weight-bold text-sm">বিক্রির জন্য ১ম প্রোডাক্ট যোগ করুন</div>
+                            </div>
+                            @if($isProductDone)
+                                <span class="badge bg-success rounded-circle p-2"><i class="ti ti-check fs-5"></i></span>
+                            @else
+                                <a href="{{ route('product.create') }}" class="btn btn-sm btn-warning font-weight-bold rounded-pill text-dark">প্রোডাক্ট যোগ করুন</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Video Guide Modal -->
+        <div class="modal fade" id="videoTutorialModal" tabindex="-1" aria-labelledby="videoTutorialModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg rounded-4">
+                    <div class="modal-header bg-gradient-primary text-white" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); border-radius: 16px 16px 0 0;">
+                        <h5 class="modal-title text-white font-weight-bold" id="videoTutorialModalLabel">
+                            <i class="ti ti-video me-1"></i> বাংলা ভিডিও টিউটোরিয়াল ও মার্চেন্ট হেল্প সেন্টার
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card h-100 border rounded-3 p-3 hover-shadow">
+                                    <div class="d-flex align-items-center gap-3 mb-2">
+                                        <div class="bg-primary text-white p-2 rounded-3 fs-4">
+                                            <i class="ti ti-layout-dashboard"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="font-weight-bold mb-0">১. ল্যান্ডিং পেজ সেটআপ</h6>
+                                            <small class="text-muted">সময়: ৩ মিনিট ২০ সেকেন্ড</small>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted text-xs mb-3">কীভাবে ১ ক্লিকে প্রিমিয়াম সিঙ্গেল প্রোডাক্ট ল্যান্ডিং পেজ লাইভ করবেন এবং ছবি ও মূল্য পরিবর্তন করবেন।</p>
+                                    <a href="https://www.youtube.com/results?search_query=ecommerce+landing+page+setup" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill font-weight-bold">
+                                        <i class="ti ti-player-play"></i> ভিডিও দেখুন
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border rounded-3 p-3 hover-shadow">
+                                    <div class="d-flex align-items-center gap-3 mb-2">
+                                        <div class="bg-success text-white p-2 rounded-3 fs-4">
+                                            <i class="ti ti-truck"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="font-weight-bold mb-0">২. কুরিয়ার অটোমেশন</h6>
+                                            <small class="text-muted">সময়: ২ মিনিট ৪৫ সেকেন্ড</small>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted text-xs mb-3">Steadfast ও Pathao এপিআই কানেক্ট করে কীভাবে অর্ডার পেজ থেকে ১-ক্লিকে পার্সেল বুক করবেন।</p>
+                                    <a href="https://www.youtube.com/results?search_query=steadfast+courier+api+order" target="_blank" class="btn btn-sm btn-outline-success rounded-pill font-weight-bold">
+                                        <i class="ti ti-player-play"></i> ভিডিও দেখুন
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border rounded-3 p-3 hover-shadow">
+                                    <div class="d-flex align-items-center gap-3 mb-2">
+                                        <div class="bg-warning text-dark p-2 rounded-3 fs-4">
+                                            <i class="ti ti-brand-whatsapp"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="font-weight-bold mb-0">৩. হোয়াটসঅ্যাপ সেলস রিকভারি</h6>
+                                            <small class="text-muted">সময়: ৩ মিনিট</small>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted text-xs mb-3">ড্রপ-আউট বা অ্যাব্যান্ডনড কার্টের গ্রাহকদের ১-ক্লিকে হোয়াটসঅ্যাপে বার্তা পাঠিয়ে ৩০% বাড়তি সেলস আনার কৌশল।</p>
+                                    <a href="https://www.youtube.com/results?search_query=abandoned+cart+whatsapp+recovery" target="_blank" class="btn btn-sm btn-outline-warning text-dark rounded-pill font-weight-bold">
+                                        <i class="ti ti-player-play"></i> ভিডিও দেখুন
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border rounded-3 p-3 hover-shadow">
+                                    <div class="d-flex align-items-center gap-3 mb-2">
+                                        <div class="bg-danger text-white p-2 rounded-3 fs-4">
+                                            <i class="ti ti-chart-dots"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="font-weight-bold mb-0">৪. ফেসবুক CAPI ও পিক্সেল</h6>
+                                            <small class="text-muted">সময়: ৪ মিনিট</small>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted text-xs mb-3">অ্যাড-ব্লকার বাইপাস করে মেটা Conversions API ও টিকটক পিক্সেল দিয়ে নির্ভুল আরওএএস (ROAS) ট্র্যাকিং।</p>
+                                    <a href="https://www.youtube.com/results?search_query=facebook+conversion+api+tracking" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill font-weight-bold">
+                                        <i class="ti ti-player-play"></i> ভিডিও দেখুন
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row mb-4 dash-order-status g-4">
             <div class="col-12">
                 <div class="row g-4">

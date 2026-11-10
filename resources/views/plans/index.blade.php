@@ -27,9 +27,34 @@
 
 @section('content')
 
+    @if(\Auth::user()->type == 'admin')
+        <div class="row justify-content-center mb-4">
+            <div class="col-auto text-center">
+                <div class="d-inline-flex align-items-center gap-3 bg-white px-4 py-2 rounded-pill shadow-sm border">
+                    <span class="fw-bold cursor-pointer transition text-primary" id="btnToggleMonthly" style="cursor: pointer; font-size: 15px;">
+                        মাসিক বিলিং (Monthly)
+                    </span>
+                    <div class="form-check form-switch custom-switch-v1 m-0 d-flex align-items-center">
+                        <input class="form-check-input input-primary m-0" type="checkbox" id="billingPlanToggle" style="width: 48px; height: 24px; cursor: pointer;">
+                    </div>
+                    <span class="fw-bold cursor-pointer transition text-muted" id="btnToggleYearly" style="cursor: pointer; font-size: 15px;">
+                        বাৎসরিক বিলিং (Yearly)
+                        <span class="badge bg-danger rounded-pill px-2 py-1 ms-1 font-weight-bold" style="font-size: 11px;">
+                            🎉 ২ মাস ফ্রি!
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="row plan_card_wrp mb-4">
         @foreach ($plans as $plan)
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+            @if(\Auth::user()->type == 'admin' && $plan->price <= 0)
+                @continue
+            @endif
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 plan-card-col plan-duration-{{ strtolower($plan->duration) }}"
+                 style="{{ \Auth::user()->type == 'admin' && $plan->duration == 'Year' ? 'display: none;' : '' }}">
                 <div class="plan_card">
                     <div class="card price-card price-1 wow animate__fadeInUp" data-wow-delay="0.2s"
                         style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
@@ -87,9 +112,16 @@
                                 </div>
                             </div>
 
-                            <h3 class="mb-3 f-w-600 text-start text-primary">
+                            <h3 class="mb-2 f-w-600 text-start text-primary">
                                 {{ !empty($setting['CURRENCY']) ? $setting['CURRENCY'] : (!empty($setting['CURRENCYCURRENCY']) ? $setting['CURRENCYCURRENCY'] : '৳') }}{{ $plan->price . ' / ' . (\App\Models\Plan::getDurationsArr()[$plan->duration]) }}</small>
                             </h3>
+                            @if($plan->duration == 'Year')
+                                <div class="mb-2 text-start">
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success px-2 py-1 rounded-pill" style="font-size: 11px;">
+                                        <i class="ti ti-gift"></i> বাৎসরিক সাশ্রয় ১৭% (১০ মাসের মূল্যে ১২ মাস!)
+                                    </span>
+                                </div>
+                            @endif
                             @if ($plan->price > 0 && $plan->trial != 0)
                                 <p class="mb-0">
                                     {{ __('Free Trial Days : ') . __($plan->trial_days ? $plan->trial_days : 0) }}<br />
@@ -156,17 +188,7 @@
                                                 <i class="text-danger ti ti-circle-plus"></i></span>{{ __('Sub Domain') }}
                                         </li>
                                     @endif
-                                    @if ($plan && $plan->enable_chatgpt == 'on')
-                                        <li class="d-flex align-items-center">
-                                            <span class="theme-avtar">
-                                                <i class="text-primary ti ti-circle-plus"></i></span>{{ __('Chatgpt') }}
-                                        </li>
-                                    @else
-                                        <li class="text-danger d-flex align-items-center">
-                                            <span class="theme-avtar">
-                                                <i class="text-danger ti ti-circle-plus"></i></span>{{ __('Chatgpt') }}
-                                        </li>
-                                    @endif
+
                                     @if ($plan && $plan->pwa_store == 'on')
                                         <li class="d-flex align-items-center">
                                             <span class="theme-avtar">
@@ -263,8 +285,9 @@
                                             <div class="{{ $plan->id == 1 ? 'col-12' : 'col-12'  }}">
                                                 <div class="row">
                                                     <div class="col-9">
-                                                    <a href="{{ route('stripe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}"
-                                                        class="btn w-100 btn-badge btn-primary d-flex align-items-center gap-2  justify-content-center">{{ __('Subscribe') }}
+                                                    <a href="{{ route('plan.bkash.checkout', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}"
+                                                        class="btn w-100 btn-badge btn-primary d-flex align-items-center gap-2 justify-content-center" style="background: linear-gradient(135deg, #e2136e 0%, #be125a 100%) !important; border-color: #be125a !important;">
+                                                        <i class="ti ti-brand-cashapp"></i> {{ __('Subscribe (বিকাশ)') }}
                                                         <i class="fas fa-arrow-right"></i>
                                                     </a>
                                                     </div>  
@@ -324,6 +347,53 @@
     </div>
 @endsection
 @push('custom-script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('billingPlanToggle');
+            const btnMonthly = document.getElementById('btnToggleMonthly');
+            const btnYearly = document.getElementById('btnToggleYearly');
+            const monthlyCards = document.querySelectorAll('.plan-duration-month');
+            const yearlyCards = document.querySelectorAll('.plan-duration-year');
+
+            if (toggle && btnMonthly && btnYearly) {
+                function setBillingCycle(isYearly) {
+                    toggle.checked = isYearly;
+                    if (isYearly) {
+                        monthlyCards.forEach(el => el.style.display = 'none');
+                        yearlyCards.forEach(el => el.style.display = '');
+                        btnYearly.classList.remove('text-muted');
+                        btnYearly.classList.add('text-primary');
+                        btnMonthly.classList.remove('text-primary');
+                        btnMonthly.classList.add('text-muted');
+                    } else {
+                        yearlyCards.forEach(el => el.style.display = 'none');
+                        monthlyCards.forEach(el => el.style.display = '');
+                        btnMonthly.classList.remove('text-muted');
+                        btnMonthly.classList.add('text-primary');
+                        btnYearly.classList.remove('text-primary');
+                        btnYearly.classList.add('text-muted');
+                    }
+                }
+
+                // Check if current user is already on a Yearly plan
+                @if(\Auth::user()->type == 'admin' && \Auth::user()->currentPlan && \Auth::user()->currentPlan->duration == 'Year')
+                    setBillingCycle(true);
+                @endif
+
+                toggle.addEventListener('change', function () {
+                    setBillingCycle(this.checked);
+                });
+
+                btnMonthly.addEventListener('click', function () {
+                    setBillingCycle(false);
+                });
+
+                btnYearly.addEventListener('click', function () {
+                    setBillingCycle(true);
+                });
+            }
+        });
+    </script>
     <script>
         $(document).on('change', '#trial', function() {
             if ($(this).is(':checked')) {

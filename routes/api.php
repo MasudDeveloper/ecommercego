@@ -23,6 +23,12 @@ use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 //     return $request->user();
 // });
 
+// bKash Mobile Notification Auto-Verifier Webhook
+Route::post('v1/payment/verify-notification', [\App\Http\Controllers\BkashPlanPaymentController::class, 'receiveNotificationApi'])->name('api.payment.verify.notification');
+
+// Abandoned Cart Real-Time Lead Capture API
+Route::post('v1/store/capture-abandoned-cart', [\App\Http\Controllers\AbandonedCartController::class, 'captureLead'])->name('api.cart.capture');
+
 Route::post('{slug}/register', [AuthController::class, 'register'])->middleware(['APILog']); 
 Route::post('{slug}/login', [AuthController::class, 'login'])->middleware(['APILog']);
 Route::post('{slug}/forgot-password-send-otp', [AuthController::class, 'forgot_password_send_otp'])->middleware(['APILog']);

@@ -177,6 +177,21 @@ $activeTab = session()->get('setting_tab') ?? 'email_setting';
                             {{ __('WhatsApp Business API') }}
                             </a>
                         </li>
+                        <li class="nav-item col-xxl-2 col-xl-3 col-md-4 col-sm-6 col-12 text-center" role="presentation">
+                            <a class="nav-link btn-sm f-w-600 {{ $activeTab == 'courier_setting' ? 'active' : '' }}" data-url="{{ route('setting.form') }}" data-tab="courier_setting" id="pills-courier-tab" data-bs-toggle="pill" data-bs-target="#eco-courier" type="button" role="tab" aria-controls="pills-courier" aria-selected="false">
+                            <i class="ti ti-truck-delivery"></i> {{ __('বাংলাদেশ কুরিয়ার') }}
+                            </a>
+                        </li>
+                        <li class="nav-item col-xxl-2 col-xl-3 col-md-4 col-sm-6 col-12 text-center" role="presentation">
+                            <a class="nav-link btn-sm f-w-600 {{ $activeTab == 'bangla_sms_setting' ? 'active' : '' }}" data-url="{{ route('setting.form') }}" data-tab="bangla_sms_setting" id="pills-bangla_sms-tab" data-bs-toggle="pill" data-bs-target="#eco-bangla_sms" type="button" role="tab" aria-controls="pills-bangla_sms" aria-selected="false">
+                            <i class="ti ti-message-dots"></i> {{ __('বাংলা বাল্ক SMS') }}
+                            </a>
+                        </li>
+                        <li class="nav-item col-xxl-2 col-xl-3 col-md-4 col-sm-6 col-12 text-center" role="presentation">
+                            <a class="nav-link btn-sm f-w-600 {{ $activeTab == 'ad_tracking_setting' ? 'active' : '' }}" data-url="{{ route('setting.form') }}" data-tab="ad_tracking_setting" id="pills-ad_tracking-tab" data-bs-toggle="pill" data-bs-target="#eco-ad_tracking" type="button" role="tab" aria-controls="pills-ad_tracking" aria-selected="false">
+                            <i class="ti ti-chart-arrows-vertical"></i> {{ __('ফেসবুক CAPI ও টিকটক') }}
+                            </a>
+                        </li>
 
                         @stack('settingTab')
                         @endif

@@ -353,6 +353,19 @@ class CompanyMenuListener
             'module' => $module,
             'permission' => 'Manage Order Refund Request'
         ]);
+
+        $menu->add([
+            'title' => __('অ্যাব্যান্ডনড কার্ট (হোয়াটসঅ্যাপ)'),
+            'icon' => 'shopping-cart',
+            'name' => 'abandoned-cart',
+            'parent' => 'orders',
+            'order' => 3,
+            'ignore_if' => [],
+            'depend_on' => [],
+            'route' => 'abandoned-cart.index',
+            'module' => $module,
+            'permission' => 'Manage Order'
+        ]);
         /** order end */
 
         /** customer start */

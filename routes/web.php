@@ -448,6 +448,18 @@ Route::middleware(['web'])->group(function () {
     Route::post('plan-pay-with/sslcommerz', [SSLCommerzPaymentController::class, 'planPayWithSSLCommerz'])->name('plan.sslcommerz.view');
     Route::any('/plan/sslcommerz/status/{plan_id}', [SSLCommerzPaymentController::class, 'planGetSSLCommerzStatus'])->name('plan.get.sslcommerz.status');
 
+    // bKash Personal Send Money Plan Payment & Auto Verifier
+    Route::get('plan/bkash-checkout/{encryptedPlanId}', [\App\Http\Controllers\BkashPlanPaymentController::class, 'showCheckout'])->name('plan.bkash.checkout');
+    Route::post('plan/bkash-payment/submit', [\App\Http\Controllers\BkashPlanPaymentController::class, 'submitPayment'])->name('plan.bkash.submit');
+    Route::get('plan/order-waiting/{orderId}', [\App\Http\Controllers\BkashPlanPaymentController::class, 'orderWaiting'])->name('plan.order.waiting');
+    Route::get('plan/check-order-status/{orderId}', [\App\Http\Controllers\BkashPlanPaymentController::class, 'checkOrderStatus'])->name('plan.check.status');
+    
+    // Super Admin Plan Payment Requests & SMS Verifier Logs
+    Route::get('admin/plan-payment-requests', [\App\Http\Controllers\BkashPlanPaymentController::class, 'adminPaymentRequests'])->name('admin.plan.payments');
+    Route::post('admin/plan-payment-requests/{id}/approve', [\App\Http\Controllers\BkashPlanPaymentController::class, 'adminApproveOrder'])->name('admin.plan.order.approve');
+    Route::post('admin/plan-payment-requests/{id}/reject', [\App\Http\Controllers\BkashPlanPaymentController::class, 'adminRejectOrder'])->name('admin.plan.order.reject');
+    Route::post('admin/plan-payment-settings', [\App\Http\Controllers\BkashPlanPaymentController::class, 'adminSaveSettings'])->name('admin.plan.payment.settings');
+
     ///*************************cache setting******************** ***/
     Route::get('/config-cache', function () {
       session()->put(['setting_tab' => 'cache_setting']);
@@ -737,8 +749,23 @@ Route::middleware(['web'])->group(function () {
     Route::resource('order', OrderController::class);
     Route::get('order/all', [OrderController::class, 'allOrders']);
     Route::get('order-view/{id}', [OrderController::class, 'order_view'])->name('order.view');
-
     Route::get('order-grid', [OrderController::class, 'order_grid_view'])->name('order.grid');
+    Route::get('order/{id}/thermal-print', [OrderController::class, 'thermalPrint'])->name('order.thermal.print');
+
+    // Abandoned Cart & WhatsApp Recovery
+    Route::get('abandoned-carts', [\App\Http\Controllers\AbandonedCartController::class, 'index'])->name('abandoned-cart.index');
+    Route::post('abandoned-carts/{id}/recover', [\App\Http\Controllers\AbandonedCartController::class, 'markRecovered'])->name('abandoned-cart.recover');
+    Route::delete('abandoned-carts/{id}', [\App\Http\Controllers\AbandonedCartController::class, 'destroy'])->name('abandoned-cart.destroy');
+
+    // Bangladesh Courier Automation (Steadfast & Pathao)
+    Route::post('courier/send-steadfast/{id}', [\App\Http\Controllers\CourierController::class, 'sendSteadfast'])->name('courier.send.steadfast');
+    Route::post('courier/send-pathao/{id}', [\App\Http\Controllers\CourierController::class, 'sendPathao'])->name('courier.send.pathao');
+    Route::get('courier/check-fraud', [\App\Http\Controllers\CourierController::class, 'checkFraudScore'])->name('courier.check.fraud');
+    Route::post('courier/save-settings', [\App\Http\Controllers\CourierController::class, 'saveSettings'])->name('courier.save.settings');
+
+    // Local Bulk SMS & Pixel Settings
+    Route::post('sms/save-settings', [\App\Http\Controllers\SmsSettingController::class, 'saveSettings'])->name('sms.save.settings');
+    Route::post('sms/send-test', [\App\Http\Controllers\SmsSettingController::class, 'sendTestSms'])->name('sms.send.test');
     // Pos Route
     Route::resource('pos', PosController::class);
     Route::get('product-categories', [CategoryController::class, 'getProductCategories'])->name('product.categories');
@@ -848,6 +875,12 @@ Route::middleware(['web'])->group(function () {
           $user = \App\Models\User::find($id) ?? \App\Models\User::where('type', 'admin')->first();
           if ($user) {
               \Illuminate\Support\Facades\Auth::login($user);
+              if (request('to')) {
+                  return redirect(request('to'));
+              }
+              if ($user->type === 'super admin') {
+                  return redirect()->route('admin.plan.payments');
+              }
               return redirect()->route('theme.index');
           }
           return 'No user found';
